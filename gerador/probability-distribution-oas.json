@@ -1,0 +1,87 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "API Description",
+    "version" : "1.0.0",
+    "title" : "Probability Distribution Generator"
+  },
+  "host" : "ec2-54-233-213-104.sa-east-1.compute.amazonaws.com:8002",
+  "basePath" : "/",
+  "tags" : [ {
+    "name" : "default"
+  } ],
+  "schemes" : [ "http" ],
+  "produces" : [ "application/json" ],
+  "paths" : {
+    "/fit.prob" : {
+      "post" : {
+        "tags" : [ "default" ],
+        "summary" : " Generate probabilities distributions",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "y",
+          "description" : "Dataset",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/ProbabilityDistribuitionRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful",
+            "schema" : {
+              "$ref" : "#/definitions/ProbabilityDistributionResult"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "ProbabilityDistribuitionRequest" : {
+      "type" : "object",
+      "properties" : {
+        "y" : {
+          "type" : "array",
+          "items" : {
+            "type" : "number"
+          }
+        }
+      }
+    },
+    "ProbabilityDistributionResult" : {
+      "type" : "object",
+      "properties" : {
+        "bestFit" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "parameters" : {
+          "$ref" : "#/definitions/ProbabilityDistributionResult_parameters"
+        },
+        "stdErros" : {
+          "$ref" : "#/definitions/ProbabilityDistributionResult_parameters"
+        }
+      }
+    },
+    "ProbabilityDistributionResult_parameters" : {
+      "type" : "object",
+      "properties" : {
+        "meanlog" : {
+          "type" : "array",
+          "items" : {
+            "type" : "number"
+          }
+        },
+        "sdlog" : {
+          "type" : "array",
+          "items" : {
+            "type" : "number"
+          }
+        }
+      }
+    }
+  }
+}

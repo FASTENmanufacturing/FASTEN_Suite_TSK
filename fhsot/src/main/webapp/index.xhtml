@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                 xmlns:h="http://xmlns.jcp.org/jsf/html"
+                 xmlns:of="http://omnifaces.org/functions"
+                template="#{layoutMB.template}">
+
+	<ui:define name="metadata">
+        <style type="text/css">
+            .ui-datatable .ui-datatable-header {
+                text-align: right !important;
+            }
+            .d-flex{
+            	display: flex;
+            }
+			.justify-content-center {
+				-ms-flex-pack: center !important;
+				justify-content: center !important;
+			}
+        </style>
+    </ui:define>
+
+    <ui:define name="description">
+       
+    </ui:define>
+	
+	
+    <ui:define name="head-end">
+        <ui:param name="renderBreadCrumb" value="false"/>
+    </ui:define>
+
+    <ui:define name="title">
+        <h2 class="align-center">
+             #{adm['index.title']} 
+        	<br/>
+        	<small>#{adm['index.lastupdate']} #{of:formatDate(now, adminConfig.dateFormat)}.</small>
+        </h2>
+    </ui:define>
+
+	<ui:define name="body">
+	
+	<div class="row">
+	
+	    <div class="col-lg-2 col-lg-offset-3 col-md-3 col-sm-3 col-sm-offset-2  ">
+		    <p:link outcome="/demand-list">
+				<p:panelGrid class="text-center info-box box-primary card " columns="1" layout="grid">
+	                <i class="text-aqua fa fa-map-marker fa-3x"></i>
+				    <h:outputText styleClass="text-aqua text-uppercase" value="#{adm['menu.item.demands']}" />
+				</p:panelGrid>
+         	</p:link>
+		</div>
+		<div class="col-lg-2 col-md-3 col-sm-3 ">
+		    <p:link outcome="/delivery-list">
+				<p:panelGrid class="text-center info-box box-primary card" columns="1" layout="grid">
+	                <i class="text-aqua fa fa-truck fa-3x"></i>
+				    <h:outputText styleClass="text-aqua text-uppercase" value="#{adm['menu.item.delivery']}" />
+				</p:panelGrid>
+         	</p:link>
+		</div>
+		<div class="col-lg-2 col-md-3 col-sm-3 ">
+		    <p:link outcome="/processing-part-list">
+				<p:panelGrid class="text-center info-box box-primary card " columns="1" layout="grid">
+	                <i class="text-aqua fa fa-industry fa-3x"></i>
+				    <h:outputText styleClass="text-aqua text-uppercase" value="#{adm['menu.item.processingparts']}" />
+				</p:panelGrid>
+         	</p:link>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-2 col-lg-offset-3 col-md-3 col-sm-3 col-sm-offset-2">
+		    <p:link outcome="/part-list">
+				<p:panelGrid class="text-center info-box box-primary card " columns="1" layout="grid">
+	                <i class="text-aqua fa fa-cubes fa-3x"></i>
+				    <h:outputText styleClass="text-aqua text-uppercase" value="#{adm['menu.item.parts']}" />
+				</p:panelGrid>
+         	</p:link>
+		</div>
+		<div class="col-lg-2 col-md-3 col-sm-3 ">
+		    <p:link outcome="/sram-list">
+				<p:panelGrid class="text-center info-box box-primary card " columns="1" layout="grid">
+	                <i class="text-aqua glyphicon glyphicon-object-align-horizontal fa-rotate-90 fa-3x"></i>
+				    <h:outputText styleClass="text-aqua text-uppercase" value="#{adm['menu.item.sram']}" />
+				</p:panelGrid>
+         	</p:link>
+		</div>
+		<div class="col-lg-2 col-md-3 col-sm-3 ">
+		    <p:link outcome="/remote-station-list">
+				<p:panelGrid class="text-center info-box box-primary card " columns="1" layout="grid">
+	                <i class="text-aqua fa fa-desktop fa-3x"></i>
+				    <h:outputText styleClass="text-aqua text-uppercase" value="#{adm['menu.item.remoteStation']}" />
+				</p:panelGrid>
+         	</p:link>
+		</div>
+	</div>
+	</ui:define>
+
+</ui:composition>

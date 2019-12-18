@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                 xmlns:p="http://primefaces.org/ui"
+                template="/admin.xhtml">
+
+    <ui:define name="head">
+        <title> #{adm['index.title']}</title>
+        <link rel="shortcut icon" type="image/x-icon" href="#{resource['favicon/favicon.ico']}"/>
+        <link rel="shortcut icon" type="image/x-icon" href="#{resource['favicon/favicon-16x16.png']}" sizes="16x16"/>
+        <link rel="shortcut icon" type="image/x-icon" href="#{resource['favicon/favicon-32x32.png']}" sizes="32x32"/>
+        <link rel="shortcut icon" type="image/x-icon" href="#{resource['favicon/favicon-96x96.png']}" sizes="96x96"/>
+        <meta name="theme-color" content="#444"/>
+        <meta name="mobile-web-app-capable" content="yes"/>
+        <f:loadBundle var="msg" basename="starter"/>
+        <h:outputStylesheet library="css" name="starter.css"/>
+        <f:view locale="#{localeMB.locale}" />
+        
+            
+    </ui:define>
+
+    <ui:define name="logo">
+        <h:graphicImage value="#{resource[ 'images:horizontal-logo.png' ]}"/>
+    </ui:define>
+
+    <ui:define name="logo-mini">
+        <h:graphicImage value="#{resource[ 'images:horizontal-logo-small.png' ]}"/>
+    </ui:define>
+
+     <ui:define name="menu">
+         <ui:include src="/includes/menu.xhtml"/>
+     </ui:define>
+
+    <ui:define name="top-menu">
+        <ui:include src="/includes/top-bar.xhtml"/>
+    </ui:define>
+    
+    <ui:define name="body-end">
+	    <p:growl for="asyncNotify" id="asyncNotify" keepAlive="true" sticky="true" showDetail="true" showSummary="true"/>
+	    <h:form>
+		    <f:websocket channel="asyncChanel" onmessage="function(message, channel, event) { updateAsyncMessages({socketMessage:message}); }" />
+			<h:commandScript name="updateAsyncMessages" action="#{asyncNotifyMB.updateAsyncMessages}" render=" :asyncNotify" />
+		</h:form>
+	    <h:outputScript library="js" name="primefaces_i18n.js" />
+	    <h:outputScript library="js" name="starter.js" />
+    </ui:define>
+    
+    
+     <!-- below is just an example on how to define more tabs for control sidebar --> 
+    <ui:define name="controlsidebar-tabs">
+        <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+        <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+    </ui:define>
+     
+   <ui:define name="controlsidebar-content">
+        <ui:include src="/includes/controlsidebar-tabs-content.xhtml"/>
+    </ui:define>
+    
+
+
+    <ui:define name="footer">
+         <small>This project has received funding from the European Union’s Horizon 2020 research and innovation programme under grant agreement 777096.</small>
+
+        <div class="pull-right hidden-md hidden-sm hidden-xs" style="color: gray">
+            <i>#{msg['starter.version']}</i>
+        </div>
+    </ui:define>
+
+
+</ui:composition>

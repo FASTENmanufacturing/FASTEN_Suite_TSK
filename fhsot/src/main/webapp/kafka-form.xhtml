@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui" xmlns:adm="http://github.com/adminfaces"
+                xmlns:of="http://omnifaces.org/functions"
+                template="#{layoutMB.template}">
+
+    <ui:define name="metadata">
+    	 <f:metadata>
+            <!-- use view action if you are in a Java EE 7 server: <f:viewAction action="#{carFormMB.init()}"/>-->
+            <f:viewAction action="#{kafkaFormMB.init()}"/>
+        </f:metadata>
+        <ui:param name="renderAsterisks" value="true"/>
+    </ui:define>
+    <ui:define name="head-end">
+        <ui:param name="renderBreadCrumb" value="false"/>
+    </ui:define>
+    <ui:define name="title">
+    	<p:graphicImage value="#{resource[ 'images:IoT.png' ]}" style="width: 50px;"/>
+		<p:spacer width="5"/> 
+        #{adm['kafka.title']}
+    </ui:define>
+    <ui:define name="body">
+        <h:form id="form">
+            <p:focus context="@form"/>
+            <p:panel styleClass="box-primary box-solid card">
+            	<div class="box-header with-border">
+				    <h3 class="box-title"> 
+			    			#{adm['kafka.boxTitle']}
+	    			</h3>
+				    <div class="box-tools pull-right">
+				      <span class="label label-primary">IoT</span>
+				    </div>
+			  	</div>
+                <div class="ui-sm-12 ui-g-12 ">
+					<div class="ui-sm-12 ui-g-2">
+						<p:outputLabel value="Get Historical Demand" />
+					</div>
+					<div class="ui-sm-12 ui-g-4" >
+					    <div style="text-align: center;" class="ui-sm-12 ui-g-3 ">
+					    	<p:outputLabel value="#{adm['kafka.initialDate']}" for="initialDate"/>
+					    </div>
+					    <div class="ui-sm-12 ui-g-9 ">
+					    	<p:calendar id="initialDate" value="#{kafkaFormMB.historicalDemandRequest.initialDate}" readonlyInput="true"
+                        				mindate="#{of:addYears(now, -1)}" maxdate="#{of:addDays(now, -1)}" pagedate="#{of:addMonths(now, -3)}"
+                        				required="true" showOn="button" pattern="#{adm['admin.dateFormat']}"
+                        				locale="#{localeMB.locale}" navigator="true" >
+                        		<p:ajax event="dateSelect" update="endDate" />
+                			</p:calendar>
+                            <span class="help-block"> 
+                                <p:message for="initialDate"/>
+                            </span>
+					    </div>
+					</div>
+					<div class="ui-sm-12 ui-g-4 ">
+						<div style="text-align: center;" class="ui-sm-12 ui-g-3 ">
+							<p:outputLabel value="#{adm['kafka.endDate']}" for="endDate"/>
+						</div>
+						<div class="ui-sm-12 ui-g-9 ">
+							<p:calendar id="endDate" value="#{kafkaFormMB.historicalDemandRequest.endDate}" readonlyInput="true" 
+				                            mindate="#{kafkaFormMB.historicalDemandRequest.initialDate}" maxdate="#{now}"  
+				                            required="true" showOn="button" pattern="#{adm['admin.dateFormat']}"
+				                            locale="#{localeMB.locale}" navigator="true"
+				                            disabled="#{empty kafkaFormMB.historicalDemandRequest.initialDate}">
+				                    <p:ajax event="dateSelect" update="getHistoricalDemandBtn" />
+                			</p:calendar>
+	                            <span class="help-block"> 
+	                                <p:message for="endDate"/>
+	                            </span>
+						</div>
+					</div>
+					<div style="text-align: center;" class="ui-sm-12 ui-g-2 " >
+						<p:commandButton value="Fire" disabled="#{empty kafkaFormMB.historicalDemandRequest.endDate}" id="getHistoricalDemandBtn" type="button" icon="fa fa-check" styleClass="btn-primary" >
+							<p:ajax event="click" listener="#{kafkaFormMB.getHistoricalDemand}" update="@form" global="false"/>
+						</p:commandButton>
+					</div>
+				</div>
+				<div class="ui-sm-12 ui-g-12 ">
+					<div class="ui-sm-12 ui-g-10">
+						<p:outputLabel value="Get Historical Times" />
+					</div>
+					<div style="text-align: center;" class="ui-sm-12 ui-g-2 " >
+						<p:commandButton value="Fire" type="button" icon="fa fa-check" styleClass="btn-primary" >
+							<p:ajax event="click" listener="#{kafkaFormMB.getHistoricalTimes}" update="@form" global="false"/>
+						</p:commandButton>
+					</div>
+				</div>
+				<div class="ui-sm-12 ui-g-12 ">
+					<div class="ui-sm-12 ui-g-10">
+						<p:outputLabel value="Get Probability Distribuitions" />
+					</div>
+					<div style="text-align: center;" class="ui-sm-12 ui-g-2 " >
+						<p:commandButton value="Fire" type="button" icon="fa fa-check" styleClass="btn-primary" >
+							<p:ajax event="click" listener="#{kafkaFormMB.getProbabilityDistribuitions}" update="@form" global="false"/>
+						</p:commandButton>
+					</div>
+				</div>
+            </p:panel>
+
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="box-danger box-solid">
+                <p:commandButton value="Yes" type="button" styleClass="btn-material btn-primary ui-confirmdialog-yes"
+                                 icon="fa fa-check"/>
+                <p:commandButton value="No" type="button" styleClass="btn-material btn-danger ui-confirmdialog-no"
+                                 icon="fa fa-close"/>
+            </p:confirmDialog>
+        </h:form>
+		
+		
+		
+
+
+	    
+    </ui:define>
+
+</ui:composition>

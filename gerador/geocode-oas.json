@@ -1,0 +1,332 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "This is the openrouteservice API V1 documentation for ORS Core-Version `5.0.0`",
+    "version" : "5.0.0",
+    "title" : "Openrouteservice",
+    "contact" : {
+      "email" : "support@openrouteservice.org"
+    },
+    "license" : {
+      "name" : "MIT",
+      "url" : "https://github.com/swagger-api/swagger-ui/blob/master/LICENSE"
+    }
+  },
+  "host" : "api.openrouteservice.org",
+  "tags" : [ {
+    "name" : "Geocode",
+    "description" : "Resolve input coordinates to addresses and vice versa"
+  } ],
+  "schemes" : [ "https" ],
+  "produces" : [ "application/vnd.geo+json", "application/json; charset=utf-8" ],
+  "security" : [ {
+    "api_key-Parameter" : [ ]
+  } ],
+  "paths" : {
+    "/geocode/search" : {
+      "get" : {
+        "tags" : [ "Geocode" ],
+        "summary" : "Forward Geocode Service",
+        "description" : "Returns a JSON formatted list of objects corresponding to the search input. `boundary.*`-parameters can be combined if they are overlapping. **The interactivity for this enpoint is experimental!** [Please refer to this external Documentation](https://github.com/pelias/documentation/blob/master/search.md#search-the-world)\n",
+        "parameters" : [ {
+          "name" : "api_key",
+          "in" : "query",
+          "description" : "Insert your API Key here.\n",
+          "required" : true,
+          "type" : "string",
+          "default" : "your-api-key"
+        }, {
+          "name" : "text",
+          "in" : "query",
+          "description" : "User's search string",
+          "required" : true,
+          "type" : "string",
+          "format" : "string"
+        }, {
+          "name" : "focus.point.lon",
+          "in" : "query",
+          "description" : "Focal point longitude. Ideally a user's device location, but can also be a focal point. Used to provide results close to the user, while still finding good matches globally. Used in conjunction with `focus.point.lat`. Accepts only WGS84 longitutdes.",
+          "required" : false,
+          "type" : "number",
+          "format" : "float"
+        }, {
+          "name" : "focus.point.lat",
+          "in" : "query",
+          "description" : "Focal point latitude. Used to provide results close to the user, while still finding good matches globally. Used in conjunction with `focus.point.lon`. Accepts only WGS84 latitudes.",
+          "required" : false,
+          "type" : "number",
+          "format" : "float"
+        }, {
+          "name" : "boundary.rect.min_lon",
+          "in" : "query",
+          "required" : false,
+          "type" : "number",
+          "format" : "float"
+        }, {
+          "name" : "boundary.rect.min_lat",
+          "in" : "query",
+          "required" : false,
+          "type" : "number",
+          "format" : "float"
+        }, {
+          "name" : "boundary.rect.max_lon",
+          "in" : "query",
+          "required" : false,
+          "type" : "number",
+          "format" : "float"
+        }, {
+          "name" : "boundary.rect.max_lat",
+          "in" : "query",
+          "required" : false,
+          "type" : "number",
+          "format" : "float"
+        }, {
+          "name" : "boundary.circle.lon",
+          "in" : "query",
+          "description" : "circle center longitude",
+          "required" : false,
+          "type" : "number",
+          "maximum" : 180,
+          "minimum" : -180,
+          "format" : "float"
+        }, {
+          "name" : "boundary.circle.lat",
+          "in" : "query",
+          "description" : "circle center latitude",
+          "required" : false,
+          "type" : "number",
+          "maximum" : 90,
+          "minimum" : -90,
+          "format" : "float"
+        }, {
+          "name" : "boundary.circle.radius",
+          "in" : "query",
+          "description" : "Maximum distance in meters from the centroid to search from. Forms the radius of a bounding circle.",
+          "required" : false,
+          "type" : "number",
+          "format" : "float"
+        }, {
+          "name" : "boundary.country",
+          "in" : "query",
+          "description" : "Limits search to only return matches within a specific country. Accepts 2 or 3 letter country codes based on ISO [Alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Current_codes) or [Alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Current_codes) abbreviations.\n",
+          "required" : false,
+          "type" : "string",
+          "format" : "string"
+        }, {
+          "name" : "sources",
+          "in" : "query",
+          "description" : "source filter",
+          "required" : false,
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "enum" : [ "openstreetmap", "openaddresses", "whosonfirst", "geonames" ]
+          },
+          "collectionFormat" : "csv",
+          "default" : "osm,oa,gn,wof",
+          "uniqueItems" : true
+        }, {
+          "name" : "layers",
+          "in" : "query",
+          "description" : "For more than one layer, accepts a comma separated list of valid layers. If any of those layers is invalid, the request will still be honored, but a warning will be thrown in the `geocoding` block of the response.\n",
+          "required" : false,
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "enum" : [ "address", "venue", "neighbourhood", "locality", "borough", "localadmin", "county", "macrocounty", "region", "macroregion", "country", "coarse" ]
+          },
+          "collectionFormat" : "csv",
+          "uniqueItems" : true,
+          "x-example" : "region,county"
+        }, {
+          "name" : "size",
+          "in" : "query",
+          "description" : "Maximum number of possible matching places to be returned",
+          "required" : false,
+          "type" : "integer",
+          "default" : 10,
+          "maximum" : 50,
+          "minimum" : 1,
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful",
+            "schema" : {
+              "$ref" : "#/definitions/AddressResponse"
+            }
+          },
+          "400" : {
+            "description" : "Bad request, An input parameter was invalid. An error message is included in the response body with more details."
+          },
+          "403" : {
+            "description" : "Forbidden, no correct token was provided."
+          },
+          "404" : {
+            "description" : "Not Found, The URL is invalid or the path is no longer valid."
+          },
+          "408" : {
+            "description" : "Request Timeout, Underlying services took too long to respond."
+          },
+          "500" : {
+            "description" : "Internal Server Error, Generic fatal error."
+          },
+          "502" : {
+            "description" : "Bad Gateway, Connection was lost to the Elasticsearch cluster."
+          },
+          "503" : {
+            "description" : "Service unavailable, API gateway got no response from the service."
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions" : {
+    "api_key-Parameter" : {
+      "description" : "For GET requests add your API Key as the value of the api_key parameter",
+      "type" : "apiKey",
+      "name" : "api_key",
+      "in" : "query"
+    },
+    "Authorization-Header" : {
+      "description" : "For POST requests add your API Key as the value of the `Authorization` header.\n",
+      "type" : "apiKey",
+      "name" : "Authorization",
+      "in" : "header"
+    }
+  },
+  "definitions" : {
+    "AddressResponse" : {
+      "type" : "object",
+      "properties" : {
+        "geocoding" : {
+          "$ref" : "#/definitions/Geocoding"
+        },
+        "type" : {
+          "type" : "string",
+          "description" : "Result type, FeatureCollection"
+        },
+        "features" : {
+          "$ref" : "#/definitions/AddressFeatures"
+        }
+      },
+      "description" : "ok"
+    },
+    "Geocoding" : {
+      "type" : "object",
+      "properties" : {
+        "version" : {
+          "type" : "string",
+          "description" : "GeoJSON version"
+        },
+        "attribution" : {
+          "type" : "string",
+          "description" : "attribution info"
+        },
+        "query" : {
+          "type" : "object",
+          "description" : "query as intepreted by AIR",
+          "properties" : { }
+        },
+        "size" : {
+          "type" : "number",
+          "format" : "integer",
+          "description" : "Number of features returned"
+        },
+        "private" : {
+          "type" : "string"
+        },
+        "warnings" : {
+          "type" : "array",
+          "description" : "list of invalid inputs and general request warnings",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "lang" : {
+          "$ref" : "#/definitions/Geocoding_lang"
+        },
+        "engine" : {
+          "$ref" : "#/definitions/Geocoding_engine"
+        },
+        "timestamp": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Timestamp when the query was run"
+        }
+      },
+      "description" : "AIR Address response metadata information."
+    },
+    "AddressFeatures" : {
+      "type" : "array",
+      "description" : "list of features",
+      "items" : {
+        "$ref" : "#/definitions/AddressFeature"
+      }
+    },
+    "AddressFeature" : {
+      "type" : "object",
+      "properties" : {
+        "type" : {
+          "type" : "string",
+          "description" : "Type of geometry."
+        },
+        "geometry" : {
+          "$ref" : "#/definitions/Geometry"
+        },
+        "properties" : { }
+      },
+      "description" : "Feature object. See http://geojson.org for more information."
+    },
+    "Geometry" : {
+      "type" : "object",
+      "properties" : {
+        "type" : {
+          "type" : "string",
+          "description" : "Type of geometry."
+        },
+        "coordinates" : {
+          "type" : "array",
+          "description" : "Coordinates for the given geometry.",
+          "items" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        }
+      },
+      "description" : "Geometry object. See http://geojson.org for more information."
+    },
+    "Geocoding_lang" : {
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        },
+        "iso6391" : {
+          "type" : "string"
+        },
+        "iso6393" : {
+          "type" : "string"
+        },
+        "defaulted" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "Geocoding_engine" : {
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "description" : "Source engine, Pelias"
+        },
+        "author" : {
+          "type" : "string",
+          "description" : "Main author, Mapzen"
+        },
+        "version" : {
+          "type" : "string",
+          "description" : "Engine version"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,37 @@
+Database OAS:
+
+java -jar swagger-codegen-cli-2.4.7.jar generate -DapiDocs=false -DmodelDocs=false -D io.swagger.parser.util.RemoteUrl.trustAll=true -D hideGenerationTimestamp=true -i http://localhost:8081/v2/api-docs --api-package com.fasten.wp4.database.client.api --model-package com.fasten.wp4.database.client.model --invoker-package com.fasten.wp4.database.client.invoker --group-id com.fasten.wp4 --artifact-id database-client --artifact-version 0.0.1-SNAPSHOT -l java --additional-properties dateLibrary=legacy,java8=true,serializableModel=true,booleanGetterPrefix -o ../database-client
+
+Open Route Service geolocate:
+
+java -jar swagger-codegen-cli-2.4.7.jar generate -DapiDocs=false -DmodelDocs=false -D io.swagger.parser.util.RemoteUrl.trustAll=true -D hideGenerationTimestamp=true -i geocode-oas.json --api-package org.ors.geocode.client.api --model-package org.ors.geocode.client.model --invoker-package org.ors.geocode.client.invoker --group-id org.ors --artifact-id geocode-client --artifact-version 0.0.1-SNAPSHOT -l java --additional-properties dateLibrary=legacy,java8=true,serializableModel=true,booleanGetterPrefix -o ../geocode-client
+
+Open Route Service matrix:
+
+java -jar swagger-codegen-cli-2.4.7.jar generate -DapiDocs=false -DmodelDocs=false -D io.swagger.parser.util.RemoteUrl.trustAll=true -D hideGenerationTimestamp=true -i matrix-oas.json --api-package org.ors.matrix.client.api --model-package org.ors.matrix.client.model --invoker-package org.ors.matrix.client.invoker --group-id org.ors --artifact-id matrix-client --artifact-version 0.0.1-SNAPSHOT -l java --additional-properties dateLibrary=legacy,java8=true,serializableModel=true,booleanGetterPrefix -o ../matrix-client
+
+Previsor OAS:
+
+java -jar swagger-codegen-cli-2.4.7.jar generate -DapiDocs=false -DmodelDocs=false -D io.swagger.parser.util.RemoteUrl.trustAll=true -D hideGenerationTimestamp=true -i predictive-oas.json --api-package com.fasten.wp4.predictive.client.api --model-package com.fasten.wp4.predictive.client.model --invoker-package com.fasten.wp4.predictive.client.invoker --group-id com.fasten.wp4 --artifact-id predictive-client --artifact-version 0.0.1-SNAPSHOT -l java --additional-properties dateLibrary=legacy,java8=true,serializableModel=true,booleanGetterPrefix -o ../predictive-client
+
+Operational Optimizator OAS:
+
+java -jar swagger-codegen-cli-2.4.7.jar generate -DapiDocs=false -DmodelDocs=false -D io.swagger.parser.util.RemoteUrl.trustAll=true -D hideGenerationTimestamp=true -i operational-optimization-oas.json --api-package com.fasten.wp4.optimizator.operational.client.api --model-package com.fasten.wp4.optimizator.operational.client.model --invoker-package com.fasten.wp4.optimizator.operational.client.invoker --group-id com.fasten.wp4 --artifact-id optimizator-operational-client --artifact-version 0.0.1-SNAPSHOT -l java --additional-properties dateLibrary=legacy,java8=true,serializableModel=true,booleanGetterPrefix -o ../optimizator-operational-client 
+ 
+Tactical Optimizator OAS:
+
+java -jar swagger-codegen-cli-2.4.7.jar generate -DapiDocs=false -DmodelDocs=false -D io.swagger.parser.util.RemoteUrl.trustAll=true -D hideGenerationTimestamp=true -i http://localhost:8082/v2/api-docs --api-package com.fasten.wp4.optimizator.tactical.client.api --model-package com.fasten.wp4.optimizator.tactical.client.model --invoker-package com.fasten.wp4.optimizator.tactical.client.invoker --group-id com.fasten.wp4 --artifact-id optimizator-tactical-client --artifact-version 0.0.1-SNAPSHOT -l java --additional-properties dateLibrary=legacy,java8=true,serializableModel=true,booleanGetterPrefix -o ../optimizator-tactical-client
+  
+ 
+Directions OAS:
+
+java -jar swagger-codegen-cli-2.4.7.jar generate -DapiDocs=false -DmodelDocs=false -D io.swagger.parser.util.RemoteUrl.trustAll=true -D hideGenerationTimestamp=true -i directions-oas.json --api-package org.ors.direction.operational.client.api --model-package org.ors.direction.client.model --invoker-package org.ors.direction.client.invoker --group-id org.ors --artifact-id direction-client --artifact-version 0.0.1-SNAPSHOT -l java --additional-properties dateLibrary=legacy,java8=true,serializableModel=true,booleanGetterPrefix -o ../direction-client
+ 
+Kafka response Client (reside dentro do fhsot):
+java -jar swagger-codegen-cli-2.4.7.jar generate -DapiDocs=false -DmodelDocs=false -D io.swagger.parser.util.RemoteUrl.trustAll=true -D hideGenerationTimestamp=true -i kafka-response-oas.json --api-package com.fasten.wp4.kafka.response.client.api --model-package com.fasten.wp4.kafka.response.client.model --invoker-package com.fasten.wp4.kafka.response.client.invoker --group-id com.fasten.wp4 --artifact-id kafka-response-client --artifact-version 0.0.1-SNAPSHOT -l java --additional-properties dateLibrary=legacy,java8=true,serializableModel=true,booleanGetterPrefix -o ../kafka-response-client
+
+Kafka request Client (IoT OAS):
+java -jar swagger-codegen-cli-2.4.7.jar generate -DapiDocs=false -DmodelDocs=false -D io.swagger.parser.util.RemoteUrl.trustAll=true -D hideGenerationTimestamp=true -i http://localhost:8060/v2/api-docs --api-package com.fasten.wp4.kafka.request.client.api --model-package com.fasten.wp4.kafka.request.client.model --invoker-package com.fasten.wp4.kafka.request.client.invoker --group-id com.fasten.wp4 --artifact-id kafka-request-client --artifact-version 0.0.1-SNAPSHOT -l java --additional-properties dateLibrary=legacy,java8=true,serializableModel=true,booleanGetterPrefix -o ../kafka-request-client
+
+Probability Distribution
+java -jar swagger-codegen-cli-2.4.7.jar generate -DapiDocs=false -DmodelDocs=false -D io.swagger.parser.util.RemoteUrl.trustAll=true -D hideGenerationTimestamp=true -i probability-distribution-oas.json --api-package com.fasten.wp4.probabilitydistribution.client.api --model-package com.fasten.wp4.probabilitydistribution.client.model --invoker-package com.fasten.wp4.probabilitydistribution.client.invoker --group-id com.fasten.wp4 --artifact-id probability-distribution-client --artifact-version 0.0.1-SNAPSHOT -l java --additional-properties dateLibrary=legacy,java8=true,serializableModel=true,booleanGetterPrefix -o ../probability-distribution-client 

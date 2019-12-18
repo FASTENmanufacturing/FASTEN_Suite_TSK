@@ -1,0 +1,652 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "This is the openrouteservice API V2 documentation for ORS Core-Version `5.0.0`. Documentations for [older Core-Versions](https://github.com/GIScience/openrouteservice-docs/releases) can be rendered with the [Swagger-Editor](https://editor.swagger.io/).",
+    "version" : "5.0.0",
+    "title" : "OpenRouteService",
+    "contact" : {
+      "email" : "info@openrouteservice.org"
+    },
+    "license" : {
+      "name" : "MIT",
+      "url" : "https://github.com/swagger-api/swagger-ui/blob/master/LICENSE"
+    }
+  },
+  "host" : "api.openrouteservice.org",
+  "basePath" : "/",
+  "tags" : [ {
+    "name" : "Directions",
+    "description" : "Get directions for different modes of transport"
+  } ],
+  "schemes" : [ "https" ],
+  "produces" : [ "application/vnd.geo+json", "application/json; charset=utf-8", "application/gpx+xml, img/png; charset=utf-8" ],
+  "security" : [ {
+    "api_key-Parameter" : [ ]
+  } ],
+  "paths" : {
+    "/v2/directions/{profile}" : {
+      "get" : {
+        "tags" : [ "Directions" ],
+        "summary" : "Directions Service (GET)",
+        "description" : "Get a basic route between two points with the profile provided. Returned response is in GeoJSON format. This method does not accept any request body or parameters other than profile, start coordinate, and end coordinate.",
+        "operationId" : "getSimpleGeoJsonRouteUsingGET",
+        "produces" : [ "application/geo+json;charset=UTF-8" ],
+        "parameters" : [ {
+          "name" : "end",
+          "in" : "query",
+          "description" : "Destination coordinate of the route",
+          "required" : true,
+          "type" : "string",
+          "allowEmptyValue" : false,
+          "x-example" : "8.687872,49.420318"
+        }, {
+          "name" : "profile",
+          "in" : "path",
+          "description" : "Specifies the route profile.",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "driving-car",
+          "enum" : [ "driving-car", "driving-hgv", "cycling-regular", "cycling-road", "cycling-mountain", "cycling-electric", "foot-walking", "foot-hiking", "wheelchair" ]
+        }, {
+          "name" : "start",
+          "in" : "query",
+          "description" : "Start coordinate of the route",
+          "required" : true,
+          "type" : "string",
+          "allowEmptyValue" : false,
+          "x-example" : "8.681495,49.41461"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Standard response for successfully processed requests. Returns GeoJSON. The decoded values of the extra information can be found [here](https://github.com/GIScience/openrouteservice-docs).",
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "bbox" : {
+                  "type" : "array",
+                  "example" : [ 49.414057, 8.680894, 49.420514, 8.690123 ],
+                  "description" : "Bounding box that covers all returned routes",
+                  "items" : {
+                    "type" : "number",
+                    "format" : "double"
+                  }
+                },
+                "features" : {
+                  "type" : "array",
+                  "items" : {
+                    "type" : "object",
+                    "properties" : { }
+                  }
+                },
+                "metadata" : {
+                  "$ref" : "#/definitions/RouteResponseInfo"
+                },
+                "type" : {
+                  "type" : "string"
+                }
+              },
+              "title" : "GeoJSONRouteResponse"
+            }
+          },
+          "400" : {
+            "description" : "The request is incorrect and therefore can not be processed."
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "An element could not be found. If possible, a more detailed error code is provided."
+          },
+          "405" : {
+            "description" : "The specified HTTP method is not supported. For more details, refer to the EndPoint documentation."
+          },
+          "413" : {
+            "description" : "The request is larger than the server is able to process, the data provided in the request exceeds the capacity limit."
+          },
+          "500" : {
+            "description" : "An unexpected error was encountered and a more detailed error code is provided."
+          },
+          "501" : {
+            "description" : "Indicates that the server does not support the functionality needed to fulfill the request."
+          },
+          "503" : {
+            "description" : "The server is currently unavailable due to overload or maintenance."
+          }
+        },
+        "deprecated" : false
+      }
+    }
+  },
+  "securityDefinitions" : {
+    "api_key-Parameter" : {
+      "description" : "For GET requests add your API Key as the value of the api_key parameter",
+      "type" : "apiKey",
+      "name" : "api_key",
+      "in" : "query"
+    },
+    "Authorization-Header" : {
+      "description" : "For POST requests add your API Key as the value of the `Authorization` header.\n",
+      "type" : "apiKey",
+      "name" : "Authorization",
+      "in" : "header"
+    }
+  },
+  "definitions" : {
+    "EngineInfo" : {
+      "properties" : {
+        "build_date" : {
+          "type" : "string",
+          "example" : "2019-02-07T14:28:11Z",
+          "description" : "The date that the service was last updated"
+        },
+        "version" : {
+          "type" : "string",
+          "example" : "5",
+          "description" : "The backend version of the openrouteservice that was queried"
+        }
+      },
+      "description" : "Information about the routing service"
+    },
+    "RouteResponseInfo" : {
+      "properties" : {
+        "attribution" : {
+          "type" : "string",
+          "example" : "openrouteservice.org | OpenStreetMap contributors",
+          "description" : "Copyright and attribution information"
+        },
+        "engine" : {
+          "$ref" : "#/definitions/EngineInfo"
+        },
+        "id" : {
+          "type" : "string",
+          "example" : "request123",
+          "description" : "ID of the request (as passed in by the query)"
+        },
+        "osm_file_md5_hash" : {
+          "type" : "string",
+          "example" : "c0327ba6",
+          "description" : "The MD5 hash of the OSM planet file that was used for generating graphs"
+        },
+        "query" : {
+          "type" : "object",
+          "description" : "The information that was used for generating the route",
+          "title" : "Directions Service",
+          "allOf" : [ {
+            "type" : "object",
+            "description" : "Advanced options for routing",
+            "title" : "Route Options",
+            "properties" : {
+              "avoid_borders" : {
+                "type" : "string",
+                "description" : "`all` for no border crossing. `controlled` to cross open borders but avoid controlled ones. Only for `driving-*` profiles. CUSTOM_KEYS:{'validWhen':{'ref':'profile','value':['driving-*']}}",
+                "enum" : [ "all", "controlled", "none" ]
+              },
+              "avoid_countries" : {
+                "type" : "array",
+                "example" : [ 11, 193 ],
+                "description" : "List of countries to exclude from routing with `driving-*` profiles. Can be used together with `'avoid_borders': 'controlled'`. `[ 11, 193 ]` would exclude Austria and Switzerland. List of countries and application examples can be found [here](https://github.com/GIScience/openrouteservice-docs#country-list). Also, ISO standard country codes cna be used in place of the numerical ids, for example, DE or DEU for Germany. CUSTOM_KEYS:{'validWhen':{'ref':'profile','value':['driving-*']}}",
+                "items" : {
+                  "type" : "string"
+                }
+              },
+              "avoid_features" : {
+                "type" : "array",
+                "description" : "List of features to avoid. CUSTOM_KEYS:{'itemRestrictions':{'ref':'profile', 'itemsWhen':{'driving-*':['highways','tollways','ferries'],'cycling-*':['ferries','steps','fords'],'foot-*':['ferries','fords','steps'],'wheelchair':['ferries','steps']}}}",
+                "items" : {
+                  "type" : "string",
+                  "enum" : [ "highways", "tollways", "ferries", "fords", "steps" ]
+                }
+              },
+              "avoid_polygons" : {
+                "type" : "object",
+                "description" : "Comprises areas to be avoided for the route. Formatted in GeoJSON as either a Polygon or Multipolygon object.",
+                "additionalProperties" : {
+                  "type" : "object",
+                  "properties" : { }
+                }
+              },
+              "profile_params" : {
+                "type" : "object",
+                "description" : " Specifies additional routing parameters.",
+                "title" : "Profile Parameters",
+                "properties" : {
+                  "restrictions" : {
+                    "type" : "object",
+                    "description" : "Describe restrictions to be applied to edges on the routing. any edges that do not match these restrictions are not traversed.",
+                    "title" : "Restrictions",
+                    "properties" : {
+                      "axleload" : {
+                        "type" : "number",
+                        "format" : "float",
+                        "example" : 50.0,
+                        "description" : "Axleload restriction in tons. CUSTOM_KEYS:{'validWhen':{'ref':'profile','value':['driving-hgv']}}"
+                      },
+                      "hazmat" : {
+                        "type" : "boolean",
+                        "description" : "Specifies whether to use appropriate routing for delivering hazardous goods and avoiding water protected areas. Default is `false`. CUSTOM_KEYS:{'apiDefault':false,'validWhen':{'ref':'profile','value':['driving-hgv']}}"
+                      },
+                      "height" : {
+                        "type" : "number",
+                        "format" : "float",
+                        "example" : 4.2,
+                        "description" : "Height restriction in metres. CUSTOM_KEYS:{'validWhen':{'ref':'profile','value':['driving-hgv']}}"
+                      },
+                      "length" : {
+                        "type" : "number",
+                        "format" : "float",
+                        "example" : 8.4,
+                        "description" : "Length restriction in metres. CUSTOM_KEYS:{'validWhen':{'ref':'profile','value':['driving-hgv']}}"
+                      },
+                      "maximum_incline" : {
+                        "type" : "integer",
+                        "format" : "int32",
+                        "example" : 3,
+                        "description" : "Specifies the maximum incline as a percentage. `3`, `6` (default), `10`, `15.CUSTOM_KEYS:{'apiDefault':6,'validWhen':{'ref':'profile','value':['wheelchair']}}"
+                      },
+                      "maximum_sloped_kerb" : {
+                        "type" : "number",
+                        "format" : "float",
+                        "example" : 0.03,
+                        "description" : "Specifies the maximum height of the sloped curb in metres. Values are `0.03`, `0.06` (default), `0.1`.CUSTOM_KEYS:{'apiDefault':0.6,'validWhen':{'ref':'profile','value':['wheelchair']}}"
+                      },
+                      "minimum_width" : {
+                        "type" : "number",
+                        "format" : "float",
+                        "example" : 2.5,
+                        "description" : "Specifies the minimum width of the footway in metres.CUSTOM_KEYS:{'validWhen':{'ref':'profile','value':['wheelchair']}}"
+                      },
+                      "smoothness_type" : {
+                        "type" : "string",
+                        "example" : "best",
+                        "description" : "Specifies the minimum smoothness of the route. Default is `good`.CUSTOM_KEYS:{'apiDefault':'good','validWhen':{'ref':'profile','value':['wheelchair']}}"
+                      },
+                      "surface_type" : {
+                        "type" : "string",
+                        "example" : "asphalt",
+                        "description" : "Specifies the minimum surface type. Default is `cobblestone:flattened`. CUSTOM_KEYS:{'apiDefault':'cobblestone:flattened','validWhen':{'ref':'profile','value':['wheelchair']}}"
+                      },
+                      "track_type" : {
+                        "type" : "string",
+                        "example" : "grade2",
+                        "description" : "Specifies the minimum grade of the route. Default is `grade1`. CUSTOM_KEYS:{'apiDefault':'grade1','validWhen':{'ref':'profile','value':['wheelchair']}}"
+                      },
+                      "weight" : {
+                        "type" : "number",
+                        "format" : "float",
+                        "example" : 40.0,
+                        "description" : "Weight restriction in tons. CUSTOM_KEYS:{'validWhen':{'ref':'profile','value':['driving-hgv']}}"
+                      },
+                      "width" : {
+                        "type" : "number",
+                        "format" : "float",
+                        "example" : 5.6,
+                        "description" : "Width restriction in metres. CUSTOM_KEYS:{'validWhen':{'ref':'profile','value':['driving-hgv']}}"
+                      }
+                    }
+                  },
+                  "weightings" : {
+                    "type" : "object",
+                    "description" : "Describe additional weightings to be applied to edges on the routing.",
+                    "title" : "Profile Weightings",
+                    "properties" : {
+                      "green" : {
+                        "type" : "number",
+                        "format" : "float",
+                        "example" : 0.4,
+                        "description" : "Specifies the Green factor for `foot-*` profiles.\n\nfactor: Values range from 0 to 1. 0 equals normal routing. 1 will prefer ways through green areas over a shorter route. CUSTOM_KEYS:{'validWhen':{'ref':'profile','value':['foot-*']}}"
+                      },
+                      "quiet" : {
+                        "type" : "number",
+                        "format" : "float",
+                        "example" : 0.8,
+                        "description" : "Specifies the Quiet factor for foot-* profiles.\n\nfactor: Values range from 0 to 1. 0 equals normal routing. 1 will prefer quiet ways over a shorter route. CUSTOM_KEYS:{'validWhen':{'ref':'profile','value':['foot-*']}}"
+                      },
+                      "steepness_difficulty" : {
+                        "type" : "integer",
+                        "format" : "int32",
+                        "example" : 2,
+                        "description" : "Specifies the fitness level for `cycling-*` profiles.\n\n level: 0 = Novice, 1 = Moderate, 2 = Amateur, 3 = Pro. The prefered gradient increases with level. CUSTOM_KEYS:{'validWhen':{'ref':'profile','value':['cycling-*']}}"
+                      }
+                    }
+                  }
+                }
+              },
+              "vehicle_type" : {
+                "type" : "string",
+                "description" : "(for profile=driving-hgv only): hgv,bus,agricultural,delivery,forestry and goods. It is needed for vehicle restrictions to work. CUSTOM_KEYS:{'validWhen':{'ref':'profile','value':['driving-hgv']}}",
+                "enum" : [ "hgv", "bus", "agricultural", "delivery", "forestry", "goods", "unknown" ]
+              }
+            }
+          }, {
+            "type" : "object",
+            "description" : "The JSON body request sent to the routing service which defines options and parameters regarding the route to generate.",
+            "title" : "Directions Service",
+            "properties" : {
+              "attributes" : {
+                "type" : "array",
+                "example" : [ "avgspeed", "percentage" ],
+                "description" : "List of route attributes",
+                "items" : {
+                  "type" : "string",
+                  "enum" : [ "avgspeed", "detourfactor", "percentage" ]
+                }
+              },
+              "bearings" : {
+                "type" : "array",
+                "example" : [ [ 30, 20 ], [ ], [ 40, 20 ] ],
+                "description" : "Specifies a list of pairs (bearings and deviations) to filter the segments of the road network a waypoint can snap to. For example `bearings=[[45,10],[120,20]]`. \nEach pair is a comma-separated list that can consist of one or two float values, where the first value is the bearing and the second one is the allowed deviation from the bearing. The bearing can take values between `0` and `360` clockwise from true north. If the deviation is not set, then the default value of `100` degrees is used. The number of pairs must correspond to the number of waypoints.\nThe number of bearings corresponds to the length of waypoints-1 or waypoints. If the bearing information for the last waypoint is given, then this will control the sector from which the destination waypoint may be reached. You can skip a bearing for a certain waypoint by passing an empty value for an array, e.g. `[30,20],[],[40,20]`. CUSTOM_KEYS:{'validWhen':{'ref':'profile','value':'cycling-*'}}",
+                "items" : {
+                  "type" : "array",
+                  "items" : {
+                    "type" : "number",
+                    "format" : "double"
+                  }
+                }
+              },
+              "continue_straight" : {
+                "type" : "boolean",
+                "example" : false,
+                "description" : "Forces the route to keep going straight at waypoints restricting uturns there even if it would be faster. This setting will work for all profiles except for `driving-*`. CUSTOM_KEYS:{'apiDefault':'true','validWhen':{'ref':'profile','valueNot':['driving-*']}}"
+              },
+              "coordinates" : {
+                "type" : "array",
+                "example" : [ [ 8.681495, 49.41461 ], [ 8.686507, 49.41943 ], [ 8.687872, 49.420318 ] ],
+                "description" : "The waypoints to use for the route as an array of `longitude/latitude` pairs",
+                "items" : {
+                  "type" : "array",
+                  "items" : {
+                    "type" : "number",
+                    "format" : "double"
+                  }
+                }
+              },
+              "elevation" : {
+                "type" : "boolean",
+                "example" : false,
+                "description" : "Specifies whether to return elevation values for points. Please note that elevation also gets encoded for json response encoded polyline."
+              },
+              "extra_info" : {
+                "type" : "array",
+                "example" : [ "waytype", "surface" ],
+                "description" : "The extra info items to include in the response",
+                "items" : {
+                  "type" : "string",
+                  "enum" : [ "steepness", "suitability", "surface", "waycategory", "waytype", "tollways", "traildifficulty", "osmid", "roadaccessrestrictions", "countryinfo" ]
+                }
+              },
+              "geometry" : {
+                "type" : "boolean",
+                "example" : true,
+                "description" : "Specifies whether to return geometry. CUSTOM_KEYS:{'apiDefault':true, 'validWhen':{'ref':'format','value':['json']}}"
+              },
+              "geometry_simplify" : {
+                "type" : "boolean",
+                "example" : false,
+                "description" : "Specifies whether to simplify the geometry. Simplify geometry cannot be applied to routes with more than **one segment** and when `extra_info` is required.CUSTOM_KEYS:{'apiDefault':false}"
+              },
+              "id" : {
+                "type" : "string",
+                "example" : "routing_request",
+                "description" : "Arbitrary identification string of the request reflected in the meta information."
+              },
+              "instructions" : {
+                "type" : "boolean",
+                "example" : true,
+                "description" : "Specifies whether to return instructions. CUSTOM_KEYS:{'apiDefault':true}"
+              },
+              "instructions_format" : {
+                "type" : "string",
+                "example" : "text",
+                "description" : "Select html for more verbose instructions. CUSTOM_KEYS:{'apiDefault':'text'}",
+                "enum" : [ "html", "text" ]
+              },
+              "language" : {
+                "type" : "string",
+                "example" : "en",
+                "description" : "Language for the route instructions. CUSTOM_KEYS:{'apiDefault':'en'}",
+                "enum" : [ "de", "en", "en-us", "es", "fr", "gr", "hu", "it", "ne", "nl", "pt", "ru", "zh-cn" ]
+              },
+              "maneuvers" : {
+                "type" : "boolean",
+                "example" : false,
+                "description" : "Specifies whether the maneuver object is included into the step object or not. CUSTOM_KEYS:{'apiDefault':false}"
+              },
+              "options" : {
+                "type" : "object",
+                "example" : {
+                  "maximum_speed" : 100
+                },
+                "description" : "For advanced options formatted as json object. For structure refer to the [these examples](https://github.com/GIScience/openrouteservice-docs#examples).",
+                "title" : "Route Options",
+                "properties" : {
+                  "avoid_borders" : {
+                    "type" : "string",
+                    "description" : "`all` for no border crossing. `controlled` to cross open borders but avoid controlled ones. Only for `driving-*` profiles. CUSTOM_KEYS:{'validWhen':{'ref':'profile','value':['driving-*']}}",
+                    "enum" : [ "all", "controlled", "none" ]
+                  },
+                  "avoid_countries" : {
+                    "type" : "array",
+                    "example" : [ 11, 193 ],
+                    "description" : "List of countries to exclude from routing with `driving-*` profiles. Can be used together with `'avoid_borders': 'controlled'`. `[ 11, 193 ]` would exclude Austria and Switzerland. List of countries and application examples can be found [here](https://github.com/GIScience/openrouteservice-docs#country-list). Also, ISO standard country codes cna be used in place of the numerical ids, for example, DE or DEU for Germany. CUSTOM_KEYS:{'validWhen':{'ref':'profile','value':['driving-*']}}",
+                    "items" : {
+                      "type" : "string"
+                    }
+                  },
+                  "avoid_features" : {
+                    "type" : "array",
+                    "description" : "List of features to avoid. CUSTOM_KEYS:{'itemRestrictions':{'ref':'profile', 'itemsWhen':{'driving-*':['highways','tollways','ferries'],'cycling-*':['ferries','steps','fords'],'foot-*':['ferries','fords','steps'],'wheelchair':['ferries','steps']}}}",
+                    "items" : {
+                      "type" : "string",
+                      "enum" : [ "highways", "tollways", "ferries", "fords", "steps" ]
+                    }
+                  },
+                  "avoid_polygons" : {
+                    "type" : "object",
+                    "description" : "Comprises areas to be avoided for the route. Formatted in GeoJSON as either a Polygon or Multipolygon object.",
+                    "additionalProperties" : {
+                      "type" : "object",
+                      "properties" : { }
+                    }
+                  },
+                  "profile_params" : {
+                    "type" : "object",
+                    "description" : " Specifies additional routing parameters.",
+                    "title" : "Profile Parameters",
+                    "properties" : {
+                      "restrictions" : {
+                        "type" : "object",
+                        "description" : "Describe restrictions to be applied to edges on the routing. any edges that do not match these restrictions are not traversed.",
+                        "title" : "Restrictions",
+                        "properties" : {
+                          "axleload" : {
+                            "type" : "number",
+                            "format" : "float",
+                            "example" : 50.0,
+                            "description" : "Axleload restriction in tons. CUSTOM_KEYS:{'validWhen':{'ref':'profile','value':['driving-hgv']}}"
+                          },
+                          "hazmat" : {
+                            "type" : "boolean",
+                            "description" : "Specifies whether to use appropriate routing for delivering hazardous goods and avoiding water protected areas. Default is `false`. CUSTOM_KEYS:{'apiDefault':false,'validWhen':{'ref':'profile','value':['driving-hgv']}}"
+                          },
+                          "height" : {
+                            "type" : "number",
+                            "format" : "float",
+                            "example" : 4.2,
+                            "description" : "Height restriction in metres. CUSTOM_KEYS:{'validWhen':{'ref':'profile','value':['driving-hgv']}}"
+                          },
+                          "length" : {
+                            "type" : "number",
+                            "format" : "float",
+                            "example" : 8.4,
+                            "description" : "Length restriction in metres. CUSTOM_KEYS:{'validWhen':{'ref':'profile','value':['driving-hgv']}}"
+                          },
+                          "maximum_incline" : {
+                            "type" : "integer",
+                            "format" : "int32",
+                            "example" : 3,
+                            "description" : "Specifies the maximum incline as a percentage. `3`, `6` (default), `10`, `15.CUSTOM_KEYS:{'apiDefault':6,'validWhen':{'ref':'profile','value':['wheelchair']}}"
+                          },
+                          "maximum_sloped_kerb" : {
+                            "type" : "number",
+                            "format" : "float",
+                            "example" : 0.03,
+                            "description" : "Specifies the maximum height of the sloped curb in metres. Values are `0.03`, `0.06` (default), `0.1`.CUSTOM_KEYS:{'apiDefault':0.6,'validWhen':{'ref':'profile','value':['wheelchair']}}"
+                          },
+                          "minimum_width" : {
+                            "type" : "number",
+                            "format" : "float",
+                            "example" : 2.5,
+                            "description" : "Specifies the minimum width of the footway in metres.CUSTOM_KEYS:{'validWhen':{'ref':'profile','value':['wheelchair']}}"
+                          },
+                          "smoothness_type" : {
+                            "type" : "string",
+                            "example" : "best",
+                            "description" : "Specifies the minimum smoothness of the route. Default is `good`.CUSTOM_KEYS:{'apiDefault':'good','validWhen':{'ref':'profile','value':['wheelchair']}}"
+                          },
+                          "surface_type" : {
+                            "type" : "string",
+                            "example" : "asphalt",
+                            "description" : "Specifies the minimum surface type. Default is `cobblestone:flattened`. CUSTOM_KEYS:{'apiDefault':'cobblestone:flattened','validWhen':{'ref':'profile','value':['wheelchair']}}"
+                          },
+                          "track_type" : {
+                            "type" : "string",
+                            "example" : "grade2",
+                            "description" : "Specifies the minimum grade of the route. Default is `grade1`. CUSTOM_KEYS:{'apiDefault':'grade1','validWhen':{'ref':'profile','value':['wheelchair']}}"
+                          },
+                          "weight" : {
+                            "type" : "number",
+                            "format" : "float",
+                            "example" : 40.0,
+                            "description" : "Weight restriction in tons. CUSTOM_KEYS:{'validWhen':{'ref':'profile','value':['driving-hgv']}}"
+                          },
+                          "width" : {
+                            "type" : "number",
+                            "format" : "float",
+                            "example" : 5.6,
+                            "description" : "Width restriction in metres. CUSTOM_KEYS:{'validWhen':{'ref':'profile','value':['driving-hgv']}}"
+                          }
+                        }
+                      },
+                      "weightings" : {
+                        "type" : "object",
+                        "description" : "Describe additional weightings to be applied to edges on the routing.",
+                        "title" : "Profile Weightings",
+                        "properties" : {
+                          "green" : {
+                            "type" : "number",
+                            "format" : "float",
+                            "example" : 0.4,
+                            "description" : "Specifies the Green factor for `foot-*` profiles.\n\nfactor: Values range from 0 to 1. 0 equals normal routing. 1 will prefer ways through green areas over a shorter route. CUSTOM_KEYS:{'validWhen':{'ref':'profile','value':['foot-*']}}"
+                          },
+                          "quiet" : {
+                            "type" : "number",
+                            "format" : "float",
+                            "example" : 0.8,
+                            "description" : "Specifies the Quiet factor for foot-* profiles.\n\nfactor: Values range from 0 to 1. 0 equals normal routing. 1 will prefer quiet ways over a shorter route. CUSTOM_KEYS:{'validWhen':{'ref':'profile','value':['foot-*']}}"
+                          },
+                          "steepness_difficulty" : {
+                            "type" : "integer",
+                            "format" : "int32",
+                            "example" : 2,
+                            "description" : "Specifies the fitness level for `cycling-*` profiles.\n\n level: 0 = Novice, 1 = Moderate, 2 = Amateur, 3 = Pro. The prefered gradient increases with level. CUSTOM_KEYS:{'validWhen':{'ref':'profile','value':['cycling-*']}}"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "vehicle_type" : {
+                    "type" : "string",
+                    "description" : "(for profile=driving-hgv only): hgv,bus,agricultural,delivery,forestry and goods. It is needed for vehicle restrictions to work. CUSTOM_KEYS:{'validWhen':{'ref':'profile','value':['driving-hgv']}}",
+                    "enum" : [ "hgv", "bus", "agricultural", "delivery", "forestry", "goods", "unknown" ]
+                  }
+                }
+              },
+              "preference" : {
+                "type" : "string",
+                "example" : "fastest",
+                "description" : "Specifies the route preference. CUSTOM_KEYS:{'apiDefault':'fastest'}",
+                "enum" : [ "fastest", "shortest", "recommended" ]
+              },
+              "radiuses" : {
+                "type" : "array",
+                "example" : [ 200, -1, 30 ],
+                "description" : "A pipe list of maximum distances (measured in metres) that limit the search of nearby road segments to every given waypoint. The values must be greater than 0, the value of -1 specifies no limit in the search. The number of radiuses correspond to the number of waypoints.",
+                "items" : {
+                  "type" : "number",
+                  "format" : "double"
+                }
+              },
+              "roundabout_exits" : {
+                "type" : "boolean",
+                "example" : false,
+                "description" : "Provides bearings of the entrance and all passed roundabout exits. Adds the `exit_bearings` array to the step object in the response. CUSTOM_KEYS:{'apiDefault':false}"
+              },
+              "skip_segments" : {
+                "type" : "array",
+                "example" : [ 2, 4 ],
+                "description" : "Specifies the segments that should be skipped in the route calculation. A segment is the connection between two given coordinates and the counting starts with 1 for the connection between the first and second coordinate.",
+                "items" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              },
+              "suppress_warnings" : {
+                "type" : "boolean",
+                "example" : false,
+                "description" : "Suppress warning messages in the response"
+              },
+              "units" : {
+                "type" : "string",
+                "example" : "m",
+                "description" : "Specifies the distance unit. CUSTOM_KEYS:{'apiDefault':'m'}",
+                "enum" : [ "m", "km", "mi" ]
+              }
+            },
+            "required" : [ "coordinates" ]
+          } ]
+        },
+        "service" : {
+          "type" : "string",
+          "example" : "routing",
+          "description" : "The service that was requested"
+        },
+        "timestamp" : {
+          "type" : "integer",
+          "format" : "int64",
+          "example" : 1549549847974,
+          "description" : "Time that the request was made (UNIX Epoch time)"
+        }
+      },
+      "description" : "Information about the request"
+    },
+    "GeoJSONRouteResponse" : {
+      "properties" : {
+        "bbox" : {
+          "type" : "array",
+          "example" : [ 49.414057, 8.680894, 49.420514, 8.690123 ],
+          "description" : "Bounding box that covers all returned routes",
+          "items" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        },
+        "features" : {
+          "type" : "array",
+          "items" : {
+            "type" : "object",
+            "properties" : { }
+          }
+        },
+        "metadata" : {
+          "$ref" : "#/definitions/RouteResponseInfo"
+        },
+        "type" : {
+          "type" : "string"
+        }
+      }
+    }
+  }
+}

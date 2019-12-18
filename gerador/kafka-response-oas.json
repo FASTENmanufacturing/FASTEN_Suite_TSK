@@ -1,0 +1,64 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "Open API Specification REST for FASTEN Holistic Simulator-Optimizer Tool",
+    "version" : "0.0.1-SNAPSHOT",
+    "title" : "Kafka Response OAS",
+    "termsOfService" : "urn:tos",
+    "contact" : {
+      "name" : "Flexible and Autonomous Manufacturing Systems for Custom-Designed Products",
+      "url" : "http://www.fastenmanufacturing.eu",
+      "email" : "Fasten-wp4@lists.inesctec.pt"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "host" : "localhost:8087",
+  "basePath" : "/fhsot/rest",
+  "tags" : [ {
+    "name" : "kafka-response-controller",
+    "description" : "KafkaResponseController"
+  } ],
+  "schemes" : [ "http" ],
+  "consumes" : [ "application/json" ],
+  "produces" : [ "application/json" ],
+  "paths" : {
+    "/kafka/{topicName}" : {
+      "get" : {
+        "tags" : [ "kafka-response-controller" ],
+        "parameters" : [ {
+          "name" : "topicName",
+          "in" : "path",
+          "description" : "topicName",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "return_historical_demand"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "201" : {
+            "description" : "Created"
+          },
+          "204" : {
+            "description" : "No Content"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        },
+        "deprecated" : false
+      }
+    }
+  },
+  "definitions" : { }
+}

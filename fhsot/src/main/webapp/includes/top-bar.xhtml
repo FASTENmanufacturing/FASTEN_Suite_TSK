@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <style type="text/css">
+        #layout-menu_menu {
+            z-index: 9997!important;
+        }
+        #layout-menu_menu span.ui-menuitem-text {
+            margin-left: 2px;
+        }
+		.ptBR {
+		    border: none;
+		    width: 32px;
+		    height: 22px;
+		    padding: 0px;
+		    margin: 0px 2px 0px 2px;
+/* 		    background: url(#{resource[ 'images:ptBR.png' ]}) no-repeat center center; */
+		}
+		.en {
+		    border: none;
+		    width: 32px;
+		    height: 22px;
+		    padding: 0px;
+		    margin: 0px 2px 0px 2px;
+/* 		    background: url(#{resource[ 'images:en.png' ]}) no-repeat center center; */
+		}
+		.nav>li>form {
+		    position: relative;
+		    display: block;
+		    padding: 13px 10px 10px 10px;
+		}
+    </style>
+    <ul class="nav navbar-nav">
+        <li class="hidden hidden-xs hidden-sm">
+            <h:form prependId="false">
+                <p:menuButton value="Layout" style="margin:10px 10px 0 0 " id="layout-menu">
+                    <p:menuitem value="Left menu (default)" disabled="#{layoutMB.leftMenuTemplate}" onclick="toggleTemplate();return false" ajax="false" icon="fa fa-list-ul"/>
+                    <p:menuitem value="Top menu" disabled="#{not layoutMB.leftMenuTemplate}" onclick="toggleTemplate();return false" ajax="false" icon="fa fa-credit-card"/>
+                </p:menuButton>
+            </h:form>
+        </li>
+        <li class="dropdown user user-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <p:graphicImage value="#{resource[ 'images:profile-logo-small.png' ]}" style="width:19px; border-radius: 50%"/>
+                <span class="hidden-xs">#{logonMB.currentUser}</span>
+            </a>
+            <ul class="dropdown-menu">
+                <li class="user-header">
+                    <div class="hidden-xs">
+                        <p:graphicImage value="#{resource[ 'images:profile-logo.png' ]}" style="background-color:white; border-radius: 50%"/>
+                    </div>
+                    <p>
+                        #{logonMB.currentUser}
+                        <small>Flexible and Autonomous Manufacturing System for Custom-Designed Products</small>
+                    </p>
+                </li>
+                <li class="hidden user-footer">
+                    <h:form prependId="false">
+                        <div class="pull-left">
+                            <p:commandLink styleClass="btn btn-danger" value="Change password"/>
+                        </div>
+                        <div class="pull-right">
+                            <p:commandLink id="logout" action="#{logoutMB.doLogout}" title="Logoff">
+                                <i class="fa fa-sign-out fa-2x"></i>
+                            </p:commandLink>
+                        </div>
+                    </h:form>
+                </li>
+            </ul>
+        </li>
+		<li>
+			<h:form>
+                            <p:commandButton value="Pt" styleClass="btn-info bg-blue btn-xs"	
+	                                 actionListener="#{localeMB.setPortuguese}"
+	                                 immediate="true"/>
+                            <p:commandButton value="En" styleClass="btn-info bg-blue btn-xs"
+	                                 actionListener="#{localeMB.setEnglish}"
+	                                 immediate="true"/>
+             </h:form>
+        </li>
+        <li>
+            <p:link outcome="/kafka-form" styleClass="btn-info bg-blue btn-xs">
+                <i class="fa fa-cloud-download"></i>
+                <span>IoT</span>
+            </p:link>
+        </li>
+        <li class="hidden">
+            <a id="layout-setup" href="#" class="#{adminConfig.controlSidebar.showOnMobile ? '':'hidden-sm hidden-xs'}" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+        </li>
+
+    </ul>
+
+
+</ui:composition>

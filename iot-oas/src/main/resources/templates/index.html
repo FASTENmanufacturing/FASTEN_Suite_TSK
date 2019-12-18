@@ -1,0 +1,155 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+	<head>
+		<meta charset="utf-8"/>
+		<!-- css -->
+		<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
+		<title>Iot Manager</title>
+	</head>
+	<body>
+		<nav th:replace="layout/navbar :: navbar"></nav>
+		<div class="container">
+			<div class="row" style="margin-top:50px">
+				<div class="col-sm-12">
+					<h2><img id="j_idt111" src="http://ec2-52-67-103-59.sa-east-1.compute.amazonaws.com:8080/fhsot/javax.faces.resource/IoT.png.xhtml?ln=images&pfdrid_c=true" alt="" style="width: 50px;">
+					 &nbsp; IoT Manager</h2>
+				</div>
+			</div>
+			<div class="row" style="margin-top: 20px;">
+			<div class="col-sm-12">
+					<div class="card" >
+						<div class="card-body">
+							<h5 class="card-title">Topics</h5>
+							<div th:switch="${topics}">
+								<p th:case="null" class="card-text">No topics yet!</p>
+								<div th:case="*">
+									<div class="card-header">Topics Managment</div>
+									<table  class="table">
+						                <thead>
+						                    <tr>
+						                     	<th scope="col">#</th>
+						                        <th scope="col">Name</th>
+						                        <th scope="col">Enabled</th>
+<!-- 						                        <th scope="col">Edit</th> -->
+<!-- 						                        <th scope="col">Delete</th> -->
+<!-- 						                        <th scope="col">Enable/Disable</th> -->
+						                    </tr>
+						                </thead>
+						                <tbody>
+							                <tr th:each="topic : ${topics}">
+							                	<th th:text="${topic.id}" scope="row"></th>
+							                    <td th:text="${topic.name}"></td>
+							                    <td th:text="${topic.enabled}"></td>
+<!-- 							                    <td><a th:href="@{/edit/{id}(id=${topic.id})}">Edit</a></td> -->
+<!-- 							                    <td><a th:href="@{/delete/{id}(id=${topic.id})}">Delete</a></td> -->
+<!-- 							                    <td><a th:href="@{/toggle/{id}(id=${topic.id})}">On/Off</a></td> -->
+							                </tr>
+						            	</tbody>
+						        	</table>
+								</div>
+<!-- 								<p><a href="/signup">Add a new topic</a></p> -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row" style="margin-top: 20px;">
+			<div class="col-sm-12">
+					<div class="card" >
+						<div class="card-body">
+							<h5 class="card-title">Consumers</h5>
+							<div th:switch="${listners}">
+								<p th:case="null" class="card-text">No listners yet!</p>
+								<div th:case="*">
+									<div class="card-header">Listner Managment</div>
+									<table  class="table">
+						                <thead>
+						                    <tr>
+						                     	<th scope="col">#</th>
+						                        <th scope="col">Name</th>
+						                        <th scope="col">Topic</th>
+						                        <th scope="col">Enabled</th>
+<!-- 						                        <th scope="col">Edit</th> -->
+<!-- 						                        <th scope="col">Delete</th> -->
+						                        <th scope="col">Enable/Disable</th>
+						                    </tr>
+						                </thead>
+						                <tbody>
+							                <tr th:each="listner : ${listners}">
+							                	<th th:text="${listner.id}" scope="row"></th>
+							                    <td th:text="${listner.name}"></td>
+							                    <td th:text="${listner.topic.name}"></td>
+							                    <td th:text="${listner.enabled}"></td>
+<!-- 							                    <td><a th:href="@{/edit/{id}(id=${topic.id})}">Edit</a></td> -->
+<!-- 							                    <td><a th:href="@{/delete/{id}(id=${topic.id})}">Delete</a></td> -->
+							                    <td><a th:href="@{/listner/toggle/{id}(id=${listner.id})}">On/Off</a></td>
+							                </tr>
+						            	</tbody>
+						        	</table>
+								</div>
+<!-- 								<p><a href="/signup">Add a new listner</a></p> -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row" style="margin-top: 20px;">
+			<div class="col-sm-12">
+					<div class="card" >
+						<div class="card-body">
+							<h5 class="card-title">Producers</h5>
+							<div th:switch="${producers}">
+								<p th:case="null" class="card-text">No producers yet!</p>
+								<div th:case="*">
+									<div class="card-header">Senders Managment</div>
+									<table  class="table">
+						                <thead>
+						                    <tr>
+						                     	<th scope="col">#</th>
+						                        <th scope="col">Name</th>
+						                        <th scope="col">Topic</th>
+						                        <th scope="col">Enabled</th>
+						                        <th scope="col">Interval</th>
+						                        <th scope="col">Initial delay</th>
+<!-- 						                        <th scope="col">Edit</th> -->
+<!-- 						                        <th scope="col">Delete</th> -->
+						                        <th scope="col">Enable/Disable</th>
+						                    </tr>
+						                </thead>
+						                <tbody>
+							                <tr th:each="producer : ${producers}">
+							                	<th th:text="${producer.id}" scope="row"></th>
+							                    <td th:text="${producer.name}"></td>
+							                    <td th:text="${producer.topic.name}"></td>
+							                    <td th:text="${producer.enabled}"></td>
+							                    <td th:text="${producer.interval}"></td>
+							                    <td th:text="${producer.initialDelay}"></td>
+<!-- 							                    <td><a th:href="@{/edit/{id}(id=${topic.id})}">Edit</a></td> -->
+<!-- 							                    <td><a th:href="@{/delete/{id}(id=${topic.id})}">Delete</a></td> -->
+							                    <td><a th:href="@{/producer/toggle/{id}(id=${producer.id})}">On/Off</a></td>
+							                </tr>
+						            	</tbody>
+						        	</table>
+								</div>
+<!-- 								<p><a href="/signup">Add a new producer</a></p> -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row" style="margin-top: 20px;">
+				&nbsp;
+			</div>
+			<div style="margin-top:10px" class="text-mute small fixed-bottom mt-2">
+				<span>This project has received funding from the <span class="text-primary" > European Union’s Horizon 2020 </span> research and innovation programme under grant agreement 777096.  </span>
+			</div>
+		</div>
+		<!-- js -->
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+		<script th:src="@{/js/notify.min.js}"></script>
+		<script th:inline="javascript" th:replace="lib/context :: context"></script>
+		<script th:src="@{/js/index.js}"></script>
+	</body>
+</html>

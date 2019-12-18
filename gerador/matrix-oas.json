@@ -1,0 +1,283 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "This is the openrouteservice API V2 documentation for ORS Core-Version `5.0.0`. Documentations for [older Core-Versions](https://github.com/GIScience/openrouteservice-docs/releases) can be rendered with the [Swagger-Editor](https://editor.swagger.io/).",
+    "version" : "5.0.0",
+    "title" : "OpenRouteService",
+    "contact" : {
+      "email" : "info@openrouteservice.org"
+    },
+    "license" : {
+      "name" : "MIT",
+      "url" : "https://github.com/swagger-api/swagger-ui/blob/master/LICENSE"
+    }
+  },
+  "host" : "api.openrouteservice.org",
+  "basePath" : "/",
+  "tags" : [ {
+    "name" : "Matrix",
+    "description" : "Obtain one-to-many, many-to-one and many-to-many matrices for time and distance"
+  } ],
+  "schemes" : [ "https" ],
+  "produces" : [ "application/vnd.geo+json", "application/json; charset=utf-8", "application/gpx+xml, img/png; charset=utf-8" ],
+  "security" : [ {
+    "api_key-Parameter" : [ ]
+  } ],
+  "paths" : {
+    "/v2/matrix/{profile}" : {
+      "post" : {
+        "tags" : [ "Matrix" ],
+        "summary" : "Matrix Service",
+        "description" : "Returns duration or distance matrix for mutliple source and destination points.\nBy default a symmetric duration matrix is returned where every point in locations is paired with each other. The result is null if a value can’t be determined.",
+        "operationId" : "getDefaultUsingPOST",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json;charset=UTF-8", "application/json" ],
+        "parameters" : [ {
+          "name" : "profile",
+          "in" : "path",
+          "description" : "Specifies the matrix profile.",
+          "required" : true,
+          "type" : "string",
+          "x-example" : "driving-car",
+          "enum" : [ "driving-car", "driving-hgv", "cycling-regular", "cycling-road", "cycling-mountain", "cycling-electric", "foot-walking", "foot-hiking", "wheelchair" ]
+        }, {
+          "in" : "body",
+          "name" : "request",
+          "description" : "The request payload",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/MatrixRequest"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Standard response for successfully processed requests. Returns JSON.",
+            "schema" : {
+              "$ref" : "#/definitions/JSONMatrixResponse"
+            }
+          },
+          "201" : {
+            "description" : "Created"
+          },
+          "400" : {
+            "description" : "The request is incorrect and therefore can not be processed."
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "403" : {
+            "description" : "Forbidden"
+          },
+          "404" : {
+            "description" : "An element could not be found. If possible, a more detailed error code is provided."
+          },
+          "405" : {
+            "description" : "The specified HTTP method is not supported. For more details, refer to the EndPoint documentation."
+          },
+          "413" : {
+            "description" : "The request is larger than the server is able to process, the data provided in the request exceeds the capacity limit."
+          },
+          "500" : {
+            "description" : "An unexpected error was encountered and a more detailed error code is provided."
+          },
+          "501" : {
+            "description" : "Indicates that the server does not support the functionality needed to fulfill the request."
+          },
+          "503" : {
+            "description" : "The server is currently unavailable due to overload or maintenance."
+          }
+        },
+        "deprecated" : false
+      }
+    }
+  },
+  "securityDefinitions" : {
+    "api_key-Parameter" : {
+      "description" : "For GET requests add your API Key as the value of the api_key parameter",
+      "type" : "apiKey",
+      "name" : "api_key",
+      "in" : "query"
+    },
+    "Authorization-Header" : {
+      "description" : "For POST requests add your API Key as the value of the `Authorization` header.\n",
+      "type" : "apiKey",
+      "name" : "Authorization",
+      "in" : "header"
+    }
+  },
+  "definitions" : {
+    "MatrixRequest" : {
+      "type" : "object",
+      "required" : [ "locations" ],
+      "properties" : {
+        "destinations" : {
+          "type" : "array",
+          "description" : "A list of indices that refers to the list of locations (starting with `0`). `{index_1},{index_2}[,{index_N} ...]` or `all` (default). `[0,3]` for the first and fourth locations CUSTOM_KEYS:{'apiDefault':['all']}",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "id" : {
+          "type" : "string",
+          "example" : "matrix_request",
+          "description" : "Arbitrary identification string of the request reflected in the meta information."
+        },
+        "locations" : {
+          "type" : "array",
+          "example" : [ [ 9.70093, 48.477473 ], [ 9.207916, 49.153868 ], [ 37.573242, 55.801281 ], [ 115.663757, 38.106467 ] ],
+          "description" : "List of comma separated lists of `longitude,latitude` coordinates.",
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "type" : "number",
+              "format" : "double"
+            }
+          }
+        },
+        "metrics" : {
+          "type" : "array",
+          "description" : "Specifies a list of returned metrics.\n* `distance` - Returns distance matrix for specified points in defined `units`.\n* `duration` - Returns duration matrix for specified points in **seconds**. CUSTOM_KEYS:{'apiDefault':'duration'}",
+          "items" : {
+            "type" : "string",
+            "enum" : [ "distance", "duration" ]
+          }
+        },
+        "resolve_locations" : {
+          "type" : "boolean",
+          "description" : "Specifies whether given locations are resolved or not. If the parameter value set to `true`, every element in `destinations` and `sources` will contain a `name` element that identifies the name of the closest street. Default is `false`. CUSTOM_KEYS:{'apiDefault':false}"
+        },
+        "sources" : {
+          "type" : "array",
+          "description" : "A list of indices that refers to the list of locations (starting with `0`). `{index_1},{index_2}[,{index_N} ...]` or `all` (default). example `[0,3]` for the first and fourth locations CUSTOM_KEYS:{'apiDefault':['all']}",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "units" : {
+          "type" : "string",
+          "description" : "Specifies the distance unit.\nDefault: m. CUSTOM_KEYS:{'apiDefault':'m','validWhen':{'ref':'metrics','value':'distance'}`}",
+          "enum" : [ "m", "km", "mi" ]
+        }
+      },
+      "description" : "The JSON body request sent to the matrix service which defines options and parameters regarding the matrix to generate."
+    },
+    "JSONMatrixResponse" : {
+      "type" : "object",
+      "properties" : {
+        "destinations" : {
+          "type" : "array",
+          "description" : "The individual destinations of the matrix calculations.",
+          "items" : {
+            "$ref" : "#/definitions/JSON2DDestinations"
+          }
+        },
+        "distances" : {
+          "type" : "array",
+          "example" : [ [ 0, 0.25 ], [ 0.25, 0 ] ],
+          "description" : "The distances of the matrix calculations.",
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "type" : "number",
+              "format" : "double"
+            }
+          }
+        },
+        "durations" : {
+          "type" : "array",
+          "example" : [ [ 0, 25 ], [ 25, 0 ] ],
+          "description" : "The durations of the matrix calculations.",
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "type" : "number",
+              "format" : "double"
+            }
+          }
+        },
+        "metadata" : {
+          "$ref" : "#/definitions/JSONMatrixResponse_metadata"
+        },
+        "sources" : {
+          "type" : "array",
+          "description" : "The individual sources of the matrix calculations.",
+          "items" : {
+            "$ref" : "#/definitions/JSON2DDestinations"
+          }
+        }
+      },
+      "title" : "JSONMatrixResponse",
+      "description" : "The Matrix Response contains one matrix for each specified `metrics` value."
+    },
+    "JSON2DDestinations" : {
+      "properties" : {
+        "location" : {
+          "type" : "array",
+          "example" : [ 8.678962, 49.40783 ],
+          "description" : "{longitude},{latitude} coordinates of the closest accessible point on the routing graph",
+          "items" : {
+            "type" : "number",
+            "format" : "double"
+          }
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "Bergheimer Straße",
+          "description" : "Name of the street the closest accessible point is situated on. Only for `resolve_locations=true` and only if name is available.CUSTOM_KEYS:{'validWhen':{'ref':'resolve_locations','value':true}}"
+        },
+        "snapped_distance" : {
+          "type" : "number",
+          "format" : "double",
+          "example" : 1.2,
+          "description" : "Distance between the `source/destination` Location and the used point on the routing graph."
+        }
+      }
+    },
+    "EngineInfo" : {
+      "properties" : {
+        "build_date" : {
+          "type" : "string",
+          "format" : "date-time",
+          "example" : "2019-02-07T14:28:11Z",
+          "description" : "The date that the service was last updated"
+        },
+        "version" : {
+          "type" : "string",
+          "example" : "5",
+          "description" : "The backend version of the openrouteservice that was queried"
+        }
+      },
+      "description" : "Information about the routing service"
+    },
+    "JSONMatrixResponse_metadata" : {
+      "properties" : {
+        "attribution" : {
+          "type" : "string",
+          "example" : "openrouteservice.org, OpenStreetMap contributors",
+          "description" : "Copyright and attribution information"
+        },
+        "engine" : {
+          "$ref" : "#/definitions/EngineInfo"
+        },
+        "id" : {
+          "type" : "string",
+          "example" : "request123",
+          "description" : "ID of the request (as passed in by the query)"
+        },
+        "osm_file_md5_hash" : {
+          "type" : "string",
+          "example" : "c0327ba6",
+          "description" : "The MD5 hash of the OSM planet file that was used for generating graphs"
+        },
+        "query" : {
+          "$ref" : "#/definitions/MatrixRequest"
+        },
+        "timestamp" : {
+          "type" : "string",
+          "format" : "date-time",
+          "description" : "Timestamp when the query was run"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui" xmlns:adm="http://github.com/adminfaces"
+                xmlns:of="http://omnifaces.org/functions"
+                template="#{layoutMB.template}">
+
+    <ui:define name="metadata">
+    	 <f:metadata>
+    	    <f:viewParam name="id" value="#{tacticalOptimizationValidateFormMB.id}" converter="javax.faces.Long"/>
+            <f:viewAction action="#{tacticalOptimizationValidateFormMB.init()}"/>
+        </f:metadata>
+	    </ui:define>
+    <ui:define name="title">
+    	<p:graphicImage value="#{resource[ 'images:validate-optimization-form-icon.png' ]}" style="width: 50px;"/>
+		<p:spacer width="5"/> 
+        Validate tactical optimization study
+    </ui:define>
+    <ui:define name="body">
+        <adm:breadcrumb title="#{tacticalOptimizationValidateFormMB.breadcum}" link="tactical-optimization-form.xhtml?id=#{tacticalOptimizationValidateFormMB.id}" />
+        <h:form id="form">
+            <p:focus context="@form"/>
+			<p:panel styleClass="box-primary card">
+				<div class="box-header with-border">
+				    <h3 class="box-title"> 
+			    			Study
+		   			</h3>
+				    <div class="box-tools pull-right">
+				      <span class="label label-primary">Optimization</span>
+				    </div>
+			  	</div>
+				<div class="ui-g ui-fluid">
+            	<div class="ui-sm-12 ui-g-6 ui-g-nopad">
+					<div class="ui-sm-12 ui-g-11">
+						<p:outputLabel for="name" value="Name" />
+					</div>
+					<div class="ui-sm-12 ui-g-11">
+						<p:inputText id="name" value="#{tacticalOptimizationValidateFormMB.tacticalOptimization.name}" readonly="true" styleClass="form-control ui-state-disabled" style="width: 100%; opacity: 1 !important;" />
+						<span class="help-block"> <p:message for="name" />
+						</span>
+					</div>
+				</div>
+				<div class="ui-sm-12 ui-g-12 ui-g-nopad">
+					<div class="ui-sm-12 ui-g-3">
+						<p:outputLabel value="Georeference candidate locations" />
+					</div>
+					<div class="ui-sm-12 ui-g-4" style="margin-bottom: 10px;">
+					    <div style="text-align: center;" class="ui-sm-12 ui-g-10 ui-g-nopad">
+						    <p:progressBar widgetVar="progressBarGeolocate" display="output" ajax="true" value="#{tacticalOptimizationValidateFormMB.progressGeolocateRemoteStations}" labelTemplate="{value}%" styleClass="animated" global="false">
+						        <p:ajax event="complete" listener="#{tacticalOptimizationValidateFormMB.onCompleteGeolocate}" update="geolocateRatio geolocateRemoteStationsStatus geolocateButton" />
+						    </p:progressBar>
+					    </div>
+					    <div class="ui-sm-12 ui-g-2 ui-g-nopad">
+					    	<h:panelGroup id="geolocateRatio"  style="text-align:center" layout="block" >
+							    <h:outputText id="candidatesWithCoordinates" value="#{tacticalOptimizationValidateFormMB.candidatesWithCoordinates}" />
+							    <h:outputText id="candidates" value=" / #{tacticalOptimizationValidateFormMB.candidates}" />
+						    </h:panelGroup>
+					    </div>
+					</div>
+					<div style="text-align: center;" class="ui-sm-12 ui-g-1">
+						<h:panelGroup id="geolocateRemoteStationsStatus" style="text-align:center" layout="block" >
+							<h:panelGroup rendered="#{tacticalOptimizationValidateFormMB.geolocateStatus eq 'proceeding'}"  style="text-align:center" layout="block" >
+						    	<span class="label label-info">Proceeding</span>
+					    	</h:panelGroup>
+	                        <h:panelGroup rendered="#{tacticalOptimizationValidateFormMB.geolocateStatus eq 'fail'}"  style="text-align:center" layout="block" >
+						    	<span class="label label-danger">Fail</span>
+					    	</h:panelGroup>
+	                        <h:panelGroup rendered="#{tacticalOptimizationValidateFormMB.geolocateStatus eq 'success'}" style="text-align:center" layout="block" >
+						    	<span class="label label-success">Ok</span>
+	                        </h:panelGroup>
+                        </h:panelGroup>
+					</div>
+					<div style="text-align: center;" class="ui-sm-12 ui-g-2 ui-g-nopad" >
+						<p:commandButton value="Geolocate" type="button" onclick="PF('progressBarGeolocate').start();PF('geolocateButton').disable();" disabled="#{tacticalOptimizationValidateFormMB.geolocateStatus eq 'success'}" widgetVar="geolocateButton" id="geolocateButton" icon="fa fa-check" styleClass="btn-primary" >
+							<p:ajax event="click" listener="#{tacticalOptimizationValidateFormMB.onClickGeolocate}" update="geolocateRemoteStationsStatus geolocateRatio" global="false"/>
+						</p:commandButton>
+					</div>
+				</div>
+				
+				
+				
+				<div class="ui-sm-12 ui-g-12 ui-g-nopad">
+					<div class="ui-sm-12 ui-g-3">
+						<p:outputLabel value="Update delivery info" />
+					</div>
+					<div class="ui-sm-12 ui-g-4" style="margin-bottom: 10px;">
+					    <div style="text-align: center;" class="ui-sm-12 ui-g-10 ui-g-nopad">
+						    <p:progressBar widgetVar="progressBarMatrix" display="output" ajax="true" value="#{tacticalOptimizationValidateFormMB.progressMatrixRemoteStations}" labelTemplate="{value}%" styleClass="animated" global="false">
+						        <p:ajax event="complete" listener="#{tacticalOptimizationValidateFormMB.onCompleteMatrix}" update="matrixRatio matrixRemoteStationsStatus matrixButton" />
+						    </p:progressBar>
+					    </div>
+					    <div class="ui-sm-12 ui-g-2 ui-g-nopad">
+					    	<h:panelGroup id="matrixRatio"  style="text-align:center" layout="block" >
+							    <h:outputText id="matrixWith" value="#{tacticalOptimizationValidateFormMB.matrixWith}" />
+							    <h:outputText id="matrix" value=" / #{tacticalOptimizationValidateFormMB.matrix}" />
+						    </h:panelGroup>
+					    </div>
+					</div>
+					<div style="text-align: center;" class="ui-sm-12 ui-g-1">
+						<h:panelGroup id="matrixRemoteStationsStatus" style="text-align:center" layout="block" >
+							<h:panelGroup rendered="#{tacticalOptimizationValidateFormMB.matrixStatus eq 'proceeding'}"  style="text-align:center" layout="block" >
+						    	<span class="label label-info">Proceeding</span>
+					    	</h:panelGroup>
+	                        <h:panelGroup rendered="#{tacticalOptimizationValidateFormMB.matrixStatus eq 'fail'}"  style="text-align:center" layout="block" >
+						    	<span class="label label-danger">Fail</span>
+					    	</h:panelGroup>
+	                        <h:panelGroup rendered="#{tacticalOptimizationValidateFormMB.matrixStatus eq 'success'}" style="text-align:center" layout="block" >
+						    	<span class="label label-success">Ok</span>
+	                        </h:panelGroup>
+                        </h:panelGroup>
+					</div>
+					<div style="text-align: center;" class="ui-sm-12 ui-g-2 ui-g-nopad" >
+						<p:commandButton value="Update" type="button" onclick="PF('progressBarMatrix').start();PF('matrixButton').disable();" disabled="#{tacticalOptimizationValidateFormMB.matrixStatus eq 'success'}" widgetVar="matrixButton" id="matrixButton" icon="fa fa-check" styleClass="btn-primary" >
+							<p:ajax event="click" listener="#{tacticalOptimizationValidateFormMB.onClickMatrix}" update="matrixRemoteStationsStatus matrixRatio" global="false"/>
+						</p:commandButton>
+					</div>
+				</div>
+				
+				
+				</div>
+			</p:panel>
+			<p:spacer height="15px"/>
+	        <h:panelGroup id="footer" layout="block">
+                <div id="main-buttons">
+	           		<p:commandButton value="Validate" action="#{tacticalOptimizationValidateFormMB.fireEvent}" update="@form"	
+		                            icon="fa fa-check" styleClass="btn-primary"/>
+	            </div>
+           </h:panelGroup>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

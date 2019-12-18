@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui" xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ul class="sidebar-menu tree" data-widget="tree">
+        <li>
+            <p:link outcome="/index" onclick="clearBreadCrumbs()">
+                <i class="fa fa-home"></i>
+                <span>#{adm['menu.item.index']}</span>
+            </p:link>
+        </li>
+        <li class="header">
+            #{adm['menu.header.studies']}
+        </li>
+        <li>
+            <p:link outcome="/prediction-list">
+                <i class="fa fa-search"></i>
+                <span>#{adm['menu.item.predictions']}</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link outcome="/tactical-optimization-list">
+                <i class="fa fa-connectdevelop"></i>
+                <span>#{adm['menu.item.optimizations']}</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link outcome="/operational-optimization-list">
+                <i class="fa fa-location-arrow"></i>
+                <span>#{adm['menu.item.operationaloptimizations']}</span>
+            </p:link>
+        </li>
+        <li>
+            <p:link outcome="/async-request-manager-list">
+                <i class="fa fa-cogs"></i>
+                <span>#{adm['menu.item.inexecution']}</span>
+            </p:link>
+        </li>
+        <li class="header">
+            #{adm['menu.header.results']}
+        </li>
+        <li class="treeview menu-close">
+          <p:link href="#">
+          	<i class="glyphicon glyphicon-paste"></i> 
+          	<span>#{adm['submenu.header.results']}</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </p:link>
+          <ul class="treeview-menu" style="display: none;">
+	        <li>
+	            <p:link outcome="/car-form">
+	                <i class="fa fa-share-alt"></i>
+	                <span>#{adm['menu.item.routes']}</span>
+	            </p:link>
+	        </li>
+	        <li>
+	            <p:link outcome="/car-form">
+	                <i class="fa fa-bullseye"></i>
+	                <span>#{adm['menu.item.allocatedprinters']}</span>
+	            </p:link>
+	        </li>
+	        <li>
+	            <p:link outcome="/car-form">
+	                <i class="fa fa-codepen"></i>
+	                <span>#{adm['menu.item.productions']}</span>
+	            </p:link>
+	        </li>
+	        <li>
+	            <p:link outcome="/car-form">
+	                <i class="fa fa-dropbox"></i>
+	                <span>#{adm['menu.item.internalsuppliers']}</span>
+	            </p:link>
+	        </li>
+	        <li>
+	            <p:link outcome="/car-form">
+	                <i class="fa fa-mail-reply-all"></i>
+	                <span>#{adm['menu.item.externalsuppliers']}</span>
+	            </p:link>
+	        </li>
+        </ul>
+        </li>
+        <li class="header">
+            #{adm['menu.header.input']}
+        </li>
+        <li class="treeview menu-close">
+          <p:link href="#">
+          	<i class="fa fa-cloud-download"></i> 
+          	<span>#{adm['submenu.header.input']}</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </p:link>
+          <ul class="treeview-menu" style="display: none;">
+	        <li>
+	            <p:link outcome="/demand-list">
+	                <i class="fa fa-map-marker"></i>
+	                <span>#{adm['menu.item.demands']}</span>
+	            </p:link>
+	        </li>
+	        <li>
+	            <p:link outcome="/delivery-list">
+	                <i class="fa fa-truck"></i>
+	                <span>#{adm['menu.item.delivery']}</span>
+	            </p:link>
+	        </li>
+	        <li>
+	            <p:link outcome="/processing-part-list">
+	                <i class="fa fa-industry"></i>
+	                <span>#{adm['menu.item.processingparts']}</span>
+	            </p:link>
+	        </li>
+	        <li>
+	            <p:link outcome="/part-list">
+	                <i class="fa fa-cubes"></i>
+	                <span>#{adm['menu.item.parts']}</span>
+	            </p:link>
+	        </li>
+	        <li>
+	            <p:link outcome="/sram-list">
+	                <i class="glyphicon glyphicon-object-align-horizontal fa-rotate-90"></i>
+	                <span>#{adm['menu.item.sram']}</span>
+	            </p:link>
+	        </li>
+	        <li>
+	            <p:link outcome="/remote-station-list">
+	                <i class="fa fa-desktop"></i>
+	                <span>#{adm['menu.item.remoteStation']}</span>
+	            </p:link>
+	        </li>
+          </ul>
+        </li>
+    </ul>
+</ui:composition>

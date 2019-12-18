@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui" xmlns:adm="http://github.com/adminfaces"
+                xmlns:of="http://omnifaces.org/functions"
+                xmlns:o="http://omnifaces.org/ui"
+                template="#{layoutMB.template}">
+	
+    
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="id" value="#{deliveryFormMB.id}" converter="javax.faces.Long"/>
+            <!-- use view action if you are in a Java EE 7 server: <f:viewAction action="#{deliveryFormMB.init()}"/>-->
+            <f:viewAction action="#{deliveryFormMB.init()}"/>
+        </f:metadata>
+        <ui:param name="renderAsterisks" value="true"/>
+    </ui:define>
+    <ui:define name="title">
+        #{adm['delivery']}
+    </ui:define>
+    <ui:define name="body">
+        <adm:breadcrumb title="#{deliveryFormMB.breadcum}" link="delivery-form.xhtml?id=#{deliveryFormMB.id}" />
+        <h:form id="form" >
+            <p:focus context="form:cost"/>
+            
+            <div class="ui-g ui-fluid">
+                    <div class="ui-sm-12 ui-g-6 ui-g-nopad"> 
+                        <div class="ui-sm-12 ui-g-11">
+                            <p:outputLabel for="id" value="ID"/>
+                        </div>
+                        <div class="ui-sm-12 ui-g-11">
+                            <p:inputText id="id" value="#{deliveryFormMB.delivery.id}" readonly="true"
+                                         styleClass="form-control ui-state-disabled" style="width: 100%"/>
+                            <span class="help-block">
+                                    <p:message for="id"/>
+                            </span>
+                        </div>
+                    </div>
+			 </div>            
+            
+            
+            <p:panel styleClass="box-primary deliveryd">
+                <div class="ui-g ui-fluid">
+                    <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
+                        <div class="ui-sm-12 ui-g-11">
+                            <p:outputLabel value="#{adm['form.colum.origin.cep']}" for="originCep"/>
+                        </div>
+                        <div class="ui-sm-12 ui-g-11">
+                            <p:inputMask id="originCep" value="#{deliveryFormMB.delivery.originCep}" required="true" mask="99999-999"/>
+                            <span class="help-block"> 
+                                <p:message for="originCep"/>
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
+                        <div class="ui-sm-12 ui-g-11">
+                            <p:outputLabel value="#{adm['form.colum.destination.cep']}" for="destinationCep"/>
+                        </div>
+                        <div class="ui-sm-12 ui-g-11">
+                            <p:inputMask id="destinationCep" value="#{deliveryFormMB.delivery.destinationCep}" required="true" mask="99999-999"/>
+                            <span class="help-block"> 
+                                <p:message for="destinationCep"/>
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
+                        <div class="ui-sm-12 ui-g-11">
+                            <p:outputLabel value="#{adm['form.colum.distance']} (Km)" for="distance"/>
+                        </div>
+                        <div class="ui-sm-12 ui-g-11"> 
+                            <p:inputNumber id="distance" value="#{deliveryFormMB.delivery.distance}" required="true"  decimalPlaces="2" decimalSeparator="#{adm['decimal.Separator']}" thousandSeparator="#{adm['thousand.Separator']}" symbol=" Km" symbolPosition="s" emptyValue="zero" />
+                            <span class="help-block"> 
+                                <p:message for="distance"/>
+                            </span>
+                        </div>
+                    </div> 
+                    
+                    <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
+                        <div class="ui-sm-12 ui-g-11">
+                            <p:outputLabel value="#{adm['form.colum.cost']} (#{adm['symbol.money']})" for="cost"/>
+                        </div>
+                        <div class="ui-sm-12 ui-g-11">
+                             <p:inputNumber id="cost" value="#{deliveryFormMB.delivery.cost}" required="true"  decimalPlaces="2" decimalSeparator="#{adm['decimal.Separator']}" thousandSeparator="#{adm['thousand.Separator']}" symbol="#{adm['symbol.money']} " symbolPosition="p" emptyValue="zero" />
+                            <span class="help-block"> 
+                                <p:message for="cost"/>
+                            </span>
+                        </div>
+                    </div> 
+                    
+                    <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
+                        <div class="ui-sm-12 ui-g-11">
+                            <p:outputLabel value="#{adm['form.colum.time']} (s)" for="time"/>
+                        </div>
+                        <div class="ui-sm-12 ui-g-11">
+                            <p:inputNumber id="time" value="#{deliveryFormMB.delivery.time}" required="true"  decimalPlaces="2" decimalSeparator="#{adm['decimal.Separator']}" thousandSeparator="#{adm['thousand.Separator']}" symbol=" s" symbolPosition="s" emptyValue="zero" />
+                            <span class="help-block"> 
+                                <p:message for="time"/>
+                            </span>
+                        </div>
+                    </div>  
+					
+					<div class="ui-sm-12 ui-g-6 ui-g-nopad">
+						<div class="ui-sm-12 ui-g-11">
+							<p:outputLabel value="#{adm['form.colum.origin']}" for="remoteStationOrigin" />
+						</div>
+						<div class="ui-sm-12 ui-g-11">
+							<p:selectOneMenu id="remoteStationOrigin" dynamic="true" value="#{deliveryFormMB.delivery.origin}" filter="true" filterMatchMode="contains">
+								<f:converter converterId="entityApiConverter" />
+								<f:selectItem itemLabel="#{adm['combo.box.select.one']}" itemValue="#{null}" noSelectionOption="true" />
+								<f:selectItems value="#{deliveryFormMB.remoteStations}" var="remoteStation" itemLabel="#{remoteStation.name}" itemValue="#{remoteStation}" />
+							</p:selectOneMenu>
+							<span class="help-block"> <p:message for="remoteStationOrigin" />
+							</span>
+						</div>
+					</div>
+					
+					<div class="ui-sm-12 ui-g-6 ui-g-nopad">
+						<div class="ui-sm-12 ui-g-11">
+							<p:outputLabel value="#{adm['form.colum.destination']}" for="remoteStationDestination" />
+						</div>
+						<div class="ui-sm-12 ui-g-11">
+							<p:selectOneMenu id="remoteStationDestination" dynamic="true" value="#{deliveryFormMB.delivery.destination}"  filter="true" filterMatchMode="contains">
+								<f:converter converterId="entityApiConverter" />
+								<f:selectItem itemLabel="#{adm['combo.box.select.one']}" itemValue="#{null}" noSelectionOption="true" />
+								<f:selectItems value="#{deliveryFormMB.remoteStations}" var="remoteStation" itemLabel="#{remoteStation.name}" itemValue="#{remoteStation}" />
+							</p:selectOneMenu>
+							<span class="help-block"> <p:message for="remoteStationDestination" />
+							</span>
+						</div>
+					</div>
+					
+                </div>
+            </p:panel>
+            
+     		<p:spacer height="15px"/>
+     		
+                <h:panelGroup id="footer" layout="block" >
+                   <div id="main-buttons" class="hidden-sm hidden-xs">
+	                    <p:commandButton value="#{adm['save']}" action="#{deliveryFormMB.save}" update="@form"
+	                                     icon="fa fa-check" styleClass="btn-primary"/>
+	                    <p:spacer width="5" rendered="#{deliveryFormMB.isNew()}"/>
+	                    <p:commandButton value="#{adm['clear']}" action="#{deliveryFormMB.clear}" process="@this"
+	                                     icon="fa fa-refresh" styleClass="btn-success"
+	                                     update="@form" rendered="#{deliveryFormMB.isNew()}" resetValues="true"/>
+	                    <p:spacer width="5" rendered="#{not deliveryFormMB.isNew()}"/>
+	
+	                    <p:commandButton value="#{adm['delete']}" action="#{deliveryFormMB.remove}" process="@this"
+	                                     rendered="#{not deliveryFormMB.isNew()}" icon="fa fa-trash"
+	                                     styleClass="btn-danger">
+	                        <f:setPropertyActionListener value="true"
+	                                                     target="#{facesContext.externalContext.flash.keepMessages}"/>
+	                        <p:confirm header="#{adm['confirmation']}" message="#{adm['confirmation.message']}" icon="ui-icon-danger"/>
+	                    </p:commandButton>
+	                    <p:spacer width="5"/>
+	                    <p:commandButton value="#{adm['back']}" immediate="true"
+	                                     action="delivery-list?faces-redirect=true"
+	                                     process="@this"
+	                                     icon="fa fa-reply"/>
+                   </div>
+                </h:panelGroup>
+				<p:splitButton value="#{adm['save']}" action="#{deliveryFormMB.save}" update="@form"
+                               icon="fa fa-check"
+                               styleClass="hidden-md hidden-lg btn-primary">
+                    <p:menuitem value="#{adm['reset']}" action="#{deliveryFormMB.clear}"
+                                process="@this" update="@form" rendered="#{deliveryFormMB.isNew()}"
+                                resetValues="true" icon="fa fa-refresh"/>
+                    <p:menuitem value="#{adm['delete']}" action="#{deliveryFormMB.remove}" process="@this"
+                                rendered="#{not deliveryFormMB.isNew()}" icon="fa fa-trash">
+                        <f:setPropertyActionListener value="true"
+                                                     target="#{facesContext.externalContext.flash.keepMessages}"/>
+                        <p:confirm header="#{adm['confirmation']}" message="#{adm['confirmation.message']}" icon="ui-icon-danger"/>
+                    </p:menuitem>
+                    <p:separator/>
+                    <p:menuitem value="#{adm['back']}" action="delivery-list?faces-redirect=true"
+                                process="@this" immediate="true"
+                                icon="fa fa-reply"/>
+                </p:splitButton>
+                
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="box-danger box-solid">
+                <p:commandButton value="Yes" type="button" styleClass="btn-material btn-primary ui-confirmdialog-yes"
+                                 icon="fa fa-check"/>
+                <p:commandButton value="No" type="button" styleClass="btn-material btn-danger ui-confirmdialog-no"
+                                 icon="fa fa-close"/>
+            </p:confirmDialog>
+        </h:form> 
+
+
+    </ui:define>
+
+</ui:composition>

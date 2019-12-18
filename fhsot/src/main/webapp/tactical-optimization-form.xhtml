@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui" xmlns:adm="http://github.com/adminfaces"
+                xmlns:of="http://omnifaces.org/functions"
+                 xmlns:o="http://omnifaces.org/ui"
+                template="#{layoutMB.template}">
+
+    <ui:define name="metadata">
+    	 <f:metadata>
+    	    <f:viewParam name="id" value="#{tacticalOptimizationFormMB.id}" converter="javax.faces.Long"/>
+            <f:viewAction action="#{tacticalOptimizationFormMB.init()}"/>
+        </f:metadata>
+        <ui:param name="renderAsterisks" value="true"/>
+    </ui:define>
+    <ui:define name="title">
+    	<p:graphicImage value="#{resource[ 'images:optimization-form-icon.png' ]}" style="width: 50px;"/>
+		<p:spacer width="5"/> 
+        Tactical optimization study
+    </ui:define>
+    <ui:define name="body">
+        <adm:breadcrumb title="#{tacticalOptimizationFormMB.breadcum}" link="tactical-optimization-form.xhtml?id=#{tacticalOptimizationFormMB.id}" />
+        <h:form id="form">
+            <p:focus context="@form"/>
+            <div class="box-header with-border">
+			    <h3 class="box-title"> 
+		    		Supply Chain Network
+    			</h3>
+			    <div class="box-tools pull-right">
+			      <span class="label label-primary">Optimization</span>
+			    </div>
+		  	</div>
+			<div class="ui-g ui-fluid">
+				<div class="ui-sm-12 ui-g-6 ui-g-nopad">
+					<div class="ui-sm-12 ui-g-11">
+						<p:outputLabel for="id" value="ID" />
+					</div>
+					<div class="ui-sm-12 ui-g-11">
+						<p:inputText id="id" value="#{tacticalOptimizationFormMB.tacticalOptimization.id}" readonly="true" styleClass="form-control ui-state-disabled" style="width: 100%" />
+						<span class="help-block"> <p:message for="id" />
+						</span>
+					</div>
+				</div>
+			</div>
+			<p:panel header="Study" styleClass="box-primary card">
+				<div class="ui-g ui-fluid">
+            	<div class="ui-sm-12 ui-g-6 ui-g-nopad">
+					<div class="ui-sm-12 ui-g-11">
+						<p:outputLabel for="name" value="Name" />
+					</div>
+					<div class="ui-sm-12 ui-g-11">
+						<p:inputText id="name" value="#{tacticalOptimizationFormMB.tacticalOptimization.name}" style="width: 100%" />
+						<span class="help-block"> <p:message for="name" />
+						</span>
+					</div>
+				</div>
+				</div>
+			</p:panel>
+			<p:spacer height="15px"/>
+            <p:panel header="Demand range" styleClass="box-primary card">
+            <div class="ui-g ui-fluid">
+            	<div class="ui-sm-12 ui-g-6 ui-g-nopad"> 
+	               <div class="ui-sm-12 ui-g-11">
+	                   <p:outputLabel value="From date" for="initialDate"/>
+	               </div>
+	               <div class="ui-sm-12 ui-g-11">
+	               	<p:calendar id="initialDate" value="#{tacticalOptimizationFormMB.tacticalOptimization.initialDate}" readonlyInput="true"
+	               				maxdate="#{of:addDays(now, -1)}"
+	               				required="true" showOn="button" pattern="#{adm['admin.dateFormat']}"
+	               				locale="#{localeMB.locale}" navigator="true" >
+	               		<p:ajax event="dateSelect" update="endDate candidates" listener="#{tacticalOptimizationFormMB.onDateSelect}" />
+	       			</p:calendar>
+	                   <span class="help-block"> 
+	                       <p:message for="initialDate"/>
+	                   </span>
+	               </div>
+	           </div>  
+	           <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
+	               <div class="ui-sm-12 ui-g-11">
+	                   <p:outputLabel value="To date" for="endDate"/>
+	               </div>
+	               <div class="ui-sm-12 ui-g-11">
+	                   <p:calendar id="endDate" value="#{tacticalOptimizationFormMB.tacticalOptimization.endDate}" readonlyInput="true" 
+	                      mindate="#{tacticalOptimizationFormMB.tacticalOptimization.initialDate}" maxdate="#{now}"  
+	                      required="true" showOn="button" pattern="#{adm['admin.dateFormat']}"
+	                      locale="#{localeMB.locale}" navigator="true"
+	                      disabled="#{empty tacticalOptimizationFormMB.tacticalOptimization.initialDate}">
+	                      <p:ajax event="dateSelect" listener="#{tacticalOptimizationFormMB.onDateSelect}" update ="candidates"/>
+                       </p:calendar>
+	                   <span class="help-block"> 
+	                       <p:message for="endDate"/>
+	                   </span>
+	               </div>
+	           </div>
+            </div>
+           <div class="ui-g ui-fluid">
+				<div class="ui-sm-12 ui-g-6 ui-g-nopad">
+					<div class="ui-sm-12 ui-g-11">
+						<p:outputLabel for="candidates" value="Candidate locations" />
+					</div>
+					<div class="ui-sm-12 ui-g-11">
+						<p:inputText id="candidates" value="#{tacticalOptimizationFormMB.candidates}" readonly="true" styleClass="form-control ui-state-disabled" style="width: 100%; opacity: 1 !important;" />
+						<span class="help-block"> 
+							<p:message for="candidates" />
+						</span>
+					</div>
+				</div>
+				<div class="ui-sm-12 ui-g-6 ui-g-nopad">
+					<div class="ui-sm-12 ui-g-11">
+						<p:outputLabel  value="Cluster locations" />
+					</div>
+					<div class="ui-sm-12 ui-g-11">
+						<p:toggleSwitch  value="#{tacticalOptimizationFormMB.clustered}">
+				            <p:ajax listener="#{tacticalOptimizationFormMB.toogleCluster}" global="false" process="@this" update="pMedianPanel" />
+				        </p:toggleSwitch>
+					</div>
+				</div>
+			</div>
+            </p:panel>
+            <p:spacer height="15px"/>
+            <ui:remove><!-- inseri um panel group em volta para funcionar a renderização --></ui:remove>
+			<h:panelGroup id="pMedianPanel">
+				<p:panel  rendered="#{tacticalOptimizationFormMB.clustered}" styleClass="box-primary card">
+			  	<div class="box-header with-border">
+				    <h3 class="box-title"> 
+			    			Cluster configuration:
+		   			</h3>
+				    <div class="box-tools pull-right">
+				      <span class="label label-primary">p-median</span>
+				    </div>
+			  	</div>
+			  	<div class="ui-g ui-fluid">
+	               <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
+	                  <div class="ui-sm-12 ui-g-11">
+	                      <p:outputLabel value="Max locations" for="maximumLocations"/>
+	                  </div>
+	                  <div class="ui-sm-12 ui-g-11">
+	                      <p:inputNumber id="maximumLocations" value="#{tacticalOptimizationFormMB.tacticalOptimization.maximumLocations}" required="true"  decimalPlaces="0" decimalSeparator="," thousandSeparator="." symbolPosition="s" emptyValue="zero" />
+	                      <span class="help-block"> 
+	                          <p:message for="maximumLocations"/>
+	                      </span>
+	                  </div>
+	                </div>
+	                <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
+	                  <div class="ui-sm-12 ui-g-11">
+	                      <p:outputLabel value="Importance Balance"  />
+	                  </div>
+	                  <div class="ui-sm-12 ui-g-11">
+	                    	<div class="ui-sm-12 ui-g-4"  style="text-align:center">  
+	        					<h:outputText id="timeWeightDescription" value="Time #{tacticalOptimizationFormMB.tacticalOptimization.timeWeight} %" />
+	       					</div>
+	       					<div class="ui-sm-12 ui-g-4"  style="text-align:center">
+	        					<h:inputHidden id="timeWeight" value="#{tacticalOptimizationFormMB.tacticalOptimization.timeWeight}" />
+						        <p:slider for="timeWeight" display="timeWeightDescription" style="width: 100%"  displayTemplate="Time {value} %" >
+						        	<p:ajax event="slideEnd" update="distanceWeightDescription" process="@this" global="false" listener="#{tacticalOptimizationFormMB.onSlideEnd}"   />
+						        </p:slider>
+						    </div>
+	       					<div class="ui-sm-12 ui-g-4"  style="text-align:center">
+						        <h:outputText id="distanceWeightDescription" value="Distance #{tacticalOptimizationFormMB.tacticalOptimization.distanceWeight} %" />
+						    </div>
+	                  </div>
+	                </div>
+	            </div>
+	            </p:panel>
+            </h:panelGroup>
+            <p:spacer height="15px"/>
+            <p:panel styleClass="box-primary card">
+            <div class="box-header with-border">
+			    <h3 class="box-title"> 
+		    		Production Center:
+	   			</h3>
+			    <div class="box-tools pull-right">
+			      <span class="label label-primary">location-allocation</span>
+			    </div>
+		  	</div>
+            <div class="ui-g ui-fluid">
+            	<div class="ui-sm-12 ui-g-6 ui-g-nopad">     
+                  <div class="ui-sm-12 ui-g-11">
+                      <p:outputLabel for="productionCenterCost" value="Holding a Production Center"  />
+                  </div>
+                  <div class="ui-sm-12 ui-g-11">
+                      <div class="ui-sm-6 ui-g-6"><p:inputNumber id="productionCenterCost" value="#{tacticalOptimizationFormMB.tacticalOptimization.productionCenterCost}" required="true"  decimalPlaces="2" decimalSeparator="," thousandSeparator="." symbol="$ " symbolPosition="p" emptyValue="zero" /></div>
+                      <div class="ui-sm-6 ui-g-6">by year</div>
+                      <span class="help-block"> 
+                      	<p:message for="productionCenterCost"/>
+                      </span>
+                  </div>
+                </div>
+                <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
+                  <div class="ui-sm-12 ui-g-11">
+                      <p:outputLabel for="maximumSrams" value="Maximum number of SRAMs"  />
+                  </div>
+                  <div class="ui-sm-12 ui-g-11">
+                      <div class="ui-sm-6 ui-g-6"><p:inputNumber id="maximumSrams" value="#{tacticalOptimizationFormMB.tacticalOptimization.maximumSrams}" required="true"  decimalPlaces="0" decimalSeparator="," thousandSeparator="." symbol=" printers" symbolPosition="s" emptyValue="zero" /></div>
+                      <div class="ui-sm-6 ui-g-6">by Production Center</div>
+                      <span class="help-block"> 
+                      	<p:message for="maximumSrams"/>
+                      </span>
+                  </div>
+                </div>
+            </div>
+            </p:panel>
+            <p:spacer height="15px"/>
+            <p:panel styleClass="box-primary card">
+            <div class="box-header with-border">
+			    <h3 class="box-title"> 
+		    		SRAM - Smart Robotic Additive Manufacturing:
+	   			</h3>
+			    <div class="box-tools pull-right">
+			      <span class="label label-primary">location-allocation</span>
+			    </div>
+		  	</div>
+            <div class="ui-g ui-fluid">
+            	
+                <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
+                  <div class="ui-sm-12 ui-g-11">
+                      <p:outputLabel for="sramCost" value="Holding a SRAM"  />
+                  </div>
+                  <div class="ui-sm-12 ui-g-11">
+                      <div class="ui-sm-6 ui-g-6"><p:inputNumber id="sramCost" value="#{tacticalOptimizationFormMB.tacticalOptimization.sramCost}" required="true"  decimalPlaces="2" decimalSeparator="," thousandSeparator="." symbol="$ " symbolPosition="p" emptyValue="zero" /></div>
+                      <div class="ui-sm-6 ui-g-6">by year</div>
+                      <span class="help-block"> 
+                      	<p:message for="sramCost"/>
+                      </span>
+                  </div>
+                </div>
+                <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
+                  <div class="ui-sm-12 ui-g-11">
+                      <p:outputLabel for="sramCapacity" value="Capacity of a SRAM"  />
+                  </div>
+                  <div class="ui-sm-12 ui-g-11">
+                      <div class="ui-sm-6 ui-g-6"><p:inputNumber id="sramCapacity" value="#{tacticalOptimizationFormMB.tacticalOptimization.sramCapacity}" required="true"  decimalPlaces="0" decimalSeparator="," thousandSeparator="." symbol=" hours" symbolPosition="s" emptyValue="zero" /></div>
+                      <div class="ui-sm-6 ui-g-6">by year</div>
+                      <span class="help-block"> 
+                      	<p:message for="sramCapacity"/>
+                      </span>
+                  </div>
+                </div>
+            </div>
+		    </p:panel>
+		    <p:spacer height="15px"/>
+		    <p:panel visible="false" styleClass="box-primary card">
+            <div class="box-header with-border">
+			    <h3 class="box-title"> 
+		    		Stock:
+	   			</h3>
+			    <div class="box-tools pull-right">
+			      <span class="label label-primary">location-allocation</span>
+			    </div>
+		  	</div>
+            <div class="ui-g ui-fluid">
+            	
+                <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
+                  <div class="ui-sm-12 ui-g-11">
+                      <p:outputLabel for="capitalCost" value="Average stock applied to calculate capital costs"  />
+                  </div>
+                  <div class="ui-sm-12 ui-g-11">
+                      <p:inputNumber id="capitalCost" value="#{tacticalOptimizationFormMB.tacticalOptimization.capitalCost}" required="true"  decimalPlaces="2" decimalSeparator="," thousandSeparator="." symbol="%" symbolPosition="s" emptyValue="zero" />
+                      <span class="help-block"> 
+                      	<p:message for="capitalCost"/>
+                      </span>
+                  </div>
+                </div>
+                <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
+                  <div class="ui-sm-12 ui-g-11">
+                      <p:outputLabel for="stockoutCost" value="Stockout cost"  />
+                  </div>
+                  <div class="ui-sm-12 ui-g-11">
+                      <p:inputNumber id="stockoutCost" value="#{tacticalOptimizationFormMB.tacticalOptimization.stockoutCost}" required="true"  decimalPlaces="2" decimalSeparator="," thousandSeparator="."  symbol="$ " symbolPosition="p" emptyValue="zero" />
+                      <span class="help-block"> 
+                      	<p:message for="stockoutCost"/>
+                      </span>
+                  </div>
+                </div>
+                
+            </div>
+		    </p:panel>
+		    <p:spacer height="15px"/>
+		    <p:panel id="SCNPanel" styleClass="box-primary card">
+            <div class="box-header with-border">
+			    <h3 class="box-title"> 
+		    		Design Supply Chain Network:
+	   			</h3>
+		  	</div>
+            <div class="ui-g ui-fluid">
+                <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
+                  <div class="ui-sm-12 ui-g-11">
+                  </div>
+                  <div class="ui-sm-12 ui-g-11">
+                  <o:importConstants type="com.fasten.wp4.database.client.model.TacticalOptimization.TypeEnum" />
+                      <p:selectOneRadio layout="responsive" columns="1" onchange="#{tacticalOptimizationFormMB.selectOneType()}" id="optimizationType"  required="true" value="#{tacticalOptimizationFormMB.tacticalOptimization.type}">
+                          <f:selectItems value="#{TypeEnum}" var="type" itemLabel="#{type.value}" itemValue="#{type}" />
+                          <p:ajax process="optimizationType" update="SCNPanel" global="false" partialSubmit="true"/>
+                      </p:selectOneRadio>
+<!-- 				      <ui:remove> -->
+<!--                       JSF code commented out -->
+<!--                       <p:selectOneRadio layout="responsive" columns="1" id="optimizationType" value="#{tacticalOptimizationFormMB.tacticalOptimization.type}" required="true" label="Action"> -->
+<!-- 			                <f:selectItem itemLabel="By maximum lead time" itemValue="Lead Time" /> -->
+<!-- 			                <f:selectItem itemLabel="By better cost-benefit" itemValue="Cost Benefit" /> -->
+<!-- 			                <p:ajax process="optimizationType" update="SCNPanel" global="false" partialSubmit="true"/> -->
+<!-- 		            	</p:selectOneRadio> -->
+<!-- 		            	</ui:remove> -->
+                  </div>
+                </div>
+                <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
+                  <div class="ui-sm-12 ui-g-11">
+                      <p:outputLabel for="leadTimeLimit" value="Maximum lead time" rendered="#{tacticalOptimizationFormMB.tacticalOptimization.type.value eq 'Lead Time'}" />
+                  </div>
+                  <div class="ui-sm-12 ui-g-11">
+                      <p:inputNumber id="leadTimeLimit" value="#{tacticalOptimizationFormMB.tacticalOptimization.leadTimeLimit}" rendered="#{tacticalOptimizationFormMB.tacticalOptimization.type.value eq 'Lead Time'}" required="true"  decimalPlaces="0" decimalSeparator="," thousandSeparator="." symbol=" hours" symbolPosition="s" emptyValue="zero" />
+                      <span class="help-block"> 
+                      	<p:message for="leadTimeLimit"/>
+                      </span>
+                  </div>
+                </div>
+            </div>
+            <div class="ui-g ui-fluid">
+            	<div class="ui-sm-12 ui-g-6 ui-g-nopad">     
+                  <div class="ui-sm-12 ui-g-11">
+                      <p:outputLabel for="usePrediction" value="Use Predict study" />
+                  </div>
+                  <div class="ui-sm-12 ui-g-11">
+                      <p:toggleSwitch id="usePrediction" value="#{tacticalOptimizationFormMB.usePrediction}" />
+                      <span class="help-block"> 
+                      	<p:message for="usePrediction"/>
+                      </span>
+                  </div>
+                </div>
+            </div>
+		    </p:panel>
+            <p:spacer height="15px"/>
+	        <h:panelGroup id="footer" layout="block">
+                <div id="main-buttons" class="hidden-sm hidden-xs">
+	           		<p:commandButton value="#{adm['save']}" action="#{tacticalOptimizationFormMB.save}" update="@form"	
+		                            icon="fa fa-check" styleClass="btn-primary"/>
+		           <p:spacer width="5" rendered="#{tacticalOptimizationFormMB.isNew()}"/>
+		           <p:commandButton value="#{adm['clear']}" action="#{tacticalOptimizationFormMB.clear}" process="@this"
+		                            icon="fa fa-refresh" styleClass="btn-success"
+		                            update="@form" resetValues="true"/>
+		           <p:spacer width="5" rendered="#{not tacticalOptimizationFormMB.isNew()}"/>
+		           <p:commandButton value="#{adm['delete']}" action="#{tacticalOptimizationFormMB.remove}" process="@this"
+		                               rendered="#{not tacticalOptimizationFormMB.isNew()}" icon="fa fa-trash"
+		                               styleClass="btn-danger">
+		                  <f:setPropertyActionListener value="true"
+		                                               target="#{facesContext.externalContext.flash.keepMessages}"/>
+		                  <p:confirm header="#{adm['confirmation']}" message="#{adm['confirmation.message']}" icon="ui-icon-danger"/>
+		           </p:commandButton>
+		           <p:spacer width="5"/>
+		           <p:commandButton value="#{adm['back']}" immediate="true"
+		                            action="tactical-optimization-list?faces-redirect=true"
+		                            process="@this"
+	                            icon="fa fa-reply"/>
+	            </div>
+           </h:panelGroup>
+	       <p:splitButton value="#{adm['save']}" action="#{tacticalOptimizationFormMB.save}" update="@form"
+                           icon="fa fa-check"
+                           styleClass="hidden-md hidden-lg btn-primary">
+                <p:menuitem value="#{adm['reset']}" action="#{tacticalOptimizationFormMB.clear}"
+                            process="@this" update="@form" rendered="#{tacticalOptimizationFormMB.isNew()}"
+                            resetValues="true" icon="fa fa-refresh"/>
+                <p:menuitem value="#{adm['delete']}" action="#{tacticalOptimizationFormMB.remove}" process="@this"
+                                    rendered="#{not tacticalOptimizationFormMB.isNew()}" icon="fa fa-trash">
+                            <f:setPropertyActionListener value="true"
+                                                         target="#{facesContext.externalContext.flash.keepMessages}"/>
+                            <p:confirm header="#{adm['confirmation']}" message="#{adm['confirmation.message']}" icon="ui-icon-danger"/>
+                </p:menuitem>
+                <p:separator/>
+                <p:menuitem value="#{adm['back']}" action="tactical-optimization-list?faces-redirect=true"
+                            process="@this" immediate="true"
+                            icon="fa fa-reply"/>
+	        </p:splitButton>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="box-danger box-solid">
+                <p:commandButton value="Yes" type="button" styleClass="btn-material btn-primary ui-confirmdialog-yes"
+                                 icon="fa fa-check"/>
+                <p:commandButton value="No" type="button" styleClass="btn-material btn-danger ui-confirmdialog-no"
+                                 icon="fa fa-close"/>
+            </p:confirmDialog>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

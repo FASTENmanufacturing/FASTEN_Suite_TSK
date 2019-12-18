@@ -1,0 +1,80 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "API Description",
+    "version" : "1.0.0",
+    "title" : "Allocate Production Order"
+  },
+  "host" : "ec2-54-233-213-104.sa-east-1.compute.amazonaws.com:8001",
+  "basePath" : "/",
+  "tags" : [ {
+    "name" : "default"
+  } ],
+  "schemes" : [ "http" ],
+  "produces" : [ "application/json" ],
+  "paths" : {
+    "/allocate" : {
+      "post" : {
+        "tags" : [ "default" ],
+        "summary" : " allocate production order",
+        "parameters" : [ {
+          "name" : "origin",
+          "in" : "query",
+          "description" : "The delivery location",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "quantity",
+          "in" : "query",
+          "description" : "The quantity to be allocate",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "part",
+          "in" : "query",
+          "description" : "The type of spare part (ex.: Button, Dosing chamber, Grid Air Condition, Support for escalator, Home Lift frame)",
+          "required" : false,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful",
+            "schema" : {
+              "$ref" : "#/definitions/AllocationResult"
+            }
+          },
+          "default" : {
+            "description" : "Default response."
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "AllocationResult" : {
+      "type" : "array",
+      "items" : {
+        "$ref" : "#/definitions/AllocationResult_inner"
+      }
+    },
+    "AllocationResult_inner" : {
+      "properties" : {
+        "remoteStation" : {
+          "type" : "string"
+        },
+        "queueTime" : {
+          "type" : "number"
+        },
+        "timeProduction" : {
+          "type" : "number"
+        },
+        "timeTravel" : {
+          "type" : "number"
+        },
+        "totalTime" : {
+          "type" : "number"
+        }
+      }
+    }
+  }
+}
