@@ -49,6 +49,8 @@ public class PredictionApiUtils {
 									(Prediction.ModelsEnum.NAIVE.equals(selectedModel))? ForecastingStudy.ModelsEnum.NAIVE :
 										(Prediction.ModelsEnum.SES.equals(selectedModel))? ForecastingStudy.ModelsEnum.SES :
 											(Prediction.ModelsEnum.CR.equals(selectedModel))? ForecastingStudy.ModelsEnum.CR :
+												(Prediction.ModelsEnum.ANN.equals(selectedModel))? ForecastingStudy.ModelsEnum.ANN :
+													(Prediction.ModelsEnum.ELM.equals(selectedModel))? ForecastingStudy.ModelsEnum.ELM :
 												null);
 			}
 		}else if(Prediction.ModelSelectionEnum.AUTOMATIC.equals(prediciton.getModelSelection())) {
@@ -123,6 +125,8 @@ public class PredictionApiUtils {
 					(ModelsResult.ModelEnum.NAIVE.equals(selectedModel))? DemandProjected.DemandSubtypeEnum.NAIVE :
 						(ModelsResult.ModelEnum.SES.equals(selectedModel))? DemandProjected.DemandSubtypeEnum.SES :
 							(ModelsResult.ModelEnum.CR.equals(selectedModel))? DemandProjected.DemandSubtypeEnum.CR :
+								(ModelsResult.ModelEnum.ANN.equals(selectedModel))? DemandProjected.DemandSubtypeEnum.ANN :
+									(ModelsResult.ModelEnum.ELM.equals(selectedModel))? DemandProjected.DemandSubtypeEnum.ELM :
 								null;
 	}
 	
@@ -139,6 +143,8 @@ public class PredictionApiUtils {
 					(ModelsResult.ModelEnum.NAIVE.equals(selectedModel))? ErrorProjected.ErrorSubtypeEnum.NAIVE :
 						(ModelsResult.ModelEnum.SES.equals(selectedModel))? ErrorProjected.ErrorSubtypeEnum.SES :
 							(ModelsResult.ModelEnum.CR.equals(selectedModel))? ErrorProjected.ErrorSubtypeEnum.CR :
+								(ModelsResult.ModelEnum.ANN.equals(selectedModel))? ErrorProjected.ErrorSubtypeEnum.ANN :
+									(ModelsResult.ModelEnum.ELM.equals(selectedModel))? ErrorProjected.ErrorSubtypeEnum.ELM :
 								null;
 	}
 	

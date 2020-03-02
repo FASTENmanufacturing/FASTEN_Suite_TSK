@@ -123,7 +123,7 @@ public class TacticalOptimizationResultControllerApiTest {
     @Test
     public void retrieveByTacticalOptimizationTest() throws ApiException {
         Long id = null;
-        List<TacticalOptimizationResult> response = api.retrieveByTacticalOptimization(id);
+        TacticalOptimizationResult response = api.retrieveByTacticalOptimization(id);
 
         // TODO: test validations
     }

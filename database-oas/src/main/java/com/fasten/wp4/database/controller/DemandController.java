@@ -34,6 +34,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.fasten.wp4.database.exception.NotFoundException;
 import com.fasten.wp4.database.model.Demand;
 import com.fasten.wp4.database.model.Prediction;
+import com.fasten.wp4.database.model.RemoteStation;
 import com.fasten.wp4.database.repository.DemandRepository;
 import com.fasten.wp4.database.repository.PredictionRepository;
 import com.fasten.wp4.database.swagger.ApiPageable;
@@ -150,6 +151,12 @@ public class DemandController {
 		try{endDate=format.parse(end);}catch(Exception e){};
 
 		return repository.retrieveByPredictionParams(startDate, endDate, remoteStationId, partId).size();
+	}
+	
+	@GetMapping(value = "/demand/tacticalOptimization", params = { "id"})
+	@ApiOperation(nickname="retrieveDemandByTacticalOptimization", value = "Retrive a list of demands in a Tactical Optimization Study")
+	public List<Demand> retrieveByTacticalOptimization(@ApiParam(example="1") @RequestParam(value = "id") Long id) {
+		return repository.retrieveDemandByTacticalOptimization(id);
 	}
 	
 	@GetMapping(value="/demand/candidates/withoutCoordinates", params = { "start", "end"})

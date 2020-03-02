@@ -194,6 +194,13 @@ public class TacticalOptimizationFormMB implements Serializable {
 			tacticalOptimization.setTimeWeight(null);
 		}
 	}
+
+	public void toogleUsePrediction() {
+		if(!tacticalOptimization.isUsePrediction()) {
+			tacticalOptimization.setHorizon(null);
+			tacticalOptimization.setGranularity(null);
+		}
+	}
 	
 	public boolean isUsePrediction() {
 		return (tacticalOptimization.isUsePrediction()!=null?tacticalOptimization.isUsePrediction():false);

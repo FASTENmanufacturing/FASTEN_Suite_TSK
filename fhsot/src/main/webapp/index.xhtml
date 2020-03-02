@@ -35,7 +35,7 @@
         <h2 class="align-center">
              #{adm['index.title']} 
         	<br/>
-        	<small>#{adm['index.lastupdate']} #{of:formatDate(now, adminConfig.dateFormat)}.</small>
+        	<ui:remove><small>#{adm['index.lastupdate']} #{of:formatDate(now, adminConfig.dateFormat)}.</small></ui:remove>
         </h2>
     </ui:define>
 

@@ -37,6 +37,9 @@ public interface DemandRepository extends JpaRepository<Demand, Long>,  JpaLazyD
 	
 	@Query("Select d from Demand d order by orderDate asc")
 	List<Demand> retrieveAllOrderByOrderDate();
+	
+	@Query("Select d from Demand d where d.orderDate >= (select t.initialDate from TacticalOptimization t where t.id=:id) and d.orderDate <= (select t.endDate from TacticalOptimization t where t.id=:id)  order by d.code asc")
+	List<Demand> retrieveDemandByTacticalOptimization(@Param("id") Long id);
 
 	default List<Demand> retrieveByPrediction(Prediction prediction) {
 		Specification<Demand> specs = (root, query, builder) -> {

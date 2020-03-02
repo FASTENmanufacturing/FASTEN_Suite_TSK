@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -103,6 +104,24 @@ public class PartController {
 	public List<String> retrievePartByNameLike(@PathVariable String name) {
 		List<Part> retrivedList = repository.findByNameIgnoreCaseContaining(name);
 		return retrivedList.stream().map(p->p.getName()).collect(Collectors.toList());
+	}
+	
+	@GetMapping("/part/excellName")
+	@ApiOperation(nickname="retrievePartByExcellName", value = "Retrive Part by name without space and uppercased")
+	public Part retrievePartByExcellName(@RequestParam(value = "excellName") String excellName) {
+		Optional<Part> retrivedObject = repository.findByExcellName(excellName);
+		if (!retrivedObject.isPresent())
+			throw new NotFoundException();
+		return retrivedObject.get();
+	}
+
+	@GetMapping("/part/name/equal")
+	@ApiOperation(nickname="retrievePartByName", value = "Retrive Part by name ")
+	public Part retrievePartByName(@RequestParam(value = "name") String name) {
+		Optional<Part> retrivedObject = repository.findByName(name);
+		if (!retrivedObject.isPresent())
+			throw new NotFoundException();
+		return retrivedObject.get();
 	}
 	
 	@GetMapping("/part/code/{code}/priority/{priority}")

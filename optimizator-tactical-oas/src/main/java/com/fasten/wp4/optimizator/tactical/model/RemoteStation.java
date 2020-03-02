@@ -37,6 +37,10 @@ public class RemoteStation implements Serializable{
 	private Double latitude;
 	
 	private Double longitude;
+	
+	private String unidade;
+
+	private String frete;
 
 	public RemoteStation() {
 		super();
@@ -104,6 +108,22 @@ public class RemoteStation implements Serializable{
 
 	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
+	}
+
+	public String getUnidade() {
+		return unidade;
+	}
+
+	public void setUnidade(String unidade) {
+		this.unidade = unidade;
+	}
+
+	public String getFrete() {
+		return frete;
+	}
+
+	public void setFrete(String frete) {
+		this.frete = frete;
 	}
 
 }

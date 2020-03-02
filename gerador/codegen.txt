@@ -21,8 +21,11 @@ java -jar swagger-codegen-cli-2.4.7.jar generate -DapiDocs=false -DmodelDocs=fal
 Tactical Optimizator OAS:
 
 java -jar swagger-codegen-cli-2.4.7.jar generate -DapiDocs=false -DmodelDocs=false -D io.swagger.parser.util.RemoteUrl.trustAll=true -D hideGenerationTimestamp=true -i http://localhost:8082/v2/api-docs --api-package com.fasten.wp4.optimizator.tactical.client.api --model-package com.fasten.wp4.optimizator.tactical.client.model --invoker-package com.fasten.wp4.optimizator.tactical.client.invoker --group-id com.fasten.wp4 --artifact-id optimizator-tactical-client --artifact-version 0.0.1-SNAPSHOT -l java --additional-properties dateLibrary=legacy,java8=true,serializableModel=true,booleanGetterPrefix -o ../optimizator-tactical-client
-  
- 
+
+Email OAS:
+
+java -jar swagger-codegen-cli-2.4.7.jar generate -DapiDocs=false -DmodelDocs=false -D io.swagger.parser.util.RemoteUrl.trustAll=true -D hideGenerationTimestamp=true -i http://localhost:8088/v2/api-docs --api-package com.fasten.wp4.email.client.api --model-package com.fasten.wp4.email.client.model --invoker-package com.fasten.wp4.email.client.invoker --group-id com.fasten.wp4 --artifact-id email-client --artifact-version 0.0.1-SNAPSHOT -l java --additional-properties dateLibrary=legacy,java8=true,serializableModel=true,booleanGetterPrefix -o ../email-client
+
 Directions OAS:
 
 java -jar swagger-codegen-cli-2.4.7.jar generate -DapiDocs=false -DmodelDocs=false -D io.swagger.parser.util.RemoteUrl.trustAll=true -D hideGenerationTimestamp=true -i directions-oas.json --api-package org.ors.direction.operational.client.api --model-package org.ors.direction.client.model --invoker-package org.ors.direction.client.invoker --group-id org.ors --artifact-id direction-client --artifact-version 0.0.1-SNAPSHOT -l java --additional-properties dateLibrary=legacy,java8=true,serializableModel=true,booleanGetterPrefix -o ../direction-client

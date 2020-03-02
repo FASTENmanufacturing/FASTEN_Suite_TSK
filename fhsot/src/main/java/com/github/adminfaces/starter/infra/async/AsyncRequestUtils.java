@@ -78,9 +78,10 @@ public class AsyncRequestUtils {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static AsyncCall getAsyncCallFrom(Dispatcher dispatcher, Call call) {
+	public static AsyncCall getAsyncCallFrom(Dispatcher dispatcher, Call call,String uid) {
 		
 		AsyncCall asyncCall = new AsyncCall();
+		asyncCall.setId(uid);
 		asyncCall.setCall(call);
 		asyncCall.setDispatcher(dispatcher);
 		asyncCall.setStart(new Date());

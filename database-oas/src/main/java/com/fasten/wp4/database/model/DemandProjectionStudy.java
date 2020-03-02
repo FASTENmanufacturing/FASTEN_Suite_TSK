@@ -45,15 +45,15 @@ public class DemandProjectionStudy implements Serializable {
 //	@JsonSerialize(using = CustomDemandProjectedSerializer.class)
 	private List<ErrorProjected> errors;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="prevision_date")
 	private Date previsionDate;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="prevision_period_considered_start")
 	private Date previsionPeriodConsideredStart;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="prevision_period_considered_end")
 	private Date previsionPeriodConsideredEnd;
 	

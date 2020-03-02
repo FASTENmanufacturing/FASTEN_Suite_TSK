@@ -169,7 +169,11 @@ public class Prediction implements Serializable {
     
     CF1("CF1"),
     
-    CR("CR");
+    CR("CR"),
+    
+    ANN("ANN"),
+    
+    ELM("ELM");
 
     private String value;
 

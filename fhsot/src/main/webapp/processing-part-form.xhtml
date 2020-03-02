@@ -15,7 +15,7 @@
         <ui:param name="renderAsterisks" value="true"/>
     </ui:define>
     <ui:define name="title">
-        Processing Part
+        #{adm['processingPart']}
     </ui:define>
     <ui:define name="body">
         <adm:breadcrumb title="#{processingPartFormMB.breadcum}" link="processingPart-form.xhtml?id=#{processingPartFormMB.id}" />
@@ -47,7 +47,7 @@
 						<div class="ui-sm-12 ui-g-11">
 							<p:selectOneMenu id="SRAM" dynamic="true" value="#{processingPartFormMB.processingPart.sram}" required="true" filter="true" filterMatchMode="contains">
 								<f:converter converterId="entityApiConverter" />
-								<f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+								<f:selectItem itemLabel="#{adm['combo.box.select.one']}" itemValue="#{null}" noSelectionOption="true" />
 								<f:selectItems value="#{processingPartFormMB.SRAMs}" var="SRAM" itemLabel="#{SRAM.code}" itemValue="#{SRAM}" />
 							</p:selectOneMenu>
 							<span class="help-block"> <p:message for="SRAM" />
@@ -57,12 +57,12 @@
 					
 					<div class="ui-sm-12 ui-g-6 ui-g-nopad">
 						<div class="ui-sm-12 ui-g-11">
-							<p:outputLabel value="Part" for="part" />
+							<p:outputLabel value="#{adm['part']}" for="part" />
 						</div>
 						<div class="ui-sm-12 ui-g-11">
 							<p:selectOneMenu id="part" dynamic="true" value="#{processingPartFormMB.processingPart.part}" required="true" filter="true" filterMatchMode="contains">
 								<f:converter converterId="entityApiConverter" />
-								<f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+								<f:selectItem itemLabel="#{adm['combo.box.select.one']}" itemValue="#{null}" noSelectionOption="true" />
 								<f:selectItems value="#{processingPartFormMB.parts}" var="part" itemLabel="#{part.name}" itemValue="#{part}" />
 							</p:selectOneMenu>
 							<span class="help-block"> <p:message for="part" />
@@ -72,7 +72,7 @@
 					
 					<div class="ui-sm-12 ui-g-6 ui-g-nopad">     
                         <div class="ui-sm-12 ui-g-11">
-                            <p:outputLabel value="Cost (#{adm['symbol.money']})" for="cost"/>
+                            <p:outputLabel value="#{adm['form.colum.cost']} (#{adm['symbol.money']})" for="cost"/>
                         </div>
                         <div class="ui-sm-12 ui-g-11">
                             <p:inputNumber id="cost" value="#{processingPartFormMB.processingPart.cost}" required="true"  decimalPlaces="2" decimalSeparator="#{adm['decimal.Separator']}" thousandSeparator="#{adm['thousand.Separator']}" symbol="#{adm['symbol.money']} " symbolPosition="p" emptyValue="zero" />
@@ -84,7 +84,7 @@
                     
                     <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
                         <div class="ui-sm-12 ui-g-11">
-                            <p:outputLabel value="Average Setup Time (s)" for="avgSetupTime"/>
+                            <p:outputLabel value="#{adm['form.colum.average.setup.time']} (s)" for="avgSetupTime"/>
                         </div>
                         <div class="ui-sm-12 ui-g-11">
                             <p:inputNumber id="avgSetupTime" value="#{processingPartFormMB.processingPart.avgSetupTime}" required="true"  decimalPlaces="2" decimalSeparator="#{adm['decimal.Separator']}" thousandSeparator="#{adm['thousand.Separator']}" symbol=" s" symbolPosition="s" emptyValue="zero" />
@@ -96,7 +96,7 @@
                     
                     <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
                         <div class="ui-sm-12 ui-g-11">
-                            <p:outputLabel value="Average Producing Time (s)" for="avgProducingTime"/>
+                            <p:outputLabel value="#{adm['form.colum.average.producing.time']} (s)" for="avgProducingTime"/>
                         </div>
                         <div class="ui-sm-12 ui-g-11">
                             <p:inputNumber id="avgProducingTime" value="#{processingPartFormMB.processingPart.avgProducingTime}" required="true"  decimalPlaces="2" decimalSeparator="#{adm['decimal.Separator']}" thousandSeparator="#{adm['thousand.Separator']}" symbol=" s" symbolPosition="s" emptyValue="zero" />
@@ -108,7 +108,7 @@
                     
                     <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
                         <div class="ui-sm-12 ui-g-11">
-                            <p:outputLabel value="Standard Deviation of Setting Time (s)" for="stdSetupTime"/>
+                            <p:outputLabel value="#{adm['form.colum.standard.deviation.setting.time']} (s)" for="stdSetupTime"/>
                         </div>
                         <div class="ui-sm-12 ui-g-11">
                             <p:inputNumber id="stdSetupTime" value="#{processingPartFormMB.processingPart.stdSetupTime}" required="true"  decimalPlaces="2" decimalSeparator="#{adm['decimal.Separator']}" thousandSeparator="#{adm['thousand.Separator']}" symbol=" s" symbolPosition="s" emptyValue="zero" />
@@ -120,7 +120,7 @@
                     
                      <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
                         <div class="ui-sm-12 ui-g-11">
-                            <p:outputLabel value="Standard Deviation of Producing Time (s)" for="stdProducingTime"/>
+                            <p:outputLabel value="#{adm['form.colum.standard.deviation.producing.time']} (s)" for="stdProducingTime"/>
                         </div>
                         <div class="ui-sm-12 ui-g-11">
                             <p:inputNumber id="stdProducingTime" value="#{processingPartFormMB.processingPart.stdProducingTime}" required="true"  decimalPlaces="2" decimalSeparator="#{adm['decimal.Separator']}" thousandSeparator="#{adm['thousand.Separator']}" symbol=" s" symbolPosition="s" emptyValue="zero" />

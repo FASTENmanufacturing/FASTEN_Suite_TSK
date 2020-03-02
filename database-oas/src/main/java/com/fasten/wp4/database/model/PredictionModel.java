@@ -14,5 +14,9 @@ public enum PredictionModel {
 	@JsonProperty("CF1")
 	CF1{@Override public String toString() {return "CF1";}},
 	@JsonProperty("CR")
-	CR{@Override public String toString() {return "CR";}}
+	CR{@Override public String toString() {return "CR";}},
+	@JsonProperty("ANN")
+	ANN{@Override public String toString() {return "ANN";}},
+	@JsonProperty("ELM")
+	ELM{@Override public String toString() {return "ELM";}},
 }

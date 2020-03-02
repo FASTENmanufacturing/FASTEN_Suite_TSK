@@ -3,8 +3,11 @@ package com.github.adminfaces.starter.bean;
 import static com.github.adminfaces.template.util.Assert.has;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.MessageFormat;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
@@ -28,7 +31,7 @@ import com.github.adminfaces.template.exception.BusinessException;
 @ViewScoped
 public class TacticalOptimizationResultMB implements Serializable {
 
-	private Long id;
+	private Long study;
 
 	private TacticalOptimizationResult tacticalOptimizationResult;
 
@@ -42,9 +45,9 @@ public class TacticalOptimizationResultMB implements Serializable {
 		if(Faces.isAjaxRequest()){
 			return;
 		}
-		if (has(id)) {
+		if (has(study)) {
         	try {
-        		tacticalOptimizationResult = tacticalOptimizationResultControllerApi.retrieveTacticalOptimizationResult(id);
+        		tacticalOptimizationResult = tacticalOptimizationResultControllerApi.retrieveByTacticalOptimization(study);
         		List<RemoteStation> remotes = tacticalOptimizationResult.getPrinters().stream().map(allocatedSRAM -> allocatedSRAM.getRemoteStation()).collect(Collectors.toList());
         		PrimeFaces.current().executeScript("renderMap("+remoteStationControllerApi.getApiClient().getJSON().serialize(remotes)+");");
 			} catch (ApiException e) {
@@ -53,13 +56,14 @@ public class TacticalOptimizationResultMB implements Serializable {
 		}
 	}
 
-	public Long getId() {
-		return id;
+	public Long getStudy() {
+		return study;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setStudy(Long study) {
+		this.study = study;
 	}
+
 
 	public TacticalOptimizationResult getTacticalOptimizationResult() {
 		return tacticalOptimizationResult;
@@ -80,5 +84,23 @@ public class TacticalOptimizationResultMB implements Serializable {
 			return StringUtils.capitalize(entityName).concat(" "+tacticalOptimizationResult.getId());
 		}
 	}
+	
+
+	public int getTotalRemoteStation() {
+		return tacticalOptimizationResult.getPrinters().size();
+	}
+	
+	public double getMaxLeadTime() {
+		return tacticalOptimizationResult.getRoutes().stream().mapToDouble(d -> d.getLeadTime()).max().orElse(0);
+	}
+	
+	public int getMaxPrintersByRemote() {
+		return new BigDecimal(tacticalOptimizationResult.getPrinters().stream().mapToInt(d -> d.getNumberOfSRAMs()).max().orElse(0)).setScale(0,RoundingMode.HALF_UP).intValue();
+	}
+
+	public double getExpensiveRoute() {
+		return new BigDecimal(tacticalOptimizationResult.getRoutes().stream().mapToDouble(d -> d.getCost().doubleValue()).max().orElse(0)).setScale(2,RoundingMode.HALF_UP).doubleValue();
+	}
+	
 	
 }

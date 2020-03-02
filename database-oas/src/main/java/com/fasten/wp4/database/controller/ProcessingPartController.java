@@ -41,7 +41,7 @@ public class ProcessingPartController {
 	@GetMapping(value = "/processingPart", params = {"!page","!size", "!sort"})
 	@ApiOperation(nickname="retrieveAllProcessingPart", value = "List all processing parts info")
 	public List<ProcessingPart> retrieveAll() {
-		return repository.findAll();
+		return repository.retrieveAllOrderBySramCode();
 	}
 	
 	@GetMapping(value = "/processingPart/page")
@@ -87,6 +87,12 @@ public class ProcessingPartController {
 	@ApiOperation(nickname="retrieveProcessingPartByPart", value = "Find processing parts by part name")
 	public List<ProcessingPart> retrieveByPart(@PathVariable String partName) {
 		return repository.findByPartNameIgnoreCase(partName);
+	}
+
+	@GetMapping(value="/processingPart/maxHoursProcessing")
+	@ApiOperation(nickname="retrieveMaxHoursProcessing", value = "Find max time in hours spent on processing parts ")
+	public Long maxHoursProcessing() {
+		return repository.retrieveMaxHoursProcessing();
 	}
 
 	@DeleteMapping("/processingPart/{id}")

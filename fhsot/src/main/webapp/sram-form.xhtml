@@ -15,7 +15,7 @@
         <ui:param name="renderAsterisks" value="true"/>
     </ui:define>
     <ui:define name="title">
-        SRAM
+        #{adm['sram']}
     </ui:define>
     <ui:define name="body">
         <adm:breadcrumb title="#{sRAMFormMB.breadcum}" link="sRAM-form.xhtml?id=#{sRAMFormMB.id}" />
@@ -37,11 +37,11 @@
                     </div>
              </div>
              
-             <p:panel styleClass="box-primary" header="SRAM Info:">
+             <p:panel styleClass="box-primary" header="#{adm['sram.information']}:">
                   <div class="ui-g ui-fluid">
                   	<div class="ui-sm-12 ui-g-6 ui-g-nopad">     
                         <div class="ui-sm-12 ui-g-11">
-                            <p:outputLabel value="Code" for="code"/>
+                            <p:outputLabel value="#{adm['form.colum.code']}" for="code"/>
                         </div>
                         <div class="ui-sm-12 ui-g-11">
                             <p:inputText id="code" value="#{sRAMFormMB.sRAM.code}" required="true"/>
@@ -53,7 +53,7 @@
                     
                     <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
                         <div class="ui-sm-12 ui-g-11">
-                            <p:outputLabel value="Capacity (h)" for="capacity"/>
+                            <p:outputLabel value="#{adm['form.colum.capacity']} (h)" for="capacity"/>
                         </div>
                         <div class="ui-sm-12 ui-g-11">
                             <p:inputNumber id="capacity" value="#{sRAMFormMB.sRAM.capacity}" required="true"  decimalPlaces="2" decimalSeparator="#{adm['decimal.Separator']}" thousandSeparator="#{adm['thousand.Separator']}" symbol=" h" symbolPosition="s" emptyValue="zero" />
@@ -65,7 +65,7 @@
                     
                      <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
                         <div class="ui-sm-12 ui-g-11">
-                            <p:outputLabel value="Fixed Cost (#{adm['symbol.money']})" for="fixedCost"/>
+                            <p:outputLabel value="#{adm['form.colum.fixed.cost']} (#{adm['symbol.money']})" for="fixedCost"/>
                         </div>
                         <div class="ui-sm-12 ui-g-11">
                             <p:inputNumber id="fixedCost" value="#{sRAMFormMB.sRAM.fixedCost}" required="true"  decimalPlaces="2" decimalSeparator="#{adm['decimal.Separator']}" thousandSeparator="#{adm['thousand.Separator']}" symbol="#{adm['symbol.money']} " symbolPosition="p" emptyValue="zero" />
@@ -77,12 +77,12 @@
                      
                      <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
                         <div class="ui-sm-12 ui-g-11">
-                            <p:outputLabel value="Status" for="status"/>
+                            <p:outputLabel value="#{adm['form.colum.status']}" for="status"/>
                         </div>
                         <div class="ui-sm-12 ui-g-11">
 							<o:importConstants type="com.fasten.wp4.database.client.model.SRAM.StatusEnum" /> 
-							<p:selectBooleanButton id="status" value="#{sRAMFormMB.sRAM.status}" onLabel="Online" offLabel="Offline" required="true" 
-												   onIcon="fa fa-check" offIcon="fa fa-times" style="width:80px;" /> 
+							<p:selectBooleanButton id="status" value="#{sRAMFormMB.sRAM.status}" onLabel="#{adm['form.colum.status.online']}" offLabel="#{adm['form.colum.status.offline']}" required="true" 
+												   onIcon="fa fa-check" offIcon="fa fa-times" style="width:130px;" /> 
                             <span class="help-block"> 
                                 <p:message for="status"/>
                             </span>
@@ -91,13 +91,13 @@
                      
                      <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
                         <div class="ui-sm-12 ui-g-11">
-                            <p:outputLabel value="Process Status" for="processStatus"/>
+                            <p:outputLabel value="#{adm['form.colum.process.status']}" for="processStatus"/>
                         </div>
                         <div class="ui-sm-12 ui-g-11">
 							<o:importConstants type="com.fasten.wp4.database.client.model.SRAM.ProcessStatusEnum" /> 
 							<p:selectOneMenu id="processStatus" required="true" value="#{sRAMFormMB.sRAM.processStatus}">
 								<f:selectItems value="#{ProcessStatusEnum}" var="processStatus" itemLabel="#{processStatus.value}" itemValue="#{processStatus}" />
-								<f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+								<f:selectItem itemLabel="#{adm['combo.box.select.one']}" itemValue="#{null}" noSelectionOption="true" />
 							</p:selectOneMenu>
                             <span class="help-block"> 
                                 <p:message for="processStatus"/>
@@ -110,11 +110,11 @@
                  
                  <p:spacer height="15px" />
                  
-                 <p:panel styleClass="box-primary" header="Enviromental Info:">
+                 <p:panel styleClass="box-primary" header="#{adm['sram.enviromental.information']}:">
 	                  <div class="ui-g ui-fluid">  
 	                    <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
 	                        <div class="ui-sm-12 ui-g-11">
-	                            <p:outputLabel value="Temperature (ºC)" for="temperature"/>
+	                            <p:outputLabel value="#{adm['form.colum.temperature']} (ºC)" for="temperature"/>
 	                        </div>
 	                        <div class="ui-sm-12 ui-g-11">
 	                            <p:inputNumber id="temperature" value="#{sRAMFormMB.sRAM.enviromentalInfo.temperature}" required="true"  decimalPlaces="2" decimalSeparator="#{adm['decimal.Separator']}" thousandSeparator="#{adm['thousand.Separator']}" symbol=" ºC" symbolPosition="s" emptyValue="zero" />
@@ -126,7 +126,7 @@
 	                    
 	                    <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
 	                        <div class="ui-sm-12 ui-g-11">
-	                            <p:outputLabel value="Humidity (ºC)" for="humidity"/>
+	                            <p:outputLabel value="#{adm['form.colum.humidity']} (ºC)" for="humidity"/>
 	                        </div>
 	                        <div class="ui-sm-12 ui-g-11">
 	                            <p:inputNumber id="humidity" value="#{sRAMFormMB.sRAM.enviromentalInfo.humidity}" required="true"  decimalPlaces="2" decimalSeparator="#{adm['decimal.Separator']}" thousandSeparator="#{adm['thousand.Separator']}" symbol=" ºC" symbolPosition="s" emptyValue="zero" />
@@ -140,11 +140,11 @@
                  
                  <p:spacer height="15px" />
                  
-                 <p:panel styleClass="box-primary" header="Capabilities Info:">
+                 <p:panel styleClass="box-primary" header="#{adm['sram.capabilities.information']}:">
 	                  <div class="ui-g ui-fluid">     
 	                    <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
 	                        <div class="ui-sm-12 ui-g-11">
-	                            <p:outputLabel value="Volume (cm3)" for="volume"/>
+	                            <p:outputLabel value="#{adm['form.colum.volume']} (cm3)" for="volume"/>
 	                        </div>
 	                        <div class="ui-sm-12 ui-g-11">
 	                            <p:inputNumber id="volume" value="#{sRAMFormMB.sRAM.capabilities.volume}" required="true"  decimalPlaces="2" decimalSeparator="#{adm['decimal.Separator']}" thousandSeparator="#{adm['thousand.Separator']}" symbol=" cm3" symbolPosition="s" emptyValue="zero" />
@@ -156,7 +156,7 @@
 	                    
 	                    <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
 	                        <div class="ui-sm-12 ui-g-11">
-	                            <p:outputLabel value="Material In Use" for="materialInUse"/>
+	                            <p:outputLabel value="#{adm['form.colum.material.in.use']}" for="materialInUse"/>
 	                        </div>
 	                        <div class="ui-sm-12 ui-g-11">
 	                            <p:inputText id="materialInUse" value="#{sRAMFormMB.sRAM.capabilities.materialInUse}" required="true"/>
@@ -168,7 +168,7 @@
 	                    
 	                    <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
 	                        <div class="ui-sm-12 ui-g-11">
-	                            <p:outputLabel value="Material Available" for="materialAvailable"/>
+	                            <p:outputLabel value="#{adm['form.colum.material.availabel']}" for="materialAvailable"/>
 	                        </div>
 	                        <div class="ui-sm-12 ui-g-11">
 	                            <p:inputText id="materialAvailable" value="#{sRAMFormMB.sRAM.capabilities.materialAvailable}" required="true"/>

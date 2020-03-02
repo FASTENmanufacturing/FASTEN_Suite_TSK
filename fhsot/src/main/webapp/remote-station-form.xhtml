@@ -71,7 +71,7 @@
     </ui:define>
     
     <ui:define name="title">
-        Remote Station
+        #{adm['remoteStation']}
     </ui:define>
     <ui:define name="body">
         <adm:breadcrumb title="#{remoteStationFormMB.breadcum}" link="remote-station-form.xhtml?id=#{remoteStationFormMB.id}" />
@@ -91,7 +91,7 @@
                         </div>
                 </div>  
 			</div>
-            <p:panel styleClass="box-primary" header="Geolocalization:" >
+            <p:panel styleClass="box-primary" header="#{adm['remote.station.geolocalization']}:" >
                   <div class="ui-g ui-fluid">
                   <ui:fragment rendered="#{!remoteStationFormMB.isNew()}">
 	                  <div class="ui-sm-12 ui-g-12 ui-g-nopad">     
@@ -137,13 +137,13 @@
                  </div>
             </p:panel>
             <p:spacer height="15px"></p:spacer>
-            <p:panel styleClass="box-primary" header="Remote Station Info:">
+            <p:panel styleClass="box-primary" header="#{adm['remote.station.information']}:">
                 <div class="ui-g ui-fluid">
                     
                     
                     <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
                         <div class="ui-sm-12 ui-g-11">
-                            <p:outputLabel value="Code" for="code"/>
+                            <p:outputLabel value="#{adm['form.colum.code']}" for="code"/>
                         </div>
                         <div class="ui-sm-12 ui-g-11">
                             <p:inputText id="code" value="#{remoteStationFormMB.remoteStation.code}" required="true"/>
@@ -155,7 +155,7 @@
                     
                     <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
                         <div class="ui-sm-12 ui-g-11">
-                            <p:outputLabel value="Name" for="name"/>
+                            <p:outputLabel value="#{adm['form.colum.name']}" for="name"/>
                         </div>
                         <div class="ui-sm-12 ui-g-11">
                             <p:inputText id="name" value="#{remoteStationFormMB.remoteStation.name}" required="true"/>
@@ -164,16 +164,41 @@
                             </span>
                         </div>
                     </div> 
+
+                    <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
+                        <div class="ui-sm-12 ui-g-11">
+                            <p:outputLabel value="#{adm['form.colum.unit']}" for="unidade"/>
+                        </div>
+                        <div class="ui-sm-12 ui-g-11">
+                            <p:inputText id="unidade" value="#{remoteStationFormMB.remoteStation.unidade}"/>
+                            <span class="help-block"> 
+                                <p:message for="unidade"/>
+                            </span>
+                        </div>
+                    </div> 
+                    
+
+                    <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
+                        <div class="ui-sm-12 ui-g-11">
+                            <p:outputLabel value="#{adm['form.colum.freight']}" for="frete"/>
+                        </div>
+                        <div class="ui-sm-12 ui-g-11">
+                            <p:inputText id="frete" value="#{remoteStationFormMB.remoteStation.frete}" />
+                            <span class="help-block"> 
+                                <p:message for="frete"/>
+                            </span>
+                        </div>
+                    </div> 
                     
                      <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
 		               <div class="ui-sm-12 ui-g-11">
-		                   <p:outputLabel value="State" for="state"/>
+		                   <p:outputLabel value="#{adm['form.colum.state']}" for="state"/>
 		               </div>
 		               <div class="ui-sm-12 ui-g-11">
 		                   <p:selectOneMenu dynamic="true" filter="true" filterMatchMode="contains" id="state" value="#{remoteStationFormMB.remoteStation.state}">
 		                   		<f:converter converterId="entityApiConverter"/>
 		                   		<p:ajax process="state" update="city" global="false" partialSubmit="true" event="itemSelect" listener="#{remoteStationFormMB.onStateSelect}"/>
-			                    <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+			                    <f:selectItem itemLabel="#{adm['combo.box.select.one']}" itemValue="#{null}" noSelectionOption="true" />
 			                    <f:selectItems value="#{remoteStationFormMB.states}" var="state" itemLabel="#{state.stateAcronym} - #{state.name}" itemValue="#{state}" />
 		                	</p:selectOneMenu>
 		                   <span class="help-block"> 
@@ -183,12 +208,12 @@
 		           </div>
 		           <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
 		               <div class="ui-sm-12 ui-g-11">
-		                   <p:outputLabel value="City" for="city"/>
+		                   <p:outputLabel value="#{adm['form.colum.city']}" for="city"/>
 		               </div>
 		               <div class="ui-sm-12 ui-g-11">
 		                   <p:selectOneMenu dynamic="true" disabled="#{empty remoteStationFormMB.remoteStation.state}" filter="true" filterMatchMode="contains" id="city" value="#{remoteStationFormMB.remoteStation.city}">
 		                   		<f:converter converterId="entityApiConverter"/>
-			                    <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+			                    <f:selectItem itemLabel="#{adm['combo.box.select.one']}" itemValue="#{null}" noSelectionOption="true" />
 			                    <f:selectItems value="#{remoteStationFormMB.cities}" var="city" itemLabel="#{city.name}" itemValue="#{city}" />
 		                	</p:selectOneMenu>
 		                   <span class="help-block"> 
@@ -199,13 +224,13 @@
                     
                     <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
                         <div class="ui-sm-12 ui-g-11">
-                            <p:outputLabel value="Priority" for="priority"/>
+                            <p:outputLabel value="#{adm['form.colum.priority']}" for="priority"/>
                         </div>
                         <div class="ui-sm-12 ui-g-11">
 							<o:importConstants type="com.fasten.wp4.database.client.model.RemoteStation.PriorityEnum" />
 							<p:selectOneMenu id="priority" required="true" value="#{remoteStationFormMB.remoteStation.priority}">
 								<f:selectItems value="#{PriorityEnum}" var="priority" itemLabel="#{priority.value}" itemValue="#{priority}" />
-								<f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+								<f:selectItem itemLabel="#{adm['combo.box.select.one']}" itemValue="#{null}" noSelectionOption="true" />
 							</p:selectOneMenu>
                             <span class="help-block"> 
                                 <p:message for="priority"/>

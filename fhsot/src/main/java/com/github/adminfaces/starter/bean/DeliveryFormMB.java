@@ -26,7 +26,6 @@ import com.fasten.wp4.database.client.api.DeliveryControllerApi;
 import com.fasten.wp4.database.client.api.RemoteStationControllerApi;
 import com.fasten.wp4.database.client.invoker.ApiException;
 import com.fasten.wp4.database.client.model.Delivery;
-import com.fasten.wp4.database.client.model.Part;
 import com.fasten.wp4.database.client.model.RemoteStation;
 import com.github.adminfaces.template.exception.BusinessException;
 

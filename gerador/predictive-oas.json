@@ -1,23 +1,51 @@
 {
   "swagger" : "2.0",
   "info" : {
-    "description" : "Have algorithm for demand forecasting",
-    "version" : "1.1",
-    "title" : "Predictions  API"
+    "description" : "Part of Predictive Prescriptive and Analytic Tool.",
+    "version" : "1.2",
+    "title" : "Predictions API by FASTEN"
   },
   "host" : "ec2-18-189-180-102.us-east-2.compute.amazonaws.com:8090",
   "basePath" : "/",
   "tags" : [ {
-    "name" : "forecastingMethods",
-    "description" : "provides several methods for forecasting time series"
+    "name" : "forecast",
+    "description" : "Provides several methods for time series forecasting."
   } ],
   "schemes" : [ "http" ],
   "consumes" : [ "application/json" ],
   "produces" : [ "application/json" ],
   "paths" : {
-    "/forecastingMethods/Statistical/" : {
+    "/forecast/multi/" : {
       "post" : {
-        "tags" : [ "forecastingMethods" ],
+        "tags" : [ "forecast" ],
+        "operationId" : "post_multi",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "payload",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/ForecastStudyList"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "schema" : {
+              "$ref" : "#/definitions/ForecastStudyList"
+            }
+          },
+          "400" : {
+            "description" : "Invalid Argument"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/forecast/single/" : {
+      "post" : {
+        "tags" : [ "forecast" ],
         "operationId" : "post_main_class",
         "parameters" : [ {
           "in" : "body",
@@ -51,12 +79,12 @@
       "properties" : {
         "models" : {
           "type" : "array",
-          "example" : [ "NAIVE", "SES", "AR", "HOLT", "AUTO", "CF1","CR"],
+          "example" : [ "NAIVE", "SES", "AR", "HOLT", "CR", "AUTO", "CF1" ],
           "description" : "Names of the forecasting methods",
           "items" : {
             "type" : "string",
             "example" : "NAIVE",
-            "enum" : [ "NAIVE", "SES", "AR", "HOLT", "AUTO", "CF1","CR"]
+            "enum" : [ "NAIVE", "SES", "AR", "HOLT", "CR", "AUTO", "CF1", "ANN", "ELM" ]
           }
         },
         "frequency" : {
@@ -111,7 +139,7 @@
       "properties" : {
         "processedDemand" : {
           "type" : "array",
-          "description" : "Processed demand conform to specified granuarity.",
+          "description" : "Processed demand conform to specified granularity.",
           "items" : {
             "$ref" : "#/definitions/DemandData"
           }
@@ -133,7 +161,7 @@
           "type" : "string",
           "example" : "NAIVE",
           "description" : "Name of the forecasting method",
-          "enum" : [ "NAIVE", "SES", "AR", "HOLT", "CF1","CR"]
+          "enum" : [ "NAIVE", "SES", "AR", "HOLT", "CR", "CF1", "ANN", "ELM" ]
         },
         "trainingPrediction" : {
           "type" : "array",
@@ -183,7 +211,7 @@
           "type" : "string",
           "example" : "RMSE",
           "description" : "Name of the  forecating erro",
-          "enum" : [ "RMSE", "MAPE", "MASE"]
+          "enum" : [ "RMSE", "MAPE", "MASE" ]
         },
         "value" : {
           "type" : "number",
@@ -195,6 +223,28 @@
           "example" : "TRAIN",
           "description" : "The set name where metrics were calculated.",
           "enum" : [ "TEST", "TRAIN" ]
+        }
+      }
+    },
+    "ForecastStudyList" : {
+      "type" : "object",
+      "required" : [ "endDate", "startDate" ],
+      "properties" : {
+        "startDate" : {
+          "type" : "string",
+          "example" : "01/12/2019",
+          "description" : "The initial date in the format DD/MM/YYYY."
+        },
+        "endDate" : {
+          "type" : "string",
+          "example" : "01/12/2020",
+          "description" : "The end date in the format DD/MM/YYYY."
+        },
+        "StudyList" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ForecastingStudy"
+          }
         }
       }
     }

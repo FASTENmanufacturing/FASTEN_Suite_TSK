@@ -52,6 +52,11 @@ public class TacticalOptimization implements Serializable {
 	private Boolean clustered;
 	
 	private Boolean usePrediction;
+	
+	private Integer horizon;
+	
+	@Enumerated(EnumType.STRING)
+	private Granularity granularity;
 
 	public Long getId() {
 		return id;
@@ -195,6 +200,22 @@ public class TacticalOptimization implements Serializable {
 
 	public void setUsePrediction(Boolean usePrediction) {
 		this.usePrediction = usePrediction;
+	}
+
+	public Integer getHorizon() {
+		return horizon;
+	}
+
+	public void setHorizon(Integer horizon) {
+		this.horizon = horizon;
+	}
+
+	public Granularity getGranularity() {
+		return granularity;
+	}
+
+	public void setGranularity(Granularity granularity) {
+		this.granularity = granularity;
 	}
 	
 }

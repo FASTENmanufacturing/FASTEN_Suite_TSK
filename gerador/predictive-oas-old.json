@@ -1,0 +1,210 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "Have algorithm for demand forecasting",
+    "version" : "1.1",
+    "title" : "Predictions  API"
+  },
+  "host" : "ec2-18-189-180-102.us-east-2.compute.amazonaws.com:8090",
+  "basePath" : "/",
+  "tags" : [ {
+    "name" : "forecastingMethods",
+    "description" : "provides several methods for forecasting time series"
+  } ],
+  "schemes" : [ "http" ],
+  "consumes" : [ "application/json" ],
+  "produces" : [ "application/json" ],
+  "paths" : {
+    "/forecastingMethods/Statistical/" : {
+      "post" : {
+        "tags" : [ "forecastingMethods" ],
+        "operationId" : "post_main_class",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "payload",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/ForecastingStudy"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "schema" : {
+              "$ref" : "#/definitions/StudyResults"
+            }
+          },
+          "400" : {
+            "description" : "Invalid Argument"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "ForecastingStudy" : {
+      "type" : "object",
+      "required" : [ "demands", "frequency", "horizon", "models" ],
+      "properties" : {
+        "models" : {
+          "type" : "array",
+          "example" : [ "NAIVE", "SES", "AR", "HOLT", "AUTO", "CF1","CR"],
+          "description" : "Names of the forecasting methods",
+          "items" : {
+            "type" : "string",
+            "example" : "NAIVE",
+            "enum" : [ "NAIVE", "SES", "AR", "HOLT", "AUTO", "CF1","CR"]
+          }
+        },
+        "frequency" : {
+          "type" : "string",
+          "example" : "M",
+          "description" : "The frequency of series (M=Month,W=Week,D=Day and A=Year).",
+          "enum" : [ "M", "W", "D", "A" ]
+        },
+        "demands" : {
+          "type" : "array",
+          "description" : "The historical (time-series) demand data.",
+          "items" : {
+            "$ref" : "#/definitions/DemandData"
+          }
+        },
+        "horizon" : {
+          "type" : "integer",
+          "example" : 1,
+          "description" : "Number of periods to forecast",
+          "minimum" : 1
+        },
+        "part" : {
+          "type" : "string",
+          "example" : "Bico Dosador",
+          "description" : "Part name"
+        },
+        "remoteStation" : {
+          "type" : "string",
+          "example" : "São Paulo",
+          "description" : "Demand location"
+        }
+      }
+    },
+    "DemandData" : {
+      "type" : "object",
+      "required" : [ "demandDate", "demandValue" ],
+      "properties" : {
+        "demandValue" : {
+          "type" : "integer",
+          "example" : 12,
+          "description" : "The value of a single demand."
+        },
+        "demandDate" : {
+          "type" : "string",
+          "example" : "01/12/2019",
+          "description" : "A string representation of a date in the format DD/MM/YYYY."
+        }
+      }
+    },
+    "StudyResults" : {
+      "type" : "object",
+      "properties" : {
+        "processedDemand" : {
+          "type" : "array",
+          "description" : "Processed demand conform to specified granuarity.",
+          "items" : {
+            "$ref" : "#/definitions/DemandData"
+          }
+        },
+        "modelsResults" : {
+          "type" : "array",
+          "description" : "List of model results",
+          "items" : {
+            "$ref" : "#/definitions/ModelsResult"
+          }
+        }
+      }
+    },
+    "ModelsResult" : {
+      "type" : "object",
+      "required" : [ "model", "part", "remoteStation" ],
+      "properties" : {
+        "model" : {
+          "type" : "string",
+          "example" : "NAIVE",
+          "description" : "Name of the forecasting method",
+          "enum" : [ "NAIVE", "SES", "AR", "HOLT", "CF1","CR"]
+        },
+        "trainingPrediction" : {
+          "type" : "array",
+          "description" : "Predicted demands in trainning set.",
+          "items" : {
+            "$ref" : "#/definitions/DemandData"
+          }
+        },
+        "testPrediction" : {
+          "type" : "array",
+          "description" : "Predicted demands in test set.",
+          "items" : {
+            "$ref" : "#/definitions/DemandData"
+          }
+        },
+        "forecastDemand" : {
+          "type" : "array",
+          "description" : "Predicted demands for the horizon parameter.",
+          "items" : {
+            "$ref" : "#/definitions/DemandData"
+          }
+        },
+        "error" : {
+          "type" : "array",
+          "description" : "Error of forecating",
+          "items" : {
+            "$ref" : "#/definitions/ForecastErro"
+          }
+        },
+        "part" : {
+          "type" : "string",
+          "example" : "Bico Dosador",
+          "description" : "Part name"
+        },
+        "remoteStation" : {
+          "type" : "string",
+          "example" : "São Paulo",
+          "description" : "Demand location"
+        }
+      }
+    },
+    "ForecastErro" : {
+      "type" : "object",
+      "required" : [ "errorType", "name", "value" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "example" : "RMSE",
+          "description" : "Name of the  forecating erro",
+          "enum" : [ "RMSE", "MAPE", "MASE"]
+        },
+        "value" : {
+          "type" : "number",
+          "example" : 15.5,
+          "description" : "Value of the  forecating erro"
+        },
+        "errorType" : {
+          "type" : "string",
+          "example" : "TRAIN",
+          "description" : "The set name where metrics were calculated.",
+          "enum" : [ "TEST", "TRAIN" ]
+        }
+      }
+    }
+  },
+  "responses" : {
+    "ParseError" : {
+      "description" : "When a mask can't be parsed"
+    },
+    "MaskError" : {
+      "description" : "When any error occurs on mask"
+    }
+  }
+}

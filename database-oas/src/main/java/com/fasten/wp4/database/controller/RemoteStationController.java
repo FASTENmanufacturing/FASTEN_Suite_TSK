@@ -117,6 +117,15 @@ public class RemoteStationController {
 		return retrivedObject;
 	}
 	
+	@GetMapping("/remotestation/excellName")
+	@ApiOperation(nickname="retrieveRemoteStationByExcellName", value = "Retrive Remote Stations by name without space and uppercased")
+	public RemoteStation retrieveRemoteStationByExcellName(@RequestParam(value = "excellName") String excellName) {
+		Optional<RemoteStation> retrivedObject = repository.findByExcellName(excellName);
+		if (!retrivedObject.isPresent())
+			throw new NotFoundException();
+		return retrivedObject.get();
+	}
+	
 	@GetMapping(value="/remotestation/names")
 	@ApiOperation(nickname="retrieveAllByName", value = "Find remote stations by name")
 	public List<String> retrieveAllByName() {

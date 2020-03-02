@@ -19,11 +19,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.fasten.wp4.database.exception.NotFoundException;
 import com.fasten.wp4.database.model.TacticalOptimization;
+import com.fasten.wp4.database.model.TacticalOptimizationStatus;
 import com.fasten.wp4.database.repository.TacticalOptimizationRepository;
 import com.fasten.wp4.database.swagger.ApiPageable;
 import com.fasten.wp4.database.util.ConversorUtil;
@@ -94,6 +96,18 @@ public class TacticalOptimizationController {
 		if (!optional.isPresent())
 			return ResponseEntity.notFound().build();
 		object.setId(id);
+		repository.save(object);
+		return ResponseEntity.noContent().build();
+	}
+	
+	@PutMapping("/tacticalOptimization/status")
+	@ApiOperation(nickname="validateTacticalOptimization", value = "Validate a tactical optimization")
+	public ResponseEntity<Object> updateTacticalOptimization(@RequestParam(value = "id") Long id) {
+		Optional<TacticalOptimization> optional = repository.findById(id);
+		if (!optional.isPresent())
+			return ResponseEntity.notFound().build();
+		TacticalOptimization object = optional.get();
+		object.setStatus(TacticalOptimizationStatus.Valid);
 		repository.save(object);
 		return ResponseEntity.noContent().build();
 	}

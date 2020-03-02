@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
@@ -29,10 +30,13 @@ import com.fasten.wp4.database.client.api.TacticalOptimizationResultControllerAp
 import com.fasten.wp4.database.client.invoker.ApiException;
 import com.fasten.wp4.database.client.model.PageOfTacticalOptimization;
 import com.fasten.wp4.database.client.model.TacticalOptimization;
+import com.fasten.wp4.email.client.api.EmailControllerApi;
+import com.fasten.wp4.email.client.model.Email;
 import com.fasten.wp4.optimizator.tactical.client.invoker.ApiCallback;
 import com.fasten.wp4.optimizator.tactical.client.model.TacticalOptimizationResult;
 import com.github.adminfaces.starter.infra.async.AsyncCall;
 import com.github.adminfaces.starter.infra.async.AsyncRequestUtils;
+import com.github.adminfaces.starter.infra.security.LogonMB;
 import com.github.adminfaces.template.exception.BusinessException;
 import com.squareup.okhttp.Call;
 
@@ -47,6 +51,11 @@ public class TacticalOptimizationListMB implements Serializable {
 	@Inject
 	private transient TacticalOptimizationResultControllerApi tacticalOptimizationResultControllerApi;
 	
+	@Inject
+	LogonMB logonMB;
+	
+//	@Inject
+//    AdminSession adminSession;
 
 	Long id;
 	
@@ -153,20 +162,17 @@ public class TacticalOptimizationListMB implements Serializable {
 	
 	public void execute(TacticalOptimization entity) throws ApiException {
 		try {
-			com.fasten.wp4.optimizator.tactical.client.model.TacticalOptimization tacticalOptimizationModelApi = tacticalOptimizationApi.getApiClient().getJSON().deserialize(tacticalOptimizationControllerApi.getApiClient().getJSON().serialize(entity), com.fasten.wp4.optimizator.tactical.client.model.TacticalOptimization.class);
-			Call c = tacticalOptimizationApi.executeTacticalOptimizationAsync(tacticalOptimizationModelApi,new ApiCallback<TacticalOptimizationResult>() {
+			String requestId = UUID.randomUUID().toString();
+			Call c = tacticalOptimizationApi.executeTacticalOptimizationAsync(requestId,entity.getId(),logonMB.getEmail(), new ApiCallback<TacticalOptimizationResult>() {
 				
 				@Override
 				public void onSuccess(TacticalOptimizationResult tacticalOptimizationResult, int statusCode, Map<String, List<String>> responseHeaders) {
-					try {
-						asyncNotifyMB.sendPushMessage("tactical_optimization_execution");
-					} catch (Exception e) {
-						throw  new BusinessException("Could not execute tactical optimization study");
-					}
+					asyncNotifyMB.sendPushMessage("tactical_optimization_execution");
 				}
 				
 				@Override
 				public void onFailure(com.fasten.wp4.optimizator.tactical.client.invoker.ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
+					asyncNotifyMB.sendPushMessage("error_tactical_optimization");
 					throw  new BusinessException("Could not execute tactical optimization study");
 				}
 				
@@ -176,7 +182,7 @@ public class TacticalOptimizationListMB implements Serializable {
 				public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {}
 			});
 			
-			AsyncCall asyncCall = AsyncRequestUtils.getAsyncCallFrom(tacticalOptimizationApi.getApiClient().getHttpClient().getDispatcher(), c);
+			AsyncCall asyncCall = AsyncRequestUtils.getAsyncCallFrom(tacticalOptimizationApi.getApiClient().getHttpClient().getDispatcher(), c,requestId);
 			asyncCall.setStudy(entity);
 			asyncCalls.add(asyncCall);
 			

@@ -3,6 +3,7 @@ package com.github.adminfaces.starter.bean;
 import static com.github.adminfaces.starter.util.Utils.addGrowlMessage;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.push.Push;
 import javax.faces.push.PushContext;
@@ -31,7 +32,11 @@ public class AsyncNotifyMB {
     	String title = context.getApplication().evaluateExpressionGet(context, "#{event['"+socketMessage+".title']}",String.class);
     	String message = context.getApplication().evaluateExpressionGet(context, "#{event['"+socketMessage+".message']}",String.class);
     	
-    	addGrowlMessage(title, message);
+    	if(socketMessage.contains("error")) {
+    		addGrowlMessage(title, message,FacesMessage.SEVERITY_ERROR);
+    	}else {
+    		addGrowlMessage(title, message);
+    	}
 	}
 	
 	

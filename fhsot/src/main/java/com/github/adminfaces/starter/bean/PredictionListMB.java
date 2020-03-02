@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -35,7 +36,7 @@ import com.fasten.wp4.database.client.model.Demand;
 import com.fasten.wp4.database.client.model.DemandProjectionStudy;
 import com.fasten.wp4.database.client.model.PageOfPrediction;
 import com.fasten.wp4.database.client.model.Prediction;
-import com.fasten.wp4.predictive.client.api.ForecastingMethodsApi;
+import com.fasten.wp4.predictive.client.api.ForecastApi;
 import com.fasten.wp4.predictive.client.invoker.ApiCallback;
 import com.fasten.wp4.predictive.client.model.ForecastingStudy;
 import com.fasten.wp4.predictive.client.model.StudyResults;
@@ -59,7 +60,7 @@ public class PredictionListMB implements Serializable {
 	private transient RemoteStationControllerApi remoteStationControllerApi;
 
 	@Inject
-	private transient ForecastingMethodsApi forecastingMethodsApi;
+	private transient ForecastApi forecastApi;
 
 	@Inject
 	private transient DemandControllerApi demandControllerApi;
@@ -220,9 +221,9 @@ public class PredictionListMB implements Serializable {
 		try {
 			List<Demand> realDemand = demandControllerApi.retrieveByPrediction(prediction.getId().toString());
 			ForecastingStudy forecastingStudy = PredictionApiUtils.convertInput(prediction, realDemand);
-			 
+			String requestId = UUID.randomUUID().toString();
 			
-			Call c = forecastingMethodsApi.postMainClassAsync(forecastingStudy, new ApiCallback<StudyResults>() {
+			Call c = forecastApi.postMainClassAsync(/*TODO requestId,*/forecastingStudy, new ApiCallback<StudyResults>() {
 				@Override
 				public void onFailure(com.fasten.wp4.predictive.client.invoker.ApiException e, int statusCode, Map<String, List<String>> responseHeaders) {
 					 throw  new BusinessException("Could not execute prediction study");
@@ -244,7 +245,7 @@ public class PredictionListMB implements Serializable {
 				@Override
 				public void onDownloadProgress(long bytesRead, long contentLength, boolean done) {}
 			});
-			AsyncCall asyncCall = AsyncRequestUtils.getAsyncCallFrom(forecastingMethodsApi.getApiClient().getHttpClient().getDispatcher(), c);
+			AsyncCall asyncCall = AsyncRequestUtils.getAsyncCallFrom(forecastApi.getApiClient().getHttpClient().getDispatcher(), c,requestId);
 			asyncCall.setStudy(prediction);
 			asyncCalls.add(asyncCall);
 			 

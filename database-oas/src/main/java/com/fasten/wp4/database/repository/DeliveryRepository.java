@@ -18,7 +18,8 @@ public interface DeliveryRepository extends JpaRepository<Delivery, Long>, JpaLa
 	Optional<Delivery> findByOriginCodeAndDestinationCode(String originCode, String destinationCode);
 	
 	@Query("Select delivery from Delivery delivery where delivery.origin 	in ( Select distinct(d.remoteStation) from Demand d where d.orderDate >= (select t.initialDate from TacticalOptimization t where t.id=:id) and d.orderDate <= (select t.endDate from TacticalOptimization t where t.id=:id)) "
-										+ "and delivery.destination in ( Select distinct(d.remoteStation) from Demand d where d.orderDate >= (select t.initialDate from TacticalOptimization t where t.id=:id) and d.orderDate <= (select t.endDate from TacticalOptimization t where t.id=:id)) ")
+										+ "and delivery.destination in ( Select distinct(d.remoteStation) from Demand d where d.orderDate >= (select t.initialDate from TacticalOptimization t where t.id=:id) and d.orderDate <= (select t.endDate from TacticalOptimization t where t.id=:id)) "
+										+ "order by delivery.origin.code asc, delivery.destination.code asc")
 	List<Delivery> retrieveDeliveryMatrixByTacticalOptimization(@Param("id") Long id);
 
 }

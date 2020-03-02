@@ -1,0 +1,25 @@
+/*********************************************
+ * OPL 12.8.0.0 Data
+ * Author: Filipe Marinho de Brito
+ * Creation Date: 21/05/2018 at 14:32:59
+ *********************************************/
+SheetConnection sheet("Demanda Fasten.xlsx");
+SheetConnection sheetCosts("Costs.xlsx");
+
+P from SheetRead(sheet,"Config!B3");
+pesoTempo from SheetRead(sheet,"Config!C3");
+pesoDistancia from SheetRead(sheet,"Config!D3"); 
+
+DemandExcelSource from SheetRead(sheet,"Demand!A3:I1048576");
+DistanceExcelSource from SheetRead(sheetCosts,"'DistanceCost'!A2:D1048576"); 
+TimeExcelSource from SheetRead(sheetCosts,"'TimeCost'!A2:D1048576"); 
+
+RemoteStationsEscolhidas to SheetWrite(sheet, "'Resultado'!B2:B1048576");
+Resultado to SheetWrite(sheet, "'Resultado'!C2:C1048576");
+DemandOrdenadaExcel to SheetWrite(sheet, "'DemandGroup'!A3:J1048576");
+DemandCalcExcel to SheetWrite(sheet, "'DemandCalc'!B3:Q1048576");
+
+Pecas to SheetWrite(sheet, "'Pecas'!B2:B1048576");
+Filiais to SheetWrite(sheet, "'Filiais'!B2:B1048576");
+RemoteStationsEscolhidas to SheetWrite(sheet, "'RemoteStations'!B2:B1048576");
+RemoteStationsExcel to SheetWrite(sheet, "'RemoteStationsFiliais'!B2:C1048576");

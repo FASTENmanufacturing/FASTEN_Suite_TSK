@@ -7,27 +7,27 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Named;
 
-import com.fasten.wp4.predictive.client.api.ForecastingMethodsApi;
+import com.fasten.wp4.predictive.client.api.ForecastApi;
 
 @Named
 @ApplicationScoped
 public class PredictionClient implements Serializable {
 	
 	
-	private ForecastingMethodsApi forecastingMethodsApi;
+	private ForecastApi forecastApi;
 	
 	@PostConstruct
 	public void init() {
-		forecastingMethodsApi = new ForecastingMethodsApi();
-		forecastingMethodsApi.getApiClient().setLenientOnJson(true);
-		forecastingMethodsApi.getApiClient().setDebugging(true);
-		forecastingMethodsApi.getApiClient().setConnectTimeout(0);
-		forecastingMethodsApi.getApiClient().setReadTimeout(0);
+		forecastApi = new ForecastApi();
+		forecastApi.getApiClient().setLenientOnJson(true);
+		forecastApi.getApiClient().setDebugging(true);
+		forecastApi.getApiClient().setConnectTimeout(0);
+		forecastApi.getApiClient().setReadTimeout(0);
 	}
 
 	@Produces
-	public ForecastingMethodsApi getForecastingMethodsApi() {
-		return forecastingMethodsApi;
+	public ForecastApi getForecastApi() {
+		return forecastApi;
 	}
 
 }

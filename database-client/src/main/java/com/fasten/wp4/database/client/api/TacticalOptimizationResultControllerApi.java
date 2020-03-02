@@ -722,11 +722,11 @@ public class TacticalOptimizationResultControllerApi {
      * Find by study
      * 
      * @param id id (required)
-     * @return List&lt;TacticalOptimizationResult&gt;
+     * @return TacticalOptimizationResult
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public List<TacticalOptimizationResult> retrieveByTacticalOptimization(Long id) throws ApiException {
-        ApiResponse<List<TacticalOptimizationResult>> resp = retrieveByTacticalOptimizationWithHttpInfo(id);
+    public TacticalOptimizationResult retrieveByTacticalOptimization(Long id) throws ApiException {
+        ApiResponse<TacticalOptimizationResult> resp = retrieveByTacticalOptimizationWithHttpInfo(id);
         return resp.getData();
     }
 
@@ -734,12 +734,12 @@ public class TacticalOptimizationResultControllerApi {
      * Find by study
      * 
      * @param id id (required)
-     * @return ApiResponse&lt;List&lt;TacticalOptimizationResult&gt;&gt;
+     * @return ApiResponse&lt;TacticalOptimizationResult&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<List<TacticalOptimizationResult>> retrieveByTacticalOptimizationWithHttpInfo(Long id) throws ApiException {
+    public ApiResponse<TacticalOptimizationResult> retrieveByTacticalOptimizationWithHttpInfo(Long id) throws ApiException {
         com.squareup.okhttp.Call call = retrieveByTacticalOptimizationValidateBeforeCall(id, null, null);
-        Type localVarReturnType = new TypeToken<List<TacticalOptimizationResult>>(){}.getType();
+        Type localVarReturnType = new TypeToken<TacticalOptimizationResult>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -751,7 +751,7 @@ public class TacticalOptimizationResultControllerApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call retrieveByTacticalOptimizationAsync(Long id, final ApiCallback<List<TacticalOptimizationResult>> callback) throws ApiException {
+    public com.squareup.okhttp.Call retrieveByTacticalOptimizationAsync(Long id, final ApiCallback<TacticalOptimizationResult> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -773,7 +773,7 @@ public class TacticalOptimizationResultControllerApi {
         }
 
         com.squareup.okhttp.Call call = retrieveByTacticalOptimizationValidateBeforeCall(id, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<List<TacticalOptimizationResult>>(){}.getType();
+        Type localVarReturnType = new TypeToken<TacticalOptimizationResult>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }

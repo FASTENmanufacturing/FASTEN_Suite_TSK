@@ -7,7 +7,7 @@
 
 <ui:define name="metadata">
 	<f:metadata>
-		<f:viewParam name="id" value="#{tacticalOptimizationResultMB.id}" converter="javax.faces.Long"/>
+		<f:viewParam name="study" value="#{tacticalOptimizationResultMB.study}" converter="javax.faces.Long"/>
         <f:viewAction action="#{tacticalOptimizationResultMB.init()}"/>
     </f:metadata>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
@@ -88,6 +88,50 @@
 						
 <p:panel header="Detailed Info">
 <p:accordionPanel activeIndex="0,1,2,3,4" multiple="true">
+		<p:tab title="Resume">
+			<div class="ui-g ui-fluid">
+            	<div class="ui-sm-12 ui-g-6 ">
+					<div class="ui-sm-12 ui-g-6 ">
+						<p:outputLabel for="totalRemoteStation" value="Total remote stations" />
+					</div>
+					<div class="ui-sm-12 ui-g-6 ">
+						<h:outputText id="totalRemoteStation" value="#{tacticalOptimizationResultMB.totalRemoteStation}" style="width: 100%" />
+					</div>
+				</div>
+            	<div class="ui-sm-12 ui-g-6 ">
+					<div class="ui-sm-4 ui-g-4 ">
+						<p:outputLabel for="maxLeadTime" value="Maximum lead time" />
+					</div>
+					<div class="ui-sm-8 ui-g-8 ">
+						
+							<h:outputText id="maxLeadTime" value="#{tacticalOptimizationResultMB.maxLeadTime}" style="width: 100%" >
+								<f:converter converterId="prettyHourConverter" />
+							</h:outputText> <p:spacer width="5"/> <b>or</b> <p:spacer width="5"/>
+							<h:outputText value="#{tacticalOptimizationResultMB.maxLeadTime}" style="width: 100%">
+								<f:convertNumber maxFractionDigits="3"/>
+							</h:outputText> h
+					</div>
+				</div>
+				<div class="ui-sm-12 ui-g-6 ">
+					<div class="ui-sm-12 ui-g-6 ">
+						<p:outputLabel for="maxPrintersByRemote" value="Max printers in a Remote Station" />
+					</div>
+					<div class="ui-sm-12 ui-g-6 ">
+						<h:outputText id="maxPrintersByRemote" value="#{tacticalOptimizationResultMB.maxPrintersByRemote}" style="width: 100%" />
+					</div>
+				</div>
+				<div class="ui-sm-12 ui-g-6 ">
+					<div class="ui-sm-12 ui-g-6 ">
+						<p:outputLabel for="expensiveRoute" value="Expensive demand delivery" />
+					</div>
+					<div class="ui-sm-12 ui-g-6 ">
+						<h:outputText id="expensiveRoute" value="#{tacticalOptimizationResultMB.expensiveRoute}" style="width: 100%" >
+							<f:convertNumber currencySymbol="#{adm['symbol.money']} " type="currency" />
+						</h:outputText>
+					</div>
+				</div>
+			</div>
+        </p:tab>
         <p:tab title="Allocated printers">
 				<h:outputText value="Results of the selected AM cells and number of 3D printers:" />
 				<p:dataTable var="printer" value="#{tacticalOptimizationResultMB.tacticalOptimizationResult.printers}">
@@ -104,10 +148,10 @@
         </p:tab>
         <p:tab title="Routes">
 		<h:outputText value="Post calculated routes, costs and lead time using the demands:" />
-		<p:dataTable var="route" value="#{tacticalOptimizationResultMB.tacticalOptimizationResult.routes}" rows="10"
+		<p:dataTable var="route" value="#{tacticalOptimizationResultMB.tacticalOptimizationResult.routes}" rows="200"
                  paginator="true"
                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                 rowsPerPageTemplate="5,10,15">
+                 rowsPerPageTemplate="200,300,500">
 			<p:column rendered="false" headerText="Id">
 				<h:outputText value="#{route.id}" />
 			</p:column>
@@ -137,10 +181,10 @@
 	</p:tab>
 	<p:tab title="Internal supply">
 		<h:outputText value="Final internal supply scheme for the optimized supply chain:" />
-		<p:dataTable var="internalSupply" value="#{tacticalOptimizationResultMB.tacticalOptimizationResult.internalSuppliers}" rows="10"
+		<p:dataTable var="internalSupply" value="#{tacticalOptimizationResultMB.tacticalOptimizationResult.internalSuppliers}" rows="200"
                  paginator="true"
                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                 rowsPerPageTemplate="5,10,15">
+                 rowsPerPageTemplate="200,300,500">
             <h:outputText value="The supplied demand is achieved internally by:" />
 			<p:column rendered="false" headerText="Id">
 				<h:outputText value="#{internalSupply.id}" />

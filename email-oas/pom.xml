@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.fasten.wp4.email</groupId>
+	<artifactId>email-oas</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>email-oas</name>
+	<description>
+		Open API Specification REST for FASTEN Holistic Simulator-Optimizer Tool
+		This microservice provides email sender service based in:  
+			http://javabycode.com/spring-framework-tutorial/spring-boot-tutorial/spring-boot-freemarker-email-template.html
+			https://memorynotfound.com/spring-mail-sending-email-freemarker-html-template-example/
+			https://stackoverflow.com/questions/12732584/threadsafety-in-javamail
+		because:
+			https://docs.spring.io/spring/docs/current/spring-framework-reference/integration.html#mail-templates
+		that says:
+			"Typically, the approach taken to address these issues is to use a template library (such as FreeMarker) 
+			to define the display structure of email content. This leaves your code tasked only with creating the data 
+			that is to be rendered in the email template and sending the email. It is definitely a best practice when 
+			the content of your email messages becomes even moderately complex, and, with the Spring Framework’s 
+			support classes for FreeMarker, it becomes quite easy to do." in Spring docs
+		Good templetes from:
+			https://github.com/InterNations/antwort
+			https://github.com/leemunroe/responsive-html-email-template
+		Work done at 12.26.2018
+	</description>
+	<packaging>jar</packaging>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.1.1.RELEASE</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<!-- Spring boot main class -->
+		<start-class>com.fasten.wp4.email.EmailOAS</start-class>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+		<!-- Java Mail -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.7</version>
+		</dependency>
+		<!-- Spring Swagger -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.9.2</version>
+			<exclusions>
+				<exclusion>
+					<groupId>io.swagger</groupId>
+					<artifactId>swagger-annotations</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>io.swagger</groupId>
+					<artifactId>swagger-models</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+		    <groupId>io.springfox</groupId>
+		    <artifactId>springfox-data-rest</artifactId>
+		    <version>2.9.2</version>
+		</dependency>
+				
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-annotations</artifactId>
+			<version>1.5.21</version>
+		</dependency>
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-models</artifactId>
+			<version>1.5.21</version>
+		</dependency>
+		<!-- Spring restart -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<!-- Default templated email -->
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<!-- https://www.baeldung.com/executable-jar-with-maven https://docs.spring.io/spring-boot/docs/current/maven-plugin/usage.html 
+		https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-maven-plugin.html 
+		mvn package (Goals: package) -->
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+<!-- 					<classifier>spring-boot</classifier> -->
+<!-- 					<archive> -->
+<!-- 						<manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile> -->
+<!-- 					</archive> -->
+					<mainClass>${start-class}</mainClass>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

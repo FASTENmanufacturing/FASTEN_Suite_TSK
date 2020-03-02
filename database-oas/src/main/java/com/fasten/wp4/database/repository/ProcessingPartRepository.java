@@ -8,15 +8,30 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.fasten.wp4.database.model.Demand;
 import com.fasten.wp4.database.model.ProcessingPart;
 
 @Repository
 public interface ProcessingPartRepository extends JpaRepository<ProcessingPart, Long>, JpaLazyDataModel<ProcessingPart>{
+	
+	@Query("SELECT processingPart FROM ProcessingPart processingPart order by processingPart.SRAM.code asc, processingPart.part.id asc")
+	List<ProcessingPart> retrieveAllOrderBySramCode();
 
 	@Query("SELECT processingPart FROM ProcessingPart processingPart WHERE processingPart.part.code = :partCode and processingPart.SRAM.code = :SRAMCode")
 	Optional<ProcessingPart> findByPartCodeAndSRAMCode(@Param("partCode") String partCode, @Param("SRAMCode") String SRAMCode);
 
 	List<ProcessingPart> findByPartNameIgnoreCase(String partName);
+	
+	@Query("SELECT ceil(coalesce(max( (processingPart.avgProducingTime + processingPart.stdProducingTime + processingPart.avgSetupTime + processingPart.stdSetupTime) ), 0)/3600) FROM ProcessingPart processingPart")
+	Long retrieveMaxHoursProcessing();
+
+	@Query("select max((processingPart.avgProducingTime + processingPart.stdProducingTime + processingPart.avgSetupTime + processingPart.stdSetupTime)*d.quantity)/3600"
+			+ " from ProcessingPart processingPart "
+			+ " inner join Demand d on processingPart.part.id = d.part.id "
+			+ " where d.orderDate >= (select t.initialDate from TacticalOptimization t where t.id=:tacticalOptimizationId) and "
+			+ " d.orderDate <= (select t.endDate from TacticalOptimization t where t.id=:tacticalOptimizationId) "
+			+ " and processingPart.SRAM.id=:sramId")
+	Double retrieveMinProcessingPartByTacticalOptimization(@Param("tacticalOptimizationId") Long tacticalOptimizationId, @Param("sramId") Long sramId);
 
 }
 

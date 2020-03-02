@@ -1,8 +1,10 @@
 package com.github.adminfaces.starter.bean;
 
 import static com.github.adminfaces.starter.util.ApiUtils.getIdFromLocationHeader;
+import static com.github.adminfaces.starter.util.Utils.addDetailMessage;
 import static com.github.adminfaces.template.util.Assert.has;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.text.MessageFormat;
 import java.util.Arrays;
@@ -60,6 +62,8 @@ public class TacticalOptimizationValidateFormMB implements Serializable {
 	
 	@Inject
 	private transient MatrixApi matrixApi;
+	
+	int cont;
 
 	public void init() {
 		if(Faces.isAjaxRequest()){
@@ -68,7 +72,7 @@ public class TacticalOptimizationValidateFormMB implements Serializable {
 		if (has(id)) {
 			try {
 				tacticalOptimization = tacticalOptimizationControllerApi.retrieveTacticalOptimization(id);
-				
+				cont=0;
 				getRemoteStationByTacticalOptimization();
 				calculateTotalCandidates();
 				calculateTotalCandidatesWithCoordinates();
@@ -357,6 +361,8 @@ public class TacticalOptimizationValidateFormMB implements Serializable {
 	}
 	
 	public void processMatrix() {
+		if(cont==0) {
+			cont++;
 		MatrixRequest request = new MatrixRequest();
 		request.setLocations(getCoordinatesFromTacticalOptimizationLocations());
 		request.addMetricsItem(MetricsEnum.DISTANCE).addMetricsItem(MetricsEnum.DURATION).resolveLocations(false).units(UnitsEnum.M);
@@ -383,6 +389,7 @@ public class TacticalOptimizationValidateFormMB implements Serializable {
 			deliveryControllerApi.updateDeliveries(deliveries);
 		} catch (Exception e) {
 			throw new BusinessException("Could not batch update Deliveries");
+		}
 		}
 	}
 
@@ -429,5 +436,16 @@ public class TacticalOptimizationValidateFormMB implements Serializable {
 	public void setProgressMatrixRemoteStations(Integer progressMatrixRemoteStations) {
 		this.progressMatrixRemoteStations = progressMatrixRemoteStations;
 	}
+	
+	public void validate() throws IOException {
+            try {
+            	tacticalOptimizationControllerApi.validateTacticalOptimization(id);
+			} catch (ApiException e) {
+				throw new BusinessException("Could not validate Tactical Optimization");
+			}
+            addDetailMessage("Tactical Optimization validated.");
+            Faces.getFlash().setKeepMessages(true);
+            Faces.redirect("tactical-optimization-list.xhtml");
+    }
 
 }

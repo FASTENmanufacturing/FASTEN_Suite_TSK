@@ -6,8 +6,6 @@
 
 .settings/
 
-
-
 *.class
 
 # Mobile Tools for Java (J2ME)
@@ -30,3 +28,7 @@ target
 .gradle
 build
 /aws-database-oas.ppk
+
+**/studies
+studies
+

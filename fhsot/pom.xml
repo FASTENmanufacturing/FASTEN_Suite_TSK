@@ -247,6 +247,11 @@
 		    <artifactId>kafka-request-client</artifactId>
     		<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>com.fasten.wp4</groupId>
+		    <artifactId>email-client</artifactId>
+		    <version>0.0.1-SNAPSHOT</version>
+		</dependency>	
 	</dependencies>
 	<repositories>
 		<repository>

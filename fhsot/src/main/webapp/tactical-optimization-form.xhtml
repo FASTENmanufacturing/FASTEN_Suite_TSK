@@ -320,7 +320,9 @@
                       <p:outputLabel for="usePrediction" value="Use Predict study" />
                   </div>
                   <div class="ui-sm-12 ui-g-11">
-                      <p:toggleSwitch id="usePrediction" value="#{tacticalOptimizationFormMB.usePrediction}" />
+                      <p:toggleSwitch id="usePrediction" value="#{tacticalOptimizationFormMB.usePrediction}" >
+				            <p:ajax listener="#{tacticalOptimizationFormMB.toogleUsePrediction}" global="false" process="@this" update="predictionPanel" />
+				      </p:toggleSwitch>
                       <span class="help-block"> 
                       	<p:message for="usePrediction"/>
                       </span>
@@ -328,6 +330,47 @@
                 </div>
             </div>
 		    </p:panel>
+		    <p:spacer height="15px"/>
+            <ui:remove><!-- inseri um panel group em volta para funcionar a renderização --></ui:remove>
+			<h:panelGroup id="predictionPanel">
+				<p:panel  rendered="#{tacticalOptimizationFormMB.usePrediction}" styleClass="box-primary card">
+			  	<div class="box-header with-border">
+				    <h3 class="box-title"> 
+			    			Prediction configuration:
+		   			</h3>
+				    <div class="box-tools pull-right">
+				      <span class="label label-primary">forecast</span>
+				    </div>
+			  	</div>
+			  	<div class="ui-g ui-fluid">
+			  		<div class="ui-sm-12 ui-g-6 ui-g-nopad">
+	                   <div class="ui-sm-12 ui-g-11">
+	                       <p:outputLabel for="horizon" value="Forecast horizon"/>
+	                   </div>
+	                   <div class="ui-sm-12 ui-g-11">
+	                       <p:spinner id="horizon" required="true" value="#{tacticalOptimizationFormMB.tacticalOptimization.horizon}"/>
+	                       <span class="help-block"> 
+	                           <p:message for="horizon" escape="false"/>
+	                       </span>
+	                   </div>
+	                </div>
+	                <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
+	                  <div class="ui-sm-12 ui-g-11">
+	                      <p:outputLabel for="granularity" value="Granularity" />
+	                  </div>
+	                  <div class="ui-sm-12 ui-g-11">
+	                  	  <o:importConstants type="com.fasten.wp4.database.client.model.TacticalOptimization.GranularityEnum" />
+	                      <p:selectOneRadio  layout="responsive" columns="4"  id="granularity"  required="true" value="#{tacticalOptimizationFormMB.tacticalOptimization.granularity}">
+	                          <f:selectItems value="#{GranularityEnum}" var="granularity" itemLabel="#{granularity.value}" itemValue="#{granularity}" />
+	                      </p:selectOneRadio>
+	                      <span class="help-block"> 
+	                      	<p:message for="granularity"/>
+	                      </span>
+	                  </div>
+	                </div>
+	            </div>
+	            </p:panel>
+            </h:panelGroup>
             <p:spacer height="15px"/>
 	        <h:panelGroup id="footer" layout="block">
                 <div id="main-buttons" class="hidden-sm hidden-xs">

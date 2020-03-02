@@ -36,7 +36,9 @@ public class LogonMB extends AdminSession implements Serializable {
 
     public LogonMB() {
 		super();
-		email="fasten-wp4@lists.inesctec.pt";
+		super.setIsLoggedIn(false);
+//		email="fasten-wp4@lists.inesctec.pt";
+		email="filipe.marinho.brito@gmail.com";
 		password="fasten";
 		remember=true;
 	}

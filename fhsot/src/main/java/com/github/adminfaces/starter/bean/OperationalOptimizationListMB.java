@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
@@ -257,7 +258,8 @@ public class OperationalOptimizationListMB implements Serializable {
 	public void execute(OperationalOptimization entity) throws ApiException {
 		try {
 			
-			Call c = defaultApi.allocatePostAsync(entity.getCity().getName(), entity.getQuantity().toString(), entity.getPart().getName(),new ApiCallback<AllocationResult>() {
+			String requestId = UUID.randomUUID().toString();
+			Call c = defaultApi.allocatePostAsync(/*TODO requestId,*/entity.getCity().getName(), entity.getQuantity().toString(), entity.getPart().getName(),new ApiCallback<AllocationResult>() {
 				
 				@Override
 				public void onSuccess(AllocationResult allocatePost, int statusCode, Map<String, List<String>> responseHeaders) {
@@ -292,7 +294,7 @@ public class OperationalOptimizationListMB implements Serializable {
 				public void onUploadProgress(long bytesWritten, long contentLength, boolean done) {}
 			});
 			
-			AsyncCall asyncCall = AsyncRequestUtils.getAsyncCallFrom(defaultApi.getApiClient().getHttpClient().getDispatcher(), c);
+			AsyncCall asyncCall = AsyncRequestUtils.getAsyncCallFrom(defaultApi.getApiClient().getHttpClient().getDispatcher(), c,requestId);
 			asyncCall.setStudy(entity);
 			asyncCalls.add(asyncCall);
 			

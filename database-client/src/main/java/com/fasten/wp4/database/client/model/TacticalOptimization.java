@@ -47,6 +47,63 @@ public class TacticalOptimization implements Serializable {
   @SerializedName("endDate")
   private Date endDate = null;
 
+  /**
+   * Gets or Sets granularity
+   */
+  @JsonAdapter(GranularityEnum.Adapter.class)
+  public enum GranularityEnum {
+    ANNUAL("Annual"),
+    
+    MONTHLY("Monthly"),
+    
+    WEEKLY("Weekly"),
+    
+    DAILY("Daily");
+
+    private String value;
+
+    GranularityEnum(String value) {
+      this.value = value;
+    }
+
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    public static GranularityEnum fromValue(String text) {
+      for (GranularityEnum b : GranularityEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
+        }
+      }
+      return null;
+    }
+
+    public static class Adapter extends TypeAdapter<GranularityEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final GranularityEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public GranularityEnum read(final JsonReader jsonReader) throws IOException {
+        String value = jsonReader.nextString();
+        return GranularityEnum.fromValue(String.valueOf(value));
+      }
+    }
+  }
+
+  @SerializedName("granularity")
+  private GranularityEnum granularity = null;
+
+  @SerializedName("horizon")
+  private Integer horizon = null;
+
   @SerializedName("id")
   private Long id = null;
 
@@ -253,6 +310,42 @@ public class TacticalOptimization implements Serializable {
 
   public void setEndDate(Date endDate) {
     this.endDate = endDate;
+  }
+
+  public TacticalOptimization granularity(GranularityEnum granularity) {
+    this.granularity = granularity;
+    return this;
+  }
+
+   /**
+   * Get granularity
+   * @return granularity
+  **/
+  @ApiModelProperty(value = "")
+  public GranularityEnum getGranularity() {
+    return granularity;
+  }
+
+  public void setGranularity(GranularityEnum granularity) {
+    this.granularity = granularity;
+  }
+
+  public TacticalOptimization horizon(Integer horizon) {
+    this.horizon = horizon;
+    return this;
+  }
+
+   /**
+   * Get horizon
+   * @return horizon
+  **/
+  @ApiModelProperty(value = "")
+  public Integer getHorizon() {
+    return horizon;
+  }
+
+  public void setHorizon(Integer horizon) {
+    this.horizon = horizon;
   }
 
   public TacticalOptimization id(Long id) {
@@ -521,6 +614,8 @@ public class TacticalOptimization implements Serializable {
         Objects.equals(this.clustered, tacticalOptimization.clustered) &&
         Objects.equals(this.distanceWeight, tacticalOptimization.distanceWeight) &&
         Objects.equals(this.endDate, tacticalOptimization.endDate) &&
+        Objects.equals(this.granularity, tacticalOptimization.granularity) &&
+        Objects.equals(this.horizon, tacticalOptimization.horizon) &&
         Objects.equals(this.id, tacticalOptimization.id) &&
         Objects.equals(this.initialDate, tacticalOptimization.initialDate) &&
         Objects.equals(this.leadTimeLimit, tacticalOptimization.leadTimeLimit) &&
@@ -539,7 +634,7 @@ public class TacticalOptimization implements Serializable {
 
   @Override
   public int hashCode() {
-    return Objects.hash(capitalCost, clustered, distanceWeight, endDate, id, initialDate, leadTimeLimit, maximumLocations, maximumSrams, name, productionCenterCost, sramCapacity, sramCost, status, stockoutCost, timeWeight, type, usePrediction);
+    return Objects.hash(capitalCost, clustered, distanceWeight, endDate, granularity, horizon, id, initialDate, leadTimeLimit, maximumLocations, maximumSrams, name, productionCenterCost, sramCapacity, sramCost, status, stockoutCost, timeWeight, type, usePrediction);
   }
 
 
@@ -552,6 +647,8 @@ public class TacticalOptimization implements Serializable {
     sb.append("    clustered: ").append(toIndentedString(clustered)).append("\n");
     sb.append("    distanceWeight: ").append(toIndentedString(distanceWeight)).append("\n");
     sb.append("    endDate: ").append(toIndentedString(endDate)).append("\n");
+    sb.append("    granularity: ").append(toIndentedString(granularity)).append("\n");
+    sb.append("    horizon: ").append(toIndentedString(horizon)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    initialDate: ").append(toIndentedString(initialDate)).append("\n");
     sb.append("    leadTimeLimit: ").append(toIndentedString(leadTimeLimit)).append("\n");

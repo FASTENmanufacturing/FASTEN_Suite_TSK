@@ -15,7 +15,7 @@
         <ui:param name="renderAsterisks" value="true"/>
     </ui:define>
     <ui:define name="title">
-        Part form
+        #{adm['part']}
     </ui:define>
     <ui:define name="body">
         <adm:breadcrumb title="#{partFormMB.breadcum}" link="part-form.xhtml?id=#{partFormMB.id}" />
@@ -41,7 +41,7 @@
                   <div class="ui-g ui-fluid">
                   	<div class="ui-sm-12 ui-g-6 ui-g-nopad">     
                         <div class="ui-sm-12 ui-g-11">
-                            <p:outputLabel value="Name" for="name"/>
+                            <p:outputLabel value="#{adm['form.colum.name']}" for="name"/>
                         </div>
                         <div class="ui-sm-12 ui-g-11">
                             <p:inputText id="name" value="#{partFormMB.part.name}" required="true"/>
@@ -53,7 +53,7 @@
                     
                     <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
                         <div class="ui-sm-12 ui-g-11">
-                            <p:outputLabel value="Code" for="code"/>
+                            <p:outputLabel value="#{adm['form.colum.code']}" for="code"/>
                         </div>
                         <div class="ui-sm-12 ui-g-11">
                             <p:inputText id="code" value="#{partFormMB.part.code}" required="true"/>
@@ -65,7 +65,7 @@
                     
                      <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
                         <div class="ui-sm-12 ui-g-11">
-                            <p:outputLabel value="Width (cm)" for="width"/>
+                            <p:outputLabel value="#{adm['form.colum.width']} (cm)" for="width"/>
                         </div>
                         <div class="ui-sm-12 ui-g-11">
                             <p:inputNumber id="width" value="#{partFormMB.part.width}" required="true"  decimalPlaces="2" decimalSeparator="#{adm['decimal.Separator']}" thousandSeparator="#{adm['thousand.Separator']}" symbol=" cm" symbolPosition="s" emptyValue="zero" />
@@ -77,7 +77,7 @@
                     
                     <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
                         <div class="ui-sm-12 ui-g-11">
-                            <p:outputLabel value="Height (cm)" for="height"/>
+                            <p:outputLabel value="#{adm['form.colum.height']} (cm)" for="height"/>
                         </div>
                         <div class="ui-sm-12 ui-g-11">
                             <p:inputNumber id="height" value="#{partFormMB.part.height}" required="true"  decimalPlaces="2" decimalSeparator="#{adm['decimal.Separator']}" thousandSeparator="#{adm['thousand.Separator']}" symbol=" cm" symbolPosition="s" emptyValue="zero" />
@@ -89,7 +89,7 @@
                     
                      <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
                         <div class="ui-sm-12 ui-g-11">
-                            <p:outputLabel value="Depth (cm)" for="depth"/>
+                            <p:outputLabel value="#{adm['form.colum.depth']} (cm)" for="depth"/>
                         </div>
                         <div class="ui-sm-12 ui-g-11">
                             <p:inputNumber id="depth" value="#{partFormMB.part.depth}" required="true"  decimalPlaces="2" decimalSeparator="#{adm['decimal.Separator']}" thousandSeparator="#{adm['thousand.Separator']}" symbol=" cm" symbolPosition="s" emptyValue="zero" />
@@ -101,13 +101,13 @@
                     
                     <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
                         <div class="ui-sm-12 ui-g-11">
-                            <p:outputLabel value="Priority" for="priority"/>
+                            <p:outputLabel value="#{adm['form.colum.priority']}" for="priority"/>
                         </div>
                         <div class="ui-sm-12 ui-g-11">
 							<o:importConstants type="com.fasten.wp4.database.client.model.Part.PriorityEnum" />
 							<p:selectOneMenu id="priority" required="true" value="#{partFormMB.part.priority}">
 								<f:selectItems value="#{PriorityEnum}" var="priority" itemLabel="#{priority.value}" itemValue="#{priority}" />
-								<f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+								<f:selectItem itemLabel="#{adm['combo.box.select.one']}" itemValue="#{null}" noSelectionOption="true" />
 							</p:selectOneMenu>
                             <span class="help-block"> 
                                 <p:message for="priority"/>
