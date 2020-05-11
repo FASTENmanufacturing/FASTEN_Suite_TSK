@@ -112,6 +112,22 @@ public class RemoteStationControllerApiTest {
     }
     
     /**
+     * Retrive Remote Stations by city name
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void retrieveRemoteStationByCityNameTest() throws ApiException {
+        String city = null;
+        List<RemoteStation> response = api.retrieveRemoteStationByCityName(city);
+
+        // TODO: test validations
+    }
+    
+    /**
      * Retrive one Remote Station by code
      *
      * Also returns a link to retrieve all remote station with rel - all
@@ -123,6 +139,38 @@ public class RemoteStationControllerApiTest {
     public void retrieveRemoteStationByCodeTest() throws ApiException {
         String code = null;
         RemoteStation response = api.retrieveRemoteStationByCode(code);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * Retrive Remote Stations by name without space and uppercased
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void retrieveRemoteStationByExcellNameTest() throws ApiException {
+        String excellName = null;
+        RemoteStation response = api.retrieveRemoteStationByExcellName(excellName);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * Retrive one Remote Station by name
+     *
+     * Also returns a link to retrieve all remote station with rel - all
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void retrieveRemoteStationByNameTest() throws ApiException {
+        String name = null;
+        RemoteStation response = api.retrieveRemoteStationByName(name);
 
         // TODO: test validations
     }

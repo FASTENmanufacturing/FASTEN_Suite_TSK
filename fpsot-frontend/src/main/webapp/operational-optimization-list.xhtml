@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:adm="http://github.com/adminfaces"
+                template="#{layoutMB.template}">
+
+    <ui:define name="metadata">
+    	<f:metadata>
+            <f:viewAction action="#{operationalOptimizationListMB.init()}"/>
+        </f:metadata>
+        <ui:param name="title" value="Operational Optimization listing"/> <!-- Automatic create breadCrumb and page title when param 'title' is provided. -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+		  integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+		  crossorigin=""/>
+		<style type="text/css">
+			#mapid { height: 300px; }
+        </style>
+		<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+		  integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+		  crossorigin=""></script>
+		
+		<script type="text/javascript">
+		/* <![CDATA[ */
+			
+			function renderMap(results){
+				var mymap = L.map('mapid').setView([results[0].sram.remoteStation.address.latitude,results[0].sram.remoteStation.address.longitude], 3);
+
+	            L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+	            	attribution: 'Map data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+	            	maxZoom: 18
+	            }).addTo(mymap);
+	            
+	            
+	            for(var i=0; i < results.length;i++){ 
+	            	if(i==0){
+		            	L.marker([results[i].sram.remoteStation.address.latitude,results[i].sram.remoteStation.address.longitude]).bindPopup((i+1)+"º - "+results[i].sram.code).addTo(mymap).openPopup();
+	            	}else{
+		            	L.marker([results[i].sram.remoteStation.address.latitude,results[i].sram.remoteStation.address.longitude]).bindPopup((i+1)+"º - "+results[i].sram.code).addTo(mymap);
+	            	}
+	            }
+        	
+           }
+       /* ]]> */
+      </script> 
+        <style type="text/css">
+            .ui-datatable .ui-datatable-header {
+                text-align: right !important;
+            }
+
+        </style>
+    </ui:define>
+
+    <ui:define name="description">
+        Find a Operational Optimization study
+    </ui:define>
+
+    <ui:define name="body">
+        <h:form>
+        	
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <div id="main-buttons" class="hidden-sm hidden-xs">
+                        <p:commandButton action="operational-optimization-form?faces-redirect=true" icon="fa fa-plus"
+                                         value="New" styleClass="btn-primary"/>
+                        <p:spacer width="5"/>
+                        <p:commandButton value="Delete Selected" icon="fa fa-trash" styleClass="btn-danger"
+                                         action="#{operationalOptimizationListMB.delete}"
+                                         disabled="#{empty operationalOptimizationListMB.selecteds or operationalOptimizationListMB.selecteds.size() == 0}"
+                                         process="@this" update="@form"
+                        >
+                            <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-danger"/>
+                        </p:commandButton>
+                        <p:spacer width="5"/>
+                        <p:commandButton value="View selected" update="@(.ui-dialog)" styleClass="btn-info"
+                                         disabled="#{empty operationalOptimizationListMB.selecteds or operationalOptimizationListMB.selecteds.size() == 0}"
+                                         oncomplete="PF('selecteds').show()" icon="fa fa-search"/>
+                        <p:commandButton value="Execute" styleClass="bg-orange disabled color-palette"
+                        			  disabled="#{empty operationalOptimizationListMB.selecteds or operationalOptimizationListMB.selecteds.size() != 1}"
+                        			  action="#{operationalOptimizationListMB.execute(operationalOptimizationListMB.selecteds.get(0))}"
+                                      icon="fa fa-play"/>
+                        <p:commandButton value="Results" styleClass="bg-purple disabled color-palette"
+                        			  disabled="#{!operationalOptimizationListMB.hasResult()}"
+                        			  action="#{operationalOptimizationListMB.viewResult(operationalOptimizationListMB.selecteds.get(0))}"
+                                      icon="fa fa-area-chart"/>
+                    </div>
+
+                    <p:splitButton value="New" action="operational-optimization-form?faces-redirect=true"
+                                   icon="fa fa-plus"
+                                   styleClass="hidden-md hidden-lg btn-primary">
+                        <p:menuitem value="Delete Selected" action="#{operationalOptimizationListMB.delete}"
+                                    process="@this" update="@form"
+                                    disabled="#{empty operationalOptimizationListMB.selecteds or operationalOptimizationListMB.selecteds.size() == 0}"
+                                    icon="fa fa-trash">
+                            <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-danger"/>
+                        </p:menuitem>
+                        <p:menuitem value="View selected" update="@(.ui-dialog)"
+                                    oncomplete="PF('selecteds').show()"
+                                    disabled="#{empty operationalOptimizationListMB.selecteds or operationalOptimizationListMB.selecteds.size() == 0}"
+                                    icon="fa fa-search"
+                        />
+                        <p:menuitem value="Results" styleClass="bg-purple disabled color-palette"
+                        			  disabled="#{!operationalOptimizationListMB.hasResult()}"
+                        			  action="#{operationalOptimizationListMB.viewResult(operationalOptimizationListMB.selecteds.get(0))}"
+                                      icon="fa fa-area-chart"/>
+                    </p:splitButton>
+
+                    <p:separator/>
+                    <p:dataTable id="entitiesTable" widgetVar="entitiesTable" var="c" value="#{operationalOptimizationListMB.entities}" rows="5"
+                                 rowKey="#{c.id}" lazy="true" paginator="true"
+                                 sortBy="#{c.id}" sortOrder="descending"
+                                 filteredValue="#{operationalOptimizationListMB.filteredValue}"
+                                 paginatorPosition="bottom" selection="#{operationalOptimizationListMB.selecteds}"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {JumpToPageDropdown}"
+                                 currentPageReportTemplate="[ {startRecord} to {endRecord} of {totalRecords} ]"
+                                 reflow="true" sortMode="multiple"
+                                 rowsPerPageTemplate="5,10,15,20,30"
+                            >
+
+                        <p:ajax event="rowSelectCheckbox" update="@(.ui-button, .ui-confirm-dialog)"/>
+                        <p:ajax event="rowUnselectCheckbox" update="@(.ui-button, .ui-confirm-dialog)"/>
+                        <p:ajax event="rowSelect" update="@(.ui-button, .ui-confirm-dialog)"/>
+                        <p:ajax event="rowUnselect" update="@(.ui-button, .ui-confirm-dialog)"/>
+                        <p:ajax event="toggleSelect" update="@(.ui-button, .ui-confirm-dialog)"/>
+
+                        <f:facet name="header">
+                            Find by id: <p:inputNumber id="id" decimalPlaces="0" value="#{operationalOptimizationListMB.id}"/>
+                            <p:spacer height="5"/>
+                            <p:commandButton value="Find" styleClass="btn-flat bg-black btn-states" partialSubmit="true">
+                         		<p:ajax process="@this" update="@none" oncomplete="PF('entitiesTable').filter()"/>
+                            </p:commandButton>
+                        </f:facet>
+                        <p:column selectionMode="multiple" width="5%" styleClass="align-center"/>
+
+						<p:column headerText="" width="8%" sortBy="#{c.id}">
+                            <p:link outcome="operational-optimization-form.xhtml" class="fa fa-fw fa-edit" >
+                                <f:param name="id" value="#{c.id}"/>
+                            </p:link>
+                            <p:spacer width="7px"/>
+                            <ui:remove>
+	                            <p:commandLink action="#{operationalOptimizationListMB.execute(c)}" title="Execute" class="fa fa-play" >
+	                                <f:param name="id" value="#{c.id}"/>
+	                            </p:commandLink>
+                            </ui:remove>
+                        </p:column>
+                        <p:column headerText="State" filterBy="#{c.address.state.stateAcronym}" sortBy="#{c.address.state.stateAcronym}" >
+                            <f:facet name="filter">
+						        <p:selectOneMenu dynamic="true" filter="true" filterMatchMode="contains" onchange="PF('entitiesTable').filter()">
+				                    <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+				                    <f:selectItems value="#{operationalOptimizationListMB.states}" />
+				                </p:selectOneMenu>
+                            </f:facet>
+                             #{c.address.state.stateAcronym}
+                        </p:column>
+                        <p:column headerText="City" filterBy="#{c.address.city.name}" sortBy="#{c.address.city.name}" >
+                            <f:facet name="filter">
+						        <p:inputText>
+                                    <p:ajax process="@this" update="@none" oncomplete="PF('entitiesTable').filter()"/>
+                                </p:inputText>
+                            </f:facet>
+                             #{c.address.city.name}
+                        </p:column>
+                        
+                        <p:column headerText="Part" filterBy="#{c.part.name}" sortBy="#{c.part.name}" >
+                            <f:facet name="filter">
+                                <p:selectOneMenu dynamic="true" filter="true" filterMatchMode="contains" onchange="PF('entitiesTable').filter()" >
+				                    <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+				                    <f:selectItems value="#{operationalOptimizationListMB.parts}" />
+				                </p:selectOneMenu>
+                            </f:facet>
+                             <p:link value="#{c.part.name}" outcome="operational-optimization-form.xhtml" >
+                                <f:param name="id" value="#{c.part.id}"/>
+                            </p:link>
+
+                        </p:column>
+                        <p:column headerText="Quantity" sortBy="#{c.quantity}" filterBy="#{c.quantity}" >
+  							<f:facet name="filter">
+  								<p:inputNumber decimalPlaces="0">
+                                    <p:ajax process="@this" update="@none" oncomplete="PF('entitiesTable').filter()"/>
+  								</p:inputNumber>
+                            </f:facet>
+                            #{c.quantity}
+                        </p:column>
+                    </p:dataTable>
+                </div>
+            </div>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="box-danger box-solid">
+                <p:commandButton value="Yes" type="button" styleClass="btn-material btn-primary ui-confirmdialog-yes"
+                                 icon="fa fa-check"/>
+                <p:commandButton value="No" type="button" styleClass="btn-material btn-danger ui-confirmdialog-no"
+                                 icon="fa fa-close"/>
+            </p:confirmDialog>
+        </h:form>
+
+
+
+        <p:dialog header="Selected" widgetVar="selecteds" height="250"
+                  width="400" responsive="true" styleClass="box-success">
+            <p:dataList id="selectedsList" value="#{operationalOptimizationListMB.selecteds}" var="selected" type="definition">
+                ID: #{selected.id} - Part: #{selected.part.name} 
+            </p:dataList>
+        </p:dialog>
+        
+        
+        <p:dialog header="Results" widgetVar="results" dynamic="true" height="500" width="80%" modal="true" draggable="false"
+         closable="true" responsive="true" styleClass="box">
+         	<p:ajax event="loadContent" update="graphid resultsid" listener="#{operationalOptimizationListMB.handleLoadContent}" />
+         	<p:ajax event="open" update="mapcontainer graphid resultsid" listener="#{operationalOptimizationListMB.handleOpen}" />
+         	<p:ajax event="close" update="mapcontainer" listener="#{operationalOptimizationListMB.handleClose}" />
+                  <div class="ui-g ui-fluid">
+	                  	<div class="ui-sm-12 ui-g-12 ui-g-nopad">  
+		                  	<ui:fragment id="mapcontainer">
+		                        <div class="ui-sm-12 ui-g-11">
+		                            <p:outputLabel value="Map"/>
+		                        </div>
+		                        <div id="premapid" class="ui-sm-12 ui-g-11">
+		                            <div id="mapid"></div>
+		                        </div>
+		                  	</ui:fragment>   
+                    	</div>
+                    	<div class="ui-sm-12 ui-g-12 ui-g-nopad">    
+		                        <div class="ui-sm-12 ui-g-11">
+		                            <p:outputLabel value="Graph"/>
+		                        </div>
+		                        <div class="ui-sm-12 ui-g-11">
+				                    <p:chart id="graphid" widgetVar="graphid" type="bar" model="#{operationalOptimizationListMB.horizontalBarModel}" style="height:300px"/>
+		                        </div>
+                    	</div>
+                    	<div class="ui-sm-12 ui-g-12 ui-g-nopad">
+	                    	<p:dataList id="resultsid" value="#{operationalOptimizationListMB.results}" var="result" type="definition">
+				                ID: #{result.id} - Remote Station: #{result.sram.code} - Total time: #{result.totalTime} - Queue time: #{result.queueTime} - Produciton time: #{result.timeProduction} - Travel time: #{result.timeTravel} 
+				            </p:dataList>
+			            </div>
+                  </div>
+        </p:dialog>
+
+    </ui:define>
+
+</ui:composition>

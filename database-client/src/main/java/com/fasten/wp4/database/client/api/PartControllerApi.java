@@ -1026,6 +1026,129 @@ public class PartControllerApi {
         return call;
     }
     /**
+     * Build call for retrievePartByLayout
+     * @param layout layout (required)
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call retrievePartByLayoutCall(String layout, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/part/layout/{layout}"
+            .replaceAll("\\{" + "layout" + "\\}", apiClient.escapeString(layout.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        if(progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+                @Override
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
+                }
+            });
+        }
+
+        String[] localVarAuthNames = new String[] {  };
+        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private com.squareup.okhttp.Call retrievePartByLayoutValidateBeforeCall(String layout, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        
+        // verify the required parameter 'layout' is set
+        if (layout == null) {
+            throw new ApiException("Missing the required parameter 'layout' when calling retrievePartByLayout(Async)");
+        }
+        
+
+        com.squareup.okhttp.Call call = retrievePartByLayoutCall(layout, progressListener, progressRequestListener);
+        return call;
+
+    }
+
+    /**
+     * Find one part by layout
+     * 
+     * @param layout layout (required)
+     * @return Part
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public Part retrievePartByLayout(String layout) throws ApiException {
+        ApiResponse<Part> resp = retrievePartByLayoutWithHttpInfo(layout);
+        return resp.getData();
+    }
+
+    /**
+     * Find one part by layout
+     * 
+     * @param layout layout (required)
+     * @return ApiResponse&lt;Part&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<Part> retrievePartByLayoutWithHttpInfo(String layout) throws ApiException {
+        com.squareup.okhttp.Call call = retrievePartByLayoutValidateBeforeCall(layout, null, null);
+        Type localVarReturnType = new TypeToken<Part>(){}.getType();
+        return apiClient.execute(call, localVarReturnType);
+    }
+
+    /**
+     * Find one part by layout (asynchronously)
+     * 
+     * @param layout layout (required)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call retrievePartByLayoutAsync(String layout, final ApiCallback<Part> callback) throws ApiException {
+
+        ProgressResponseBody.ProgressListener progressListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+        if (callback != null) {
+            progressListener = new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+                @Override
+                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                    callback.onUploadProgress(bytesWritten, contentLength, done);
+                }
+            };
+        }
+
+        com.squareup.okhttp.Call call = retrievePartByLayoutValidateBeforeCall(layout, progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<Part>(){}.getType();
+        apiClient.executeAsync(call, localVarReturnType, callback);
+        return call;
+    }
+    /**
      * Build call for retrievePartByName
      * @param name name (required)
      * @param progressListener Progress listener

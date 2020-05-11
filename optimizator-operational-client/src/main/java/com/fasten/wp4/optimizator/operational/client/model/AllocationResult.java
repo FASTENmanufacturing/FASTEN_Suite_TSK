@@ -15,7 +15,15 @@ package com.fasten.wp4.optimizator.operational.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.fasten.wp4.optimizator.operational.client.model.AllocationResultInner;
+import com.fasten.wp4.optimizator.operational.client.model.AllocationResultOptimizationResult;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.Serializable;
@@ -24,8 +32,58 @@ import java.io.Serializable;
  * AllocationResult
  */
 
-public class AllocationResult extends ArrayList<AllocationResultInner> implements Serializable {
+public class AllocationResult implements Serializable {
   private static final long serialVersionUID = 1L;
+
+  @SerializedName("orderID")
+  private String orderID = null;
+
+  @SerializedName("optimizationResult")
+  private List<AllocationResultOptimizationResult> optimizationResult = null;
+
+  public AllocationResult orderID(String orderID) {
+    this.orderID = orderID;
+    return this;
+  }
+
+   /**
+   * Get orderID
+   * @return orderID
+  **/
+  @ApiModelProperty(value = "")
+  public String getOrderID() {
+    return orderID;
+  }
+
+  public void setOrderID(String orderID) {
+    this.orderID = orderID;
+  }
+
+  public AllocationResult optimizationResult(List<AllocationResultOptimizationResult> optimizationResult) {
+    this.optimizationResult = optimizationResult;
+    return this;
+  }
+
+  public AllocationResult addOptimizationResultItem(AllocationResultOptimizationResult optimizationResultItem) {
+    if (this.optimizationResult == null) {
+      this.optimizationResult = new ArrayList<>();
+    }
+    this.optimizationResult.add(optimizationResultItem);
+    return this;
+  }
+
+   /**
+   * Get optimizationResult
+   * @return optimizationResult
+  **/
+  @ApiModelProperty(value = "")
+  public List<AllocationResultOptimizationResult> getOptimizationResult() {
+    return optimizationResult;
+  }
+
+  public void setOptimizationResult(List<AllocationResultOptimizationResult> optimizationResult) {
+    this.optimizationResult = optimizationResult;
+  }
 
 
   @Override
@@ -36,12 +94,14 @@ public class AllocationResult extends ArrayList<AllocationResultInner> implement
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    return super.equals(o);
+    AllocationResult allocationResult = (AllocationResult) o;
+    return Objects.equals(this.orderID, allocationResult.orderID) &&
+        Objects.equals(this.optimizationResult, allocationResult.optimizationResult);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode());
+    return Objects.hash(orderID, optimizationResult);
   }
 
 
@@ -49,7 +109,9 @@ public class AllocationResult extends ArrayList<AllocationResultInner> implement
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class AllocationResult {\n");
-    sb.append("    ").append(toIndentedString(super.toString())).append("\n");
+    
+    sb.append("    orderID: ").append(toIndentedString(orderID)).append("\n");
+    sb.append("    optimizationResult: ").append(toIndentedString(optimizationResult)).append("\n");
     sb.append("}");
     return sb.toString();
   }

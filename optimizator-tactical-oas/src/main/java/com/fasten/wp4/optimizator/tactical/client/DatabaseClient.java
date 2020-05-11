@@ -1,6 +1,5 @@
 package com.fasten.wp4.optimizator.tactical.client;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 //import com.fasten.wp4.database.client.api.DeliveryControllerApi;

@@ -15,13 +15,13 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import com.fasten.wp4.optimizator.tactical.model.InternalSupply;
-import com.fasten.wp4.optimizator.tactical.model.Part;
-import com.fasten.wp4.optimizator.tactical.model.Production;
-import com.fasten.wp4.optimizator.tactical.model.RemoteStation;
-import com.fasten.wp4.optimizator.tactical.model.Route;
-import com.fasten.wp4.optimizator.tactical.model.SRAMsAllocated;
-import com.fasten.wp4.optimizator.tactical.model.TacticalOptimizationResult;
+import com.fasten.wp4.database.model.InternalSupply;
+import com.fasten.wp4.database.model.Part;
+import com.fasten.wp4.database.model.Production;
+import com.fasten.wp4.database.model.RemoteStation;
+import com.fasten.wp4.database.model.Route;
+import com.fasten.wp4.database.model.SRAMsAllocated;
+import com.fasten.wp4.database.model.TacticalOptimizationResult;
 
 public class ExcelReader {
 

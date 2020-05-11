@@ -113,7 +113,7 @@ public class RemoteStationController {
 	@GetMapping("/remotestation/city")
 	@ApiOperation(nickname="retrieveRemoteStationByCityName", value = "Retrive Remote Stations by city name")
 	public List<RemoteStation> retrieveByCityName(@RequestParam(value = "city") String cityName) {
-		List<RemoteStation> retrivedObject = repository.findByCityName(cityName);
+		List<RemoteStation> retrivedObject = repository.findByAddressCityName(cityName);
 		return retrivedObject;
 	}
 	

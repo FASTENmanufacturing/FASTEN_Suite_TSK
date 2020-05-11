@@ -1,5 +1,4 @@
 package com.fasten.wp4.optimizator.tactical.simulator;
-import java.lang.String;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

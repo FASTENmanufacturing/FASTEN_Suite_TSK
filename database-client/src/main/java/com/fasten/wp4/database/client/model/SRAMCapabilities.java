@@ -32,49 +32,28 @@ import java.io.Serializable;
 public class SRAMCapabilities implements Serializable {
   private static final long serialVersionUID = 1L;
 
-  @SerializedName("materialAvailable")
-  private Double materialAvailable = null;
-
-  @SerializedName("materialInUse")
-  private Double materialInUse = null;
+  @SerializedName("lenght")
+  private Double lenght = null;
 
   @SerializedName("volume")
   private Double volume = null;
 
-  public SRAMCapabilities materialAvailable(Double materialAvailable) {
-    this.materialAvailable = materialAvailable;
+  public SRAMCapabilities lenght(Double lenght) {
+    this.lenght = lenght;
     return this;
   }
 
    /**
-   * Get materialAvailable
-   * @return materialAvailable
+   * Get lenght
+   * @return lenght
   **/
   @ApiModelProperty(value = "")
-  public Double getMaterialAvailable() {
-    return materialAvailable;
+  public Double getLenght() {
+    return lenght;
   }
 
-  public void setMaterialAvailable(Double materialAvailable) {
-    this.materialAvailable = materialAvailable;
-  }
-
-  public SRAMCapabilities materialInUse(Double materialInUse) {
-    this.materialInUse = materialInUse;
-    return this;
-  }
-
-   /**
-   * Get materialInUse
-   * @return materialInUse
-  **/
-  @ApiModelProperty(value = "")
-  public Double getMaterialInUse() {
-    return materialInUse;
-  }
-
-  public void setMaterialInUse(Double materialInUse) {
-    this.materialInUse = materialInUse;
+  public void setLenght(Double lenght) {
+    this.lenght = lenght;
   }
 
   public SRAMCapabilities volume(Double volume) {
@@ -105,14 +84,13 @@ public class SRAMCapabilities implements Serializable {
       return false;
     }
     SRAMCapabilities srAMCapabilities = (SRAMCapabilities) o;
-    return Objects.equals(this.materialAvailable, srAMCapabilities.materialAvailable) &&
-        Objects.equals(this.materialInUse, srAMCapabilities.materialInUse) &&
+    return Objects.equals(this.lenght, srAMCapabilities.lenght) &&
         Objects.equals(this.volume, srAMCapabilities.volume);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(materialAvailable, materialInUse, volume);
+    return Objects.hash(lenght, volume);
   }
 
 
@@ -121,8 +99,7 @@ public class SRAMCapabilities implements Serializable {
     StringBuilder sb = new StringBuilder();
     sb.append("class SRAMCapabilities {\n");
     
-    sb.append("    materialAvailable: ").append(toIndentedString(materialAvailable)).append("\n");
-    sb.append("    materialInUse: ").append(toIndentedString(materialInUse)).append("\n");
+    sb.append("    lenght: ").append(toIndentedString(lenght)).append("\n");
     sb.append("    volume: ").append(toIndentedString(volume)).append("\n");
     sb.append("}");
     return sb.toString();

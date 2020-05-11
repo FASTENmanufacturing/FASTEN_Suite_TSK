@@ -114,7 +114,7 @@ public class SramControllerApiTest {
     /**
      * Retrive one SRAM by code
      *
-     * Also returns a link to retrieve all SRAM with rel - all
+     * 
      *
      * @throws ApiException
      *          if the Api call fails

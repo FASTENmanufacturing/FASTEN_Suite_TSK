@@ -778,6 +778,129 @@ public class OperationalOptimizationResultControllerApi {
         return call;
     }
     /**
+     * Build call for retrieveByOrderID
+     * @param orderID orderID (required)
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call retrieveByOrderIDCall(String orderID, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/operationalOptimizationResult/orderID/{orderID}"
+            .replaceAll("\\{" + "orderID" + "\\}", apiClient.escapeString(orderID.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        if(progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+                @Override
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
+                }
+            });
+        }
+
+        String[] localVarAuthNames = new String[] {  };
+        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private com.squareup.okhttp.Call retrieveByOrderIDValidateBeforeCall(String orderID, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        
+        // verify the required parameter 'orderID' is set
+        if (orderID == null) {
+            throw new ApiException("Missing the required parameter 'orderID' when calling retrieveByOrderID(Async)");
+        }
+        
+
+        com.squareup.okhttp.Call call = retrieveByOrderIDCall(orderID, progressListener, progressRequestListener);
+        return call;
+
+    }
+
+    /**
+     * Find by orderID
+     * 
+     * @param orderID orderID (required)
+     * @return List&lt;OperationalOptimizationResult&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public List<OperationalOptimizationResult> retrieveByOrderID(String orderID) throws ApiException {
+        ApiResponse<List<OperationalOptimizationResult>> resp = retrieveByOrderIDWithHttpInfo(orderID);
+        return resp.getData();
+    }
+
+    /**
+     * Find by orderID
+     * 
+     * @param orderID orderID (required)
+     * @return ApiResponse&lt;List&lt;OperationalOptimizationResult&gt;&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<List<OperationalOptimizationResult>> retrieveByOrderIDWithHttpInfo(String orderID) throws ApiException {
+        com.squareup.okhttp.Call call = retrieveByOrderIDValidateBeforeCall(orderID, null, null);
+        Type localVarReturnType = new TypeToken<List<OperationalOptimizationResult>>(){}.getType();
+        return apiClient.execute(call, localVarReturnType);
+    }
+
+    /**
+     * Find by orderID (asynchronously)
+     * 
+     * @param orderID orderID (required)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call retrieveByOrderIDAsync(String orderID, final ApiCallback<List<OperationalOptimizationResult>> callback) throws ApiException {
+
+        ProgressResponseBody.ProgressListener progressListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+        if (callback != null) {
+            progressListener = new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+                @Override
+                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                    callback.onUploadProgress(bytesWritten, contentLength, done);
+                }
+            };
+        }
+
+        com.squareup.okhttp.Call call = retrieveByOrderIDValidateBeforeCall(orderID, progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<List<OperationalOptimizationResult>>(){}.getType();
+        apiClient.executeAsync(call, localVarReturnType, callback);
+        return call;
+    }
+    /**
      * Build call for retrieveOperationalOptimizationResult
      * @param id id (required)
      * @param progressListener Progress listener

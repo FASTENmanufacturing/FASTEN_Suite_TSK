@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:adm="http://github.com/adminfaces"
+                template="#{layoutMB.template}">
+
+    <ui:define name="metadata">
+    	<f:metadata>
+            <f:viewAction action="#{sRAMListMB.init()}"/>  
+        </f:metadata>
+        <ui:param name="title" value="#{adm['list.sramlisting']}"/> <!-- Automatic create breadCrumb and page title when param 'title' is provided. --> 
+        <style type="text/css">
+            .ui-datatable .ui-datatable-header {
+                text-align: right !important;
+            }
+
+        </style>
+    </ui:define>
+
+    <ui:define name="description">
+        #{adm['list.subtitle.sram']}
+    </ui:define>
+
+    <ui:define name="body">
+        <h:form>
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <div id="main-buttons" class="hidden-sm hidden-xs">
+                        <p:commandButton action="sram-form?faces-redirect=true" icon="fa fa-plus"
+                                         value="#{adm['buttom.new']}" styleClass="btn-primary"/>
+                        <p:spacer width="5"/>
+                        <p:commandButton value="#{adm['buttom.delete.selected']}" icon="fa fa-trash" styleClass="btn-danger"
+                                         action="#{sRAMListMB.delete}"
+                                         disabled="#{empty sRAMListMB.selectedSRAMs or sRAMListMB.selectedSRAMs.size() == 0}"
+                                         process="@this" update="@form"
+                        >
+                            <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-danger"/>
+                        </p:commandButton>
+                        <p:spacer width="5"/>
+                        <p:commandButton value="#{adm['buttom.view.selected']}" update="@(.ui-dialog)" styleClass="btn-info"
+                                         disabled="#{empty sRAMListMB.selectedSRAMs or sRAMListMB.selectedSRAMs.size() == 0}"
+                                         oncomplete="PF('selectedSRAMs').show()" icon="fa fa-search"/>
+                    </div>
+
+                    <p:splitButton value="#{adm['buttom.new']}" action="sram-form?faces-redirect=true"
+                                   icon="fa fa-plus"
+                                   styleClass="hidden-md hidden-lg btn-primary">
+                        <p:menuitem value="#{adm['buttom.delete.selected']}" action="#{sRAMListMB.delete}"
+                                    process="@this" update="@form"
+                                    disabled="#{empty sRAMListMB.selectedSRAMs or sRAMListMB.selectedSRAMs.size() == 0}"
+                                    icon="fa fa-trash">
+                            <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-danger"/>
+                        </p:menuitem>
+                        <p:menuitem value="#{adm['buttom.view.selected']}" update="@(.ui-dialog)"
+                                    oncomplete="PF('selectedSRAMs').show()"
+                                    disabled="#{empty sRAMListMB.selectedSRAMs or sRAMListMB.selectedSRAMs.size() == 0}"
+                                    icon="fa fa-search"
+                        />
+                    </p:splitButton>
+
+                    <p:separator/>
+                    <p:dataTable id="sramsTable" widgetVar="sramsTable" var="c" value="#{sRAMListMB.srams}" rows="5"
+                                 rowKey="#{c.id}" lazy="true" paginator="true"
+                                 sortBy="#{c.id}" sortOrder="descending"
+                                 filteredValue="#{sRAMListMB.filteredValue}"
+                                 paginatorPosition="bottom" selection="#{sRAMListMB.selectedSRAMs}"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {JumpToPageDropdown}"
+                                 currentPageReportTemplate="[ {startRecord} to {endRecord} of {totalRecords} ]"
+                                 reflow="true" sortMode="multiple"
+                                 rowsPerPageTemplate="5,10,15,20,30"
+                            >
+
+                        <p:ajax event="rowSelectCheckbox" update="@(.ui-button, .ui-confirm-dialog)"/>
+                        <p:ajax event="rowUnselectCheckbox" update="@(.ui-button, .ui-confirm-dialog)"/>
+                        <p:ajax event="rowSelect" update="@(.ui-button, .ui-confirm-dialog)"/>
+                        <p:ajax event="rowUnselect" update="@(.ui-button, .ui-confirm-dialog)"/>
+                        <p:ajax event="toggleSelect" update="@(.ui-button, .ui-confirm-dialog)"/>
+
+                        <f:facet name="header">
+                            #{adm['list.find.sram']}: <p:inputNumber id="inptId" decimalPlaces="0" value="#{sRAMListMB.id}"/>
+                            <p:spacer height="5"/>
+                            <p:commandButton value="#{adm['buttom.find']}" styleClass="btn-flat bg-black btn-states" sramialSubmit="true">
+                         		<p:ajax process="@this" update="@none" oncomplete="PF('sramsTable').filter()"/>
+                            </p:commandButton>
+                        </f:facet>
+                        <p:column selectionMode="multiple" width="5%" styleClass="align-center"/>
+
+						<p:column headerText="" width="45" sortBy="#{c.id}">
+                            <p:link outcome="sram-form.xhtml" class="fa fa-fw fa-edit" >
+                                <f:param name="id" value="#{c.id}"/>
+                            </p:link>
+                        </p:column>
+                        
+                         <p:column headerText="#{adm['list.colum.code']}" sortBy="#{c.code}" filterBy="#{c.code}" >
+                            <f:facet name="filter">
+                                <p:inputText>
+                                    <p:ajax process="@this" update="@none" oncomplete="PF('sramsTable').filter()"/>
+                                </p:inputText>
+                            </f:facet>		
+                            #{c.code}
+                        </p:column>
+                        
+                        
+                        <p:column headerText="#{adm['list.colum.temperature']}" sortBy="#{c.enviromentalInfo.temperature}" filterBy="#{c.enviromentalInfo.temperature}" >
+                            <f:facet name="filter">
+                                <p:inputText>
+                                    <p:ajax process="@this" update="@none" oncomplete="PF('sramsTable').filter()"/>
+                                </p:inputText>
+                            </f:facet>		
+                            <h:outputText value="#{c.enviromentalInfo.temperature}">
+					        	<f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" pattern="#0.00' °C'"/>
+					    	</h:outputText>
+                        </p:column>
+                        
+                        <p:column headerText="#{adm['list.colum.humidity']}" sortBy="#{c.enviromentalInfo.humidity}" filterBy="#{c.enviromentalInfo.humidity}" >
+                            <f:facet name="filter">
+                                <p:inputText>
+                                    <p:ajax process="@this" update="@none" oncomplete="PF('sramsTable').filter()"/>
+                                </p:inputText>
+                            </f:facet>		
+                            <h:outputText value="#{c.enviromentalInfo.humidity}">
+					        	<f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" pattern="#0.00' %'"/>
+					    	</h:outputText>
+                        </p:column>
+                        
+                        <p:column headerText="#{adm['list.colum.volume']}" sortBy="#{c.capabilities.volume}" filterBy="#{c.capabilities.volume}" >
+                            <f:facet name="filter">
+                                <p:inputText>
+                                    <p:ajax process="@this" update="@none" oncomplete="PF('sramsTable').filter()"/>
+                                </p:inputText>
+                            </f:facet>		
+                             <h:outputText rendered="#{not empty c.capabilities.volume}" value="#{c.capabilities.volume} cm&amp;sup3;" escape="false" />
+                        </p:column>
+
+                        <p:column headerText="Lenght" sortBy="#{c.capabilities.lenght}" filterBy="#{c.capabilities.lenght}" >
+                            <f:facet name="filter">
+                                <p:inputText>
+                                    <p:ajax process="@this" update="@none" oncomplete="PF('sramsTable').filter()"/>
+                                </p:inputText>
+                            </f:facet>		
+                             <h:outputText rendered="#{not empty c.capabilities.lenght}" value="#{c.capabilities.lenght} mm" escape="false" />
+                        </p:column>
+                        
+                        <p:column headerText="#{adm['list.colum.process.status']}" sortBy="#{c.processStatus}" filterBy="#{c.processStatus.value}" >
+                            <f:facet name="filter">
+                                <p:inputText>
+                                    <p:ajax process="@this" update="@none" oncomplete="PF('sramsTable').filter()"/>
+                                </p:inputText>
+                            </f:facet>		
+                            #{c.processStatus.value}
+                        </p:column>
+
+                        <p:column headerText="Status" sortBy="#{c.status}" filterBy="#{c.status.value}" >
+                            <f:facet name="filter">
+                                <p:inputText>
+                                    <p:ajax process="@this" update="@none" oncomplete="PF('sramsTable').filter()"/>
+                                </p:inputText>
+                            </f:facet>		
+                            #{c.status.value}
+                        </p:column>
+
+                        <p:column headerText="Progress" sortBy="#{c.progressCompletion}" filterBy="#{c.progressCompletion}" >
+                            <f:facet name="filter">
+                                <p:inputText>
+                                    <p:ajax process="@this" update="@none" oncomplete="PF('sramsTable').filter()"/>
+                                </p:inputText>
+                            </f:facet>
+							<h:outputText rendered="#{c.processStatus.value eq 'In Operation'}" value="#{c.progressCompletion}">
+					        	<f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" pattern="#0.00' %'"/>
+					    	</h:outputText>
+                        </p:column>
+                        <p:column headerText="Print Time Left" sortBy="#{c.printTimeLeft}" filterBy="#{c.printTimeLeft}" >
+                            <f:facet name="filter">
+                                <p:inputText>
+                                    <p:ajax process="@this" update="@none" oncomplete="PF('sramsTable').filter()"/>
+                                </p:inputText>
+                            </f:facet>
+							<h:panelGroup rendered="#{not empty c.printTime}" id="rangePanel" layout="block">
+                        	<div class="ui-g ui-fluid">
+                        		<div class="ui-sm-12 ui-g-12 ui-g-nopad">
+                        			<small>Printing:</small>
+                        		</div>
+	                            <div class="ui-sm-12 ui-g-12 ui-g-nopad">
+		                            <small>
+			                            <h:outputText style="text-align:center" value="#{c.printTime}">
+			                            	<f:converter converterId="prettyTimeConverter" />
+										</h:outputText>
+									</small>
+								</div>
+								<div class="ui-sm-12 ui-g-12 ui-g-nopad">
+                        			<small>Left:</small>
+                        		</div>
+	                            <div class="ui-sm-12 ui-g-12 ui-g-nopad">
+	                            	<div class="ui-sm-10 ui-g-10 ui-g-nopad">
+		                            <small>
+										<h:outputText style="text-align:center" value="#{c.printTimeLeft}">
+											<f:converter converterId="prettyTimeConverter" />
+										</h:outputText>
+									</small>
+									</div>
+									<div class="ui-sm-2 ui-g-2 ui-g-nopad">
+									<h:panelGroup id="toolTipHook">
+										<i class="fa fa-fw fa-asterisk"></i>
+									</h:panelGroup>
+									</div>
+								</div>
+							</div>
+							</h:panelGroup>
+							<p:tooltip id="toolTipFade" for="toolTipHook" value="#{c.printTimeLeftOrigin}" position="top"/>
+                        </p:column>
+                    </p:dataTable>
+                </div>
+            </div>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="box-danger box-solid">
+                <p:commandButton value="Yes" type="button" styleClass="btn-material btn-primary ui-confirmdialog-yes"
+                                 icon="fa fa-check"/>
+                <p:commandButton value="No" type="button" styleClass="btn-material btn-danger ui-confirmdialog-no"
+                                 icon="fa fa-close"/>
+            </p:confirmDialog>
+        </h:form>
+
+
+
+        <p:dialog header="#{adm['list.selected.sram']}" widgetVar="selectedSRAMs" height="250"
+                  width="400" responsive="true" styleClass="box-success">
+            <p:dataList id="selectedSRAMsList" value="#{sRAMListMB.selectedSRAMs}" var="sram"
+                        type="definition">
+                ID: #{sram.id} - Sram: #{sram.code} 
+                
+                <p:dataTable var="timeByPart" value="#{sram.timesByPart}">
+			              <p:column headerText="Part">
+			                  <h:outputText value="#{timeByPart.part.name}"/>
+			              </p:column>
+			              <p:column headerText="Print time">
+			                   <h:outputText style="text-align:center" value="#{timeByPart.averagePrintTime}">
+			                    	<f:converter converterId="prettyTimeConverter" />
+								</h:outputText>
+			              </p:column>
+			              <p:column headerText="Avg Time">
+			                    <h:outputText style="text-align:center" value="#{timeByPart.averagePrintTime}">
+			                    	<f:converter converterId="prettyTimeConverter" />
+								</h:outputText>
+			              </p:column>
+			              <p:column headerText="Last Print Time">
+			                    <h:outputText style="text-align:center" value="#{timeByPart.lastPrintTime}">
+	                            	<f:converter converterId="prettyTimeConverter" />
+								</h:outputText>
+			              </p:column>
+			    </p:dataTable>
+            
+			
+			</p:dataList>
+        </p:dialog>
+
+    </ui:define>
+
+</ui:composition>

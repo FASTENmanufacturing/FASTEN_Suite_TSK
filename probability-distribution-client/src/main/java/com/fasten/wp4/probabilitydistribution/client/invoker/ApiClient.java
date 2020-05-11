@@ -52,7 +52,7 @@ import com.fasten.wp4.probabilitydistribution.client.invoker.auth.OAuth;
 
 public class ApiClient {
 
-    private String basePath = "http://ec2-54-233-213-104.sa-east-1.compute.amazonaws.com:8002";
+    private String basePath;
     private boolean debugging = false;
     private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
     private String tempFolderPath = null;

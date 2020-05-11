@@ -5,7 +5,7 @@
     "version" : "1.0.0",
     "title" : "Allocate Production Order"
   },
-  "host" : "ec2-54-233-213-104.sa-east-1.compute.amazonaws.com:8001",
+  "host" : "200.131.17.17:11002",
   "basePath" : "/",
   "tags" : [ {
     "name" : "default"
@@ -18,9 +18,21 @@
         "tags" : [ "default" ],
         "summary" : " allocate production order",
         "parameters" : [ {
-          "name" : "origin",
+          "name" : "orderID",
           "in" : "query",
-          "description" : "The delivery location",
+          "description" : "Production Order Indentification",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "longitude",
+          "in" : "query",
+          "description" : "The delivery longitude location",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "latitude",
+          "in" : "query",
+          "description" : "The delivery latitude location",
           "required" : false,
           "type" : "string"
         }, {
@@ -52,14 +64,23 @@
   },
   "definitions" : {
     "AllocationResult" : {
-      "type" : "array",
-      "items" : {
-        "$ref" : "#/definitions/AllocationResult_inner"
+      "type" : "object",
+      "properties" : {
+        "orderID" : {
+          "type" : "string"
+        },
+        "optimizationResult" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/AllocationResult_optimizationResult"
+          }
+        }
       }
     },
-    "AllocationResult_inner" : {
+    "AllocationResult_optimizationResult" : {
+      "type" : "object",
       "properties" : {
-        "remoteStation" : {
+        "SRAM" : {
           "type" : "string"
         },
         "queueTime" : {

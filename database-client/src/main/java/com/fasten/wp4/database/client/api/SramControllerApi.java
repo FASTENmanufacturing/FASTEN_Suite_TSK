@@ -711,7 +711,7 @@ public class SramControllerApi {
 
     /**
      * Retrive one SRAM by code
-     * Also returns a link to retrieve all SRAM with rel - all
+     * 
      * @param code code (required)
      * @return SRAM
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -723,7 +723,7 @@ public class SramControllerApi {
 
     /**
      * Retrive one SRAM by code
-     * Also returns a link to retrieve all SRAM with rel - all
+     * 
      * @param code code (required)
      * @return ApiResponse&lt;SRAM&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -736,7 +736,7 @@ public class SramControllerApi {
 
     /**
      * Retrive one SRAM by code (asynchronously)
-     * Also returns a link to retrieve all SRAM with rel - all
+     * 
      * @param code code (required)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call

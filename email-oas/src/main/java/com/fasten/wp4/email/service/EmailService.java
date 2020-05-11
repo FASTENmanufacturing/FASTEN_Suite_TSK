@@ -108,7 +108,7 @@ public class EmailService{
 			
 			model.put("subtitle", subject);
 			model.put("content", content);
-			model.put("system", "FHSOT - FASTEN Holistic Simulator-Optimizer Tool");
+			model.put("system", "FPSOT - FASTEN Predictive Simulator-Optimizer Tool");
 			model.put("systemUrl", "http://www.fastenmanufacturing.eu");
 			model.put("companyName", "INESC TEC"); 
 			model.put("companyAddress", "Flexible and Autonomous Manufacturing Systems for Custom-Designed Products. "

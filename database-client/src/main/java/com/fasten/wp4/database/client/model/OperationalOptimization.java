@@ -15,9 +15,8 @@ package com.fasten.wp4.database.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.fasten.wp4.database.client.model.City;
+import com.fasten.wp4.database.client.model.Address;
 import com.fasten.wp4.database.client.model.Part;
-import com.fasten.wp4.database.client.model.State;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -36,11 +35,14 @@ import java.io.Serializable;
 public class OperationalOptimization implements Serializable {
   private static final long serialVersionUID = 1L;
 
-  @SerializedName("city")
-  private City city = null;
+  @SerializedName("address")
+  private Address address = new Address();
 
   @SerializedName("id")
   private Long id = null;
+
+  @SerializedName("orderID")
+  private String orderID = null;
 
   @SerializedName("part")
   private Part part = null;
@@ -48,25 +50,22 @@ public class OperationalOptimization implements Serializable {
   @SerializedName("quantity")
   private Integer quantity = null;
 
-  @SerializedName("state")
-  private State state = null;
-
-  public OperationalOptimization city(City city) {
-    this.city = city;
+  public OperationalOptimization address(Address address) {
+    this.address = address;
     return this;
   }
 
    /**
-   * The city
-   * @return city
+   * Get address
+   * @return address
   **/
-  @ApiModelProperty(value = "The city")
-  public City getCity() {
-    return city;
+  @ApiModelProperty(value = "")
+  public Address getAddress() {
+    return address;
   }
 
-  public void setCity(City city) {
-    this.city = city;
+  public void setAddress(Address address) {
+    this.address = address;
   }
 
   public OperationalOptimization id(Long id) {
@@ -85,6 +84,24 @@ public class OperationalOptimization implements Serializable {
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public OperationalOptimization orderID(String orderID) {
+    this.orderID = orderID;
+    return this;
+  }
+
+   /**
+   * Get orderID
+   * @return orderID
+  **/
+  @ApiModelProperty(value = "")
+  public String getOrderID() {
+    return orderID;
+  }
+
+  public void setOrderID(String orderID) {
+    this.orderID = orderID;
   }
 
   public OperationalOptimization part(Part part) {
@@ -123,24 +140,6 @@ public class OperationalOptimization implements Serializable {
     this.quantity = quantity;
   }
 
-  public OperationalOptimization state(State state) {
-    this.state = state;
-    return this;
-  }
-
-   /**
-   * The State
-   * @return state
-  **/
-  @ApiModelProperty(value = "The State")
-  public State getState() {
-    return state;
-  }
-
-  public void setState(State state) {
-    this.state = state;
-  }
-
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -151,16 +150,16 @@ public class OperationalOptimization implements Serializable {
       return false;
     }
     OperationalOptimization operationalOptimization = (OperationalOptimization) o;
-    return Objects.equals(this.city, operationalOptimization.city) &&
+    return Objects.equals(this.address, operationalOptimization.address) &&
         Objects.equals(this.id, operationalOptimization.id) &&
+        Objects.equals(this.orderID, operationalOptimization.orderID) &&
         Objects.equals(this.part, operationalOptimization.part) &&
-        Objects.equals(this.quantity, operationalOptimization.quantity) &&
-        Objects.equals(this.state, operationalOptimization.state);
+        Objects.equals(this.quantity, operationalOptimization.quantity);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(city, id, part, quantity, state);
+    return Objects.hash(address, id, orderID, part, quantity);
   }
 
 
@@ -169,11 +168,11 @@ public class OperationalOptimization implements Serializable {
     StringBuilder sb = new StringBuilder();
     sb.append("class OperationalOptimization {\n");
     
-    sb.append("    city: ").append(toIndentedString(city)).append("\n");
+    sb.append("    address: ").append(toIndentedString(address)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    orderID: ").append(toIndentedString(orderID)).append("\n");
     sb.append("    part: ").append(toIndentedString(part)).append("\n");
     sb.append("    quantity: ").append(toIndentedString(quantity)).append("\n");
-    sb.append("    state: ").append(toIndentedString(state)).append("\n");
     sb.append("}");
     return sb.toString();
   }

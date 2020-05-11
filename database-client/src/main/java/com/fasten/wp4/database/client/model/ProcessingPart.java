@@ -36,17 +36,20 @@ import java.io.Serializable;
 public class ProcessingPart implements Serializable {
   private static final long serialVersionUID = 1L;
 
-  @SerializedName("avgProducingTime")
-  private Double avgProducingTime = null;
-
-  @SerializedName("avgSetupTime")
-  private Double avgSetupTime = null;
+  @SerializedName("averagePrintTime")
+  private Double averagePrintTime = null;
 
   @SerializedName("cost")
   private BigDecimal cost = null;
 
+  @SerializedName("estimatedPrintTime")
+  private Double estimatedPrintTime = null;
+
   @SerializedName("id")
   private Long id = null;
+
+  @SerializedName("lastPrintTime")
+  private Double lastPrintTime = null;
 
   @SerializedName("part")
   private Part part = null;
@@ -54,46 +57,22 @@ public class ProcessingPart implements Serializable {
   @SerializedName("sram")
   private SRAM sram = null;
 
-  @SerializedName("stdProducingTime")
-  private Double stdProducingTime = null;
-
-  @SerializedName("stdSetupTime")
-  private Double stdSetupTime = null;
-
-  public ProcessingPart avgProducingTime(Double avgProducingTime) {
-    this.avgProducingTime = avgProducingTime;
+  public ProcessingPart averagePrintTime(Double averagePrintTime) {
+    this.averagePrintTime = averagePrintTime;
     return this;
   }
 
    /**
-   * The avarage time to produce the part (seconds)
-   * @return avgProducingTime
+   * Get averagePrintTime
+   * @return averagePrintTime
   **/
-  @ApiModelProperty(value = "The avarage time to produce the part (seconds)")
-  public Double getAvgProducingTime() {
-    return avgProducingTime;
+  @ApiModelProperty(value = "")
+  public Double getAveragePrintTime() {
+    return averagePrintTime;
   }
 
-  public void setAvgProducingTime(Double avgProducingTime) {
-    this.avgProducingTime = avgProducingTime;
-  }
-
-  public ProcessingPart avgSetupTime(Double avgSetupTime) {
-    this.avgSetupTime = avgSetupTime;
-    return this;
-  }
-
-   /**
-   * The avarage time to setup the SRAM (seconds)
-   * @return avgSetupTime
-  **/
-  @ApiModelProperty(value = "The avarage time to setup the SRAM (seconds)")
-  public Double getAvgSetupTime() {
-    return avgSetupTime;
-  }
-
-  public void setAvgSetupTime(Double avgSetupTime) {
-    this.avgSetupTime = avgSetupTime;
+  public void setAveragePrintTime(Double averagePrintTime) {
+    this.averagePrintTime = averagePrintTime;
   }
 
   public ProcessingPart cost(BigDecimal cost) {
@@ -114,6 +93,24 @@ public class ProcessingPart implements Serializable {
     this.cost = cost;
   }
 
+  public ProcessingPart estimatedPrintTime(Double estimatedPrintTime) {
+    this.estimatedPrintTime = estimatedPrintTime;
+    return this;
+  }
+
+   /**
+   * Get estimatedPrintTime
+   * @return estimatedPrintTime
+  **/
+  @ApiModelProperty(value = "")
+  public Double getEstimatedPrintTime() {
+    return estimatedPrintTime;
+  }
+
+  public void setEstimatedPrintTime(Double estimatedPrintTime) {
+    this.estimatedPrintTime = estimatedPrintTime;
+  }
+
   public ProcessingPart id(Long id) {
     this.id = id;
     return this;
@@ -130,6 +127,24 @@ public class ProcessingPart implements Serializable {
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public ProcessingPart lastPrintTime(Double lastPrintTime) {
+    this.lastPrintTime = lastPrintTime;
+    return this;
+  }
+
+   /**
+   * Get lastPrintTime
+   * @return lastPrintTime
+  **/
+  @ApiModelProperty(value = "")
+  public Double getLastPrintTime() {
+    return lastPrintTime;
+  }
+
+  public void setLastPrintTime(Double lastPrintTime) {
+    this.lastPrintTime = lastPrintTime;
   }
 
   public ProcessingPart part(Part part) {
@@ -168,42 +183,6 @@ public class ProcessingPart implements Serializable {
     this.sram = sram;
   }
 
-  public ProcessingPart stdProducingTime(Double stdProducingTime) {
-    this.stdProducingTime = stdProducingTime;
-    return this;
-  }
-
-   /**
-   * The standard deviation time to produce the part (seconds)
-   * @return stdProducingTime
-  **/
-  @ApiModelProperty(value = "The standard deviation time to produce the part (seconds)")
-  public Double getStdProducingTime() {
-    return stdProducingTime;
-  }
-
-  public void setStdProducingTime(Double stdProducingTime) {
-    this.stdProducingTime = stdProducingTime;
-  }
-
-  public ProcessingPart stdSetupTime(Double stdSetupTime) {
-    this.stdSetupTime = stdSetupTime;
-    return this;
-  }
-
-   /**
-   * The standard deviation time to setup the SRAM (seconds)
-   * @return stdSetupTime
-  **/
-  @ApiModelProperty(value = "The standard deviation time to setup the SRAM (seconds)")
-  public Double getStdSetupTime() {
-    return stdSetupTime;
-  }
-
-  public void setStdSetupTime(Double stdSetupTime) {
-    this.stdSetupTime = stdSetupTime;
-  }
-
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -214,19 +193,18 @@ public class ProcessingPart implements Serializable {
       return false;
     }
     ProcessingPart processingPart = (ProcessingPart) o;
-    return Objects.equals(this.avgProducingTime, processingPart.avgProducingTime) &&
-        Objects.equals(this.avgSetupTime, processingPart.avgSetupTime) &&
+    return Objects.equals(this.averagePrintTime, processingPart.averagePrintTime) &&
         Objects.equals(this.cost, processingPart.cost) &&
+        Objects.equals(this.estimatedPrintTime, processingPart.estimatedPrintTime) &&
         Objects.equals(this.id, processingPart.id) &&
+        Objects.equals(this.lastPrintTime, processingPart.lastPrintTime) &&
         Objects.equals(this.part, processingPart.part) &&
-        Objects.equals(this.sram, processingPart.sram) &&
-        Objects.equals(this.stdProducingTime, processingPart.stdProducingTime) &&
-        Objects.equals(this.stdSetupTime, processingPart.stdSetupTime);
+        Objects.equals(this.sram, processingPart.sram);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(avgProducingTime, avgSetupTime, cost, id, part, sram, stdProducingTime, stdSetupTime);
+    return Objects.hash(averagePrintTime, cost, estimatedPrintTime, id, lastPrintTime, part, sram);
   }
 
 
@@ -235,14 +213,13 @@ public class ProcessingPart implements Serializable {
     StringBuilder sb = new StringBuilder();
     sb.append("class ProcessingPart {\n");
     
-    sb.append("    avgProducingTime: ").append(toIndentedString(avgProducingTime)).append("\n");
-    sb.append("    avgSetupTime: ").append(toIndentedString(avgSetupTime)).append("\n");
+    sb.append("    averagePrintTime: ").append(toIndentedString(averagePrintTime)).append("\n");
     sb.append("    cost: ").append(toIndentedString(cost)).append("\n");
+    sb.append("    estimatedPrintTime: ").append(toIndentedString(estimatedPrintTime)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    lastPrintTime: ").append(toIndentedString(lastPrintTime)).append("\n");
     sb.append("    part: ").append(toIndentedString(part)).append("\n");
     sb.append("    sram: ").append(toIndentedString(sram)).append("\n");
-    sb.append("    stdProducingTime: ").append(toIndentedString(stdProducingTime)).append("\n");
-    sb.append("    stdSetupTime: ").append(toIndentedString(stdSetupTime)).append("\n");
     sb.append("}");
     return sb.toString();
   }

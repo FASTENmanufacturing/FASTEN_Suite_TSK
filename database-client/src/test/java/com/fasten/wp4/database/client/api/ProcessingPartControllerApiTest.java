@@ -81,6 +81,21 @@ public class ProcessingPartControllerApiTest {
     }
     
     /**
+     * Find max time in hours spent on processing parts 
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void retrieveMaxHoursProcessingTest() throws ApiException {
+        Long response = api.retrieveMaxHoursProcessing();
+
+        // TODO: test validations
+    }
+    
+    /**
      * Find one info about processing a parts
      *
      * Also returns a link to retrieve all processing parts with rel - all

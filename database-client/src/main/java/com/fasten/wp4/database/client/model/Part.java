@@ -45,6 +45,9 @@ public class Part implements Serializable {
   @SerializedName("id")
   private Long id = null;
 
+  @SerializedName("layout")
+  private String layout = null;
+
   @SerializedName("name")
   private String name = null;
 
@@ -177,6 +180,24 @@ public class Part implements Serializable {
     this.id = id;
   }
 
+  public Part layout(String layout) {
+    this.layout = layout;
+    return this;
+  }
+
+   /**
+   * Get layout
+   * @return layout
+  **/
+  @ApiModelProperty(value = "")
+  public String getLayout() {
+    return layout;
+  }
+
+  public void setLayout(String layout) {
+    this.layout = layout;
+  }
+
   public Part name(String name) {
     this.name = name;
     return this;
@@ -245,6 +266,7 @@ public class Part implements Serializable {
         Objects.equals(this.depth, part.depth) &&
         Objects.equals(this.height, part.height) &&
         Objects.equals(this.id, part.id) &&
+        Objects.equals(this.layout, part.layout) &&
         Objects.equals(this.name, part.name) &&
         Objects.equals(this.priority, part.priority) &&
         Objects.equals(this.width, part.width);
@@ -252,7 +274,7 @@ public class Part implements Serializable {
 
   @Override
   public int hashCode() {
-    return Objects.hash(code, depth, height, id, name, priority, width);
+    return Objects.hash(code, depth, height, id, layout, name, priority, width);
   }
 
 
@@ -265,6 +287,7 @@ public class Part implements Serializable {
     sb.append("    depth: ").append(toIndentedString(depth)).append("\n");
     sb.append("    height: ").append(toIndentedString(height)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    layout: ").append(toIndentedString(layout)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    priority: ").append(toIndentedString(priority)).append("\n");
     sb.append("    width: ").append(toIndentedString(width)).append("\n");

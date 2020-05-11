@@ -27,13 +27,13 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import com.fasten.wp4.optimizator.tactical.model.Delivery;
-import com.fasten.wp4.optimizator.tactical.model.Demand;
-import com.fasten.wp4.optimizator.tactical.model.Part;
-import com.fasten.wp4.optimizator.tactical.model.ProcessingPart;
-import com.fasten.wp4.optimizator.tactical.model.RemoteStation;
-import com.fasten.wp4.optimizator.tactical.model.SRAM;
-import com.fasten.wp4.optimizator.tactical.model.TacticalOptimization;
+import com.fasten.wp4.database.model.Delivery;
+import com.fasten.wp4.database.model.Demand;
+import com.fasten.wp4.database.model.Part;
+import com.fasten.wp4.database.model.ProcessingPart;
+import com.fasten.wp4.database.model.RemoteStation;
+import com.fasten.wp4.database.model.SRAM;
+import com.fasten.wp4.database.model.TacticalOptimization;
 import com.google.common.base.CaseFormat;
 
 
@@ -198,7 +198,7 @@ public class ExcelWriter {
 			else
 				row.createCell(1).setCellValue(0);
 			row.createCell(2).setCellValue(demand.getRemoteStation().getName().replaceAll("\\s",""));
-			row.createCell(3).setCellValue(demand.getRemoteStation().getState().getStateAcronym());
+			row.createCell(3).setCellValue(demand.getRemoteStation().getAddress().getState().getStateAcronym());
 
 			Cell orderDate = row.createCell(4);
 			if(demand.getOrderDate()!=null) {
@@ -488,9 +488,8 @@ public class ExcelWriter {
 			Row row = sheetImpressoras.createRow(rowNumImpressoras++);
 			row.createCell(0).setCellValue(rowNumImpressoras-2);
 			row.createCell(1).setCellValue(sram.getCode());
-			//TODO define if it comes from sram or by study
-			row.createCell(2).setCellValue(sram.getCapacity());
-			row.createCell(3).setCellValue(sram.getFixedCost().doubleValue());
+			row.createCell(2).setCellValue(study.getSramCapacity().doubleValue());
+			row.createCell(3).setCellValue(study.getSramCost().doubleValue());
 			row.createCell(4).setCellValue(study.getMaximumSrams());
 		}
 
@@ -510,7 +509,7 @@ public class ExcelWriter {
 			row.createCell(1).setCellValue(processingPart.getSRAM().getCode());
 			row.createCell(2).setCellValue(processingPart.getPart().getName().replaceAll("\\s",""));
 			row.createCell(3).setCellValue(processingPart.getCost().doubleValue());
-			double totalProcessingTime = (processingPart.getAvgProducingTime()+processingPart.getStdProducingTime()+processingPart.getAvgSetupTime()+processingPart.getStdSetupTime())/3600;
+			double totalProcessingTime = (processingPart.getAveragePrintTime())/3600;
 			row.createCell(4).setCellValue(totalProcessingTime);
 		}
 		Double maxCostProcessingPart = processingParts.stream().mapToDouble(pp -> pp.getCost().doubleValue()).max().orElseThrow(NoSuchElementException::new);

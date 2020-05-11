@@ -16,7 +16,7 @@ package com.fasten.wp4.database.client.model;
 import java.util.Objects;
 import java.util.Arrays;
 import com.fasten.wp4.database.client.model.OperationalOptimization;
-import com.fasten.wp4.database.client.model.RemoteStation;
+import com.fasten.wp4.database.client.model.SRAM;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -42,8 +42,8 @@ public class OperationalOptimizationResult implements Serializable {
   @SerializedName("queueTime")
   private BigDecimal queueTime = null;
 
-  @SerializedName("remoteStation")
-  private RemoteStation remoteStation = null;
+  @SerializedName("sram")
+  private SRAM sram = null;
 
   @SerializedName("study")
   private OperationalOptimization study = null;
@@ -93,22 +93,22 @@ public class OperationalOptimizationResult implements Serializable {
     this.queueTime = queueTime;
   }
 
-  public OperationalOptimizationResult remoteStation(RemoteStation remoteStation) {
-    this.remoteStation = remoteStation;
+  public OperationalOptimizationResult sram(SRAM sram) {
+    this.sram = sram;
     return this;
   }
 
    /**
-   * Get remoteStation
-   * @return remoteStation
+   * Get sram
+   * @return sram
   **/
   @ApiModelProperty(value = "")
-  public RemoteStation getRemoteStation() {
-    return remoteStation;
+  public SRAM getSram() {
+    return sram;
   }
 
-  public void setRemoteStation(RemoteStation remoteStation) {
-    this.remoteStation = remoteStation;
+  public void setSram(SRAM sram) {
+    this.sram = sram;
   }
 
   public OperationalOptimizationResult study(OperationalOptimization study) {
@@ -195,7 +195,7 @@ public class OperationalOptimizationResult implements Serializable {
     OperationalOptimizationResult operationalOptimizationResult = (OperationalOptimizationResult) o;
     return Objects.equals(this.id, operationalOptimizationResult.id) &&
         Objects.equals(this.queueTime, operationalOptimizationResult.queueTime) &&
-        Objects.equals(this.remoteStation, operationalOptimizationResult.remoteStation) &&
+        Objects.equals(this.sram, operationalOptimizationResult.sram) &&
         Objects.equals(this.study, operationalOptimizationResult.study) &&
         Objects.equals(this.timeProduction, operationalOptimizationResult.timeProduction) &&
         Objects.equals(this.timeTravel, operationalOptimizationResult.timeTravel) &&
@@ -204,7 +204,7 @@ public class OperationalOptimizationResult implements Serializable {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, queueTime, remoteStation, study, timeProduction, timeTravel, totalTime);
+    return Objects.hash(id, queueTime, sram, study, timeProduction, timeTravel, totalTime);
   }
 
 
@@ -215,7 +215,7 @@ public class OperationalOptimizationResult implements Serializable {
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    queueTime: ").append(toIndentedString(queueTime)).append("\n");
-    sb.append("    remoteStation: ").append(toIndentedString(remoteStation)).append("\n");
+    sb.append("    sram: ").append(toIndentedString(sram)).append("\n");
     sb.append("    study: ").append(toIndentedString(study)).append("\n");
     sb.append("    timeProduction: ").append(toIndentedString(timeProduction)).append("\n");
     sb.append("    timeTravel: ").append(toIndentedString(timeTravel)).append("\n");

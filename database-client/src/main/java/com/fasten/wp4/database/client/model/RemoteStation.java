@@ -15,8 +15,7 @@ package com.fasten.wp4.database.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.fasten.wp4.database.client.model.City;
-import com.fasten.wp4.database.client.model.State;
+import com.fasten.wp4.database.client.model.Address;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -35,8 +34,8 @@ import java.io.Serializable;
 public class RemoteStation implements Serializable {
   private static final long serialVersionUID = 1L;
 
-  @SerializedName("city")
-  private City city = null;
+  @SerializedName("address")
+  private Address address = new Address();
 
   @SerializedName("code")
   private String code = null;
@@ -46,12 +45,6 @@ public class RemoteStation implements Serializable {
 
   @SerializedName("id")
   private Long id = null;
-
-  @SerializedName("latitude")
-  private Double latitude = null;
-
-  @SerializedName("longitude")
-  private Double longitude = null;
 
   @SerializedName("name")
   private String name = null;
@@ -110,28 +103,25 @@ public class RemoteStation implements Serializable {
   @SerializedName("priority")
   private PriorityEnum priority = null;
 
-  @SerializedName("state")
-  private State state = null;
-
   @SerializedName("unidade")
   private String unidade = null;
 
-  public RemoteStation city(City city) {
-    this.city = city;
+  public RemoteStation address(Address address) {
+    this.address = address;
     return this;
   }
 
    /**
-   * The city (geographical location)
-   * @return city
+   * Get address
+   * @return address
   **/
-  @ApiModelProperty(value = "The city (geographical location)")
-  public City getCity() {
-    return city;
+  @ApiModelProperty(value = "")
+  public Address getAddress() {
+    return address;
   }
 
-  public void setCity(City city) {
-    this.city = city;
+  public void setAddress(Address address) {
+    this.address = address;
   }
 
   public RemoteStation code(String code) {
@@ -188,42 +178,6 @@ public class RemoteStation implements Serializable {
     this.id = id;
   }
 
-  public RemoteStation latitude(Double latitude) {
-    this.latitude = latitude;
-    return this;
-  }
-
-   /**
-   * Get latitude
-   * @return latitude
-  **/
-  @ApiModelProperty(value = "")
-  public Double getLatitude() {
-    return latitude;
-  }
-
-  public void setLatitude(Double latitude) {
-    this.latitude = latitude;
-  }
-
-  public RemoteStation longitude(Double longitude) {
-    this.longitude = longitude;
-    return this;
-  }
-
-   /**
-   * Get longitude
-   * @return longitude
-  **/
-  @ApiModelProperty(value = "")
-  public Double getLongitude() {
-    return longitude;
-  }
-
-  public void setLongitude(Double longitude) {
-    this.longitude = longitude;
-  }
-
   public RemoteStation name(String name) {
     this.name = name;
     return this;
@@ -260,24 +214,6 @@ public class RemoteStation implements Serializable {
     this.priority = priority;
   }
 
-  public RemoteStation state(State state) {
-    this.state = state;
-    return this;
-  }
-
-   /**
-   * Get state
-   * @return state
-  **/
-  @ApiModelProperty(value = "")
-  public State getState() {
-    return state;
-  }
-
-  public void setState(State state) {
-    this.state = state;
-  }
-
   public RemoteStation unidade(String unidade) {
     this.unidade = unidade;
     return this;
@@ -306,21 +242,18 @@ public class RemoteStation implements Serializable {
       return false;
     }
     RemoteStation remoteStation = (RemoteStation) o;
-    return Objects.equals(this.city, remoteStation.city) &&
+    return Objects.equals(this.address, remoteStation.address) &&
         Objects.equals(this.code, remoteStation.code) &&
         Objects.equals(this.frete, remoteStation.frete) &&
         Objects.equals(this.id, remoteStation.id) &&
-        Objects.equals(this.latitude, remoteStation.latitude) &&
-        Objects.equals(this.longitude, remoteStation.longitude) &&
         Objects.equals(this.name, remoteStation.name) &&
         Objects.equals(this.priority, remoteStation.priority) &&
-        Objects.equals(this.state, remoteStation.state) &&
         Objects.equals(this.unidade, remoteStation.unidade);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(city, code, frete, id, latitude, longitude, name, priority, state, unidade);
+    return Objects.hash(address, code, frete, id, name, priority, unidade);
   }
 
 
@@ -329,15 +262,12 @@ public class RemoteStation implements Serializable {
     StringBuilder sb = new StringBuilder();
     sb.append("class RemoteStation {\n");
     
-    sb.append("    city: ").append(toIndentedString(city)).append("\n");
+    sb.append("    address: ").append(toIndentedString(address)).append("\n");
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("    frete: ").append(toIndentedString(frete)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    latitude: ").append(toIndentedString(latitude)).append("\n");
-    sb.append("    longitude: ").append(toIndentedString(longitude)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    priority: ").append(toIndentedString(priority)).append("\n");
-    sb.append("    state: ").append(toIndentedString(state)).append("\n");
     sb.append("    unidade: ").append(toIndentedString(unidade)).append("\n");
     sb.append("}");
     return sb.toString();

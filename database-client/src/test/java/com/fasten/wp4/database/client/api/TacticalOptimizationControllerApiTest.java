@@ -150,4 +150,20 @@ public class TacticalOptimizationControllerApiTest {
         // TODO: test validations
     }
     
+    /**
+     * Validate a tactical optimization
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void validateTacticalOptimizationTest() throws ApiException {
+        Long id = null;
+        Object response = api.validateTacticalOptimization(id);
+
+        // TODO: test validations
+    }
+    
 }

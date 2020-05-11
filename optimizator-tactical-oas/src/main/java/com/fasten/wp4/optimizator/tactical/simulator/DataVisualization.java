@@ -5,10 +5,6 @@
  */
 package com.fasten.wp4.optimizator.tactical.simulator;
 
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.ss.usermodel.Cell;
-import java.io.IOException;
-import java.util.Iterator;
 import java.util.ArrayList;
 
 /**

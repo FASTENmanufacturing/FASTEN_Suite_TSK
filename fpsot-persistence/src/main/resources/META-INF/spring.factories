@@ -1,0 +1,1 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.fasten.wp4.database.PersistenceAutoConfiguration

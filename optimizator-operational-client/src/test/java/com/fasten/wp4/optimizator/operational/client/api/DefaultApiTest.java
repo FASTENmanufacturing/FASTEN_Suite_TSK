@@ -14,6 +14,7 @@
 package com.fasten.wp4.optimizator.operational.client.api;
 
 import com.fasten.wp4.optimizator.operational.client.invoker.ApiException;
+import com.fasten.wp4.optimizator.operational.client.model.AllocationResult;
 import org.junit.Test;
 import org.junit.Ignore;
 
@@ -41,10 +42,12 @@ public class DefaultApiTest {
      */
     @Test
     public void allocatePostTest() throws ApiException {
-        String origin = null;
+        String orderID = null;
+        String longitude = null;
+        String latitude = null;
         String quantity = null;
         String part = null;
-        api.allocatePost(origin, quantity, part);
+        AllocationResult response = api.allocatePost(orderID, longitude, latitude, quantity, part);
 
         // TODO: test validations
     }

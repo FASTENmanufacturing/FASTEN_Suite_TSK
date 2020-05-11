@@ -23,11 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.fasten.wp4.database.exception.NotFoundException;
-import com.fasten.wp4.database.model.DemandProjected;
-import com.fasten.wp4.database.model.DemandProjectionStudy;
 import com.fasten.wp4.database.model.OperationalOptimization;
 import com.fasten.wp4.database.model.OperationalOptimizationResult;
-import com.fasten.wp4.database.model.Prediction;
 import com.fasten.wp4.database.repository.OperationalOptimizationResultRepository;
 import com.fasten.wp4.database.swagger.ApiPageable;
 import com.fasten.wp4.database.util.ConversorUtil;
@@ -83,6 +80,13 @@ public class OperationalOptimizationResultController {
 		OperationalOptimization o = new OperationalOptimization();
 		o.setId(id);
 		List<OperationalOptimizationResult> retrivedObject = repository.findByStudy(o);
+		return retrivedObject;
+	}
+
+	@GetMapping("/operationalOptimizationResult/orderID/{orderID}")
+	@ApiOperation(nickname="retrieveByOrderID", value = "Find by orderID")
+	public List<OperationalOptimizationResult> retrieveByOrderID(@PathVariable String orderID) {
+		List<OperationalOptimizationResult> retrivedObject = repository.retrieveByOrderID(orderID);
 		return retrivedObject;
 	}
 	

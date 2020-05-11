@@ -214,6 +214,22 @@ public class DemandControllerApiTest {
     }
     
     /**
+     * Retrive a list of demands in a Tactical Optimization Study
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void retrieveDemandByTacticalOptimizationTest() throws ApiException {
+        Long id = null;
+        List<Demand> response = api.retrieveDemandByTacticalOptimization(id);
+
+        // TODO: test validations
+    }
+    
+    /**
      * List paged
      *
      * 

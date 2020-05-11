@@ -52,7 +52,7 @@ import com.fasten.wp4.optimizator.tactical.client.invoker.auth.OAuth;
 
 public class ApiClient {
 
-    private String basePath = "http://localhost:8082";
+    private String basePath;
     private boolean debugging = false;
     private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
     private String tempFolderPath = null;

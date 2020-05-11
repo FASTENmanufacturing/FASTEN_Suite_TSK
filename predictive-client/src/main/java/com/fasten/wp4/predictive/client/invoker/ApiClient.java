@@ -52,7 +52,7 @@ import com.fasten.wp4.predictive.client.invoker.auth.OAuth;
 
 public class ApiClient {
 
-    private String basePath = "http://ec2-18-189-180-102.us-east-2.compute.amazonaws.com:8090";
+    private String basePath;
     private boolean debugging = false;
     private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
     private String tempFolderPath = null;

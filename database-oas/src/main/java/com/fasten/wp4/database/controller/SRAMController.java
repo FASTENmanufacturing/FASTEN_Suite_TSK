@@ -83,15 +83,12 @@ public class SRAMController {
 	}
 	
 	@GetMapping("/SRAM/code/{code}")
-	@ApiOperation(nickname="retrieveSRAMByCode", value = "Retrive one SRAM by code", notes = "Also returns a link to retrieve all SRAM with rel - all")
-	public Resource<SRAM> retrieve(@PathVariable String code) {
+	@ApiOperation(nickname="retrieveSRAMByCode", value = "Retrive one SRAM by code")
+	public SRAM retrieve(@PathVariable String code) {
 		Optional<SRAM> retrivedObject = repository.findByCode(code);
 		if (!retrivedObject.isPresent())
 			throw new NotFoundException();
-		Resource<SRAM> resource = new Resource<SRAM>(retrivedObject.get());
-		ControllerLinkBuilder linkTo = linkTo(methodOn(this.getClass()).retrieveAll());
-		resource.add(linkTo.withRel("all"));
-		return resource;
+		return retrivedObject.get();
 	}
 
 	@GetMapping(value="/SRAM/code")

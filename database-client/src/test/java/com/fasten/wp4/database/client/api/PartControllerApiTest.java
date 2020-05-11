@@ -145,6 +145,54 @@ public class PartControllerApiTest {
     }
     
     /**
+     * Retrive Part by name without space and uppercased
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void retrievePartByExcellNameTest() throws ApiException {
+        String excellName = null;
+        Part response = api.retrievePartByExcellName(excellName);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * Find one part by layout
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void retrievePartByLayoutTest() throws ApiException {
+        String layout = null;
+        Part response = api.retrievePartByLayout(layout);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * Retrive Part by name 
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void retrievePartByNameTest() throws ApiException {
+        String name = null;
+        Part response = api.retrievePartByName(name);
+
+        // TODO: test validations
+    }
+    
+    /**
      * Find parts by name like
      *
      * 

@@ -52,7 +52,7 @@ import com.fasten.wp4.optimizator.operational.client.invoker.auth.OAuth;
 
 public class ApiClient {
 
-    private String basePath = "http://ec2-54-233-213-104.sa-east-1.compute.amazonaws.com:8001";
+    private String basePath;
     private boolean debugging = false;
     private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
     private String tempFolderPath = null;
@@ -105,7 +105,7 @@ public class ApiClient {
     /**
      * Set base path
      *
-     * @param basePath Base path of the URL (e.g http://ec2-18-229-161-65.sa-east-1.compute.amazonaws.com:8001
+     * @param basePath Base path of the URL (e.g http://200.131.17.17:11002
      * @return An instance of OkHttpClient
      */
     public ApiClient setBasePath(String basePath) {

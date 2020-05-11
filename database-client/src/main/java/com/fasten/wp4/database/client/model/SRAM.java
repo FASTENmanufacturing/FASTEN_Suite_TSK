@@ -15,6 +15,7 @@ package com.fasten.wp4.database.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import com.fasten.wp4.database.client.model.RemoteStation;
 import com.fasten.wp4.database.client.model.SRAMCapabilities;
 import com.fasten.wp4.database.client.model.SRAMEnviromentalInfo;
 import com.google.gson.TypeAdapter;
@@ -25,7 +26,6 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.io.Serializable;
 
 /**
@@ -39,33 +39,38 @@ public class SRAM implements Serializable {
   @SerializedName("capabilities")
   private SRAMCapabilities capabilities = null;
 
-  @SerializedName("capacity")
-  private Integer capacity = null;
-
   @SerializedName("code")
   private String code = null;
 
   @SerializedName("enviromentalInfo")
   private SRAMEnviromentalInfo enviromentalInfo = null;
 
-  @SerializedName("fixedCost")
-  private BigDecimal fixedCost = null;
-
   @SerializedName("id")
   private Long id = null;
+
+  @SerializedName("printTime")
+  private Double printTime = null;
+
+  @SerializedName("printTimeLeft")
+  private Double printTimeLeft = null;
+
+  @SerializedName("printTimeLeftOrigin")
+  private String printTimeLeftOrigin = null;
 
   /**
    * Gets or Sets processStatus
    */
   @JsonAdapter(ProcessStatusEnum.Adapter.class)
   public enum ProcessStatusEnum {
-    SETUP("Setup"),
+    NO_INFO("No info"),
+    
+    NOT_READY("Not ready"),
     
     IN_OPERATION("In Operation"),
     
     ERROR("Error"),
     
-    DONE("Done");
+    STANDBY("Standby");
 
     private String value;
 
@@ -107,6 +112,12 @@ public class SRAM implements Serializable {
 
   @SerializedName("processStatus")
   private ProcessStatusEnum processStatus = null;
+
+  @SerializedName("progressCompletion")
+  private Double progressCompletion = null;
+
+  @SerializedName("remoteStation")
+  private RemoteStation remoteStation = null;
 
   /**
    * Gets or Sets status
@@ -176,24 +187,6 @@ public class SRAM implements Serializable {
     this.capabilities = capabilities;
   }
 
-  public SRAM capacity(Integer capacity) {
-    this.capacity = capacity;
-    return this;
-  }
-
-   /**
-   * Annual capacity in hours)
-   * @return capacity
-  **/
-  @ApiModelProperty(value = "Annual capacity in hours)")
-  public Integer getCapacity() {
-    return capacity;
-  }
-
-  public void setCapacity(Integer capacity) {
-    this.capacity = capacity;
-  }
-
   public SRAM code(String code) {
     this.code = code;
     return this;
@@ -230,24 +223,6 @@ public class SRAM implements Serializable {
     this.enviromentalInfo = enviromentalInfo;
   }
 
-  public SRAM fixedCost(BigDecimal fixedCost) {
-    this.fixedCost = fixedCost;
-    return this;
-  }
-
-   /**
-   * Annual fixed cost (currency)
-   * @return fixedCost
-  **/
-  @ApiModelProperty(value = "Annual fixed cost (currency)")
-  public BigDecimal getFixedCost() {
-    return fixedCost;
-  }
-
-  public void setFixedCost(BigDecimal fixedCost) {
-    this.fixedCost = fixedCost;
-  }
-
   public SRAM id(Long id) {
     this.id = id;
     return this;
@@ -266,6 +241,60 @@ public class SRAM implements Serializable {
     this.id = id;
   }
 
+  public SRAM printTime(Double printTime) {
+    this.printTime = printTime;
+    return this;
+  }
+
+   /**
+   * Get printTime
+   * @return printTime
+  **/
+  @ApiModelProperty(value = "")
+  public Double getPrintTime() {
+    return printTime;
+  }
+
+  public void setPrintTime(Double printTime) {
+    this.printTime = printTime;
+  }
+
+  public SRAM printTimeLeft(Double printTimeLeft) {
+    this.printTimeLeft = printTimeLeft;
+    return this;
+  }
+
+   /**
+   * Get printTimeLeft
+   * @return printTimeLeft
+  **/
+  @ApiModelProperty(value = "")
+  public Double getPrintTimeLeft() {
+    return printTimeLeft;
+  }
+
+  public void setPrintTimeLeft(Double printTimeLeft) {
+    this.printTimeLeft = printTimeLeft;
+  }
+
+  public SRAM printTimeLeftOrigin(String printTimeLeftOrigin) {
+    this.printTimeLeftOrigin = printTimeLeftOrigin;
+    return this;
+  }
+
+   /**
+   * Get printTimeLeftOrigin
+   * @return printTimeLeftOrigin
+  **/
+  @ApiModelProperty(value = "")
+  public String getPrintTimeLeftOrigin() {
+    return printTimeLeftOrigin;
+  }
+
+  public void setPrintTimeLeftOrigin(String printTimeLeftOrigin) {
+    this.printTimeLeftOrigin = printTimeLeftOrigin;
+  }
+
   public SRAM processStatus(ProcessStatusEnum processStatus) {
     this.processStatus = processStatus;
     return this;
@@ -282,6 +311,42 @@ public class SRAM implements Serializable {
 
   public void setProcessStatus(ProcessStatusEnum processStatus) {
     this.processStatus = processStatus;
+  }
+
+  public SRAM progressCompletion(Double progressCompletion) {
+    this.progressCompletion = progressCompletion;
+    return this;
+  }
+
+   /**
+   * Get progressCompletion
+   * @return progressCompletion
+  **/
+  @ApiModelProperty(value = "")
+  public Double getProgressCompletion() {
+    return progressCompletion;
+  }
+
+  public void setProgressCompletion(Double progressCompletion) {
+    this.progressCompletion = progressCompletion;
+  }
+
+  public SRAM remoteStation(RemoteStation remoteStation) {
+    this.remoteStation = remoteStation;
+    return this;
+  }
+
+   /**
+   * Get remoteStation
+   * @return remoteStation
+  **/
+  @ApiModelProperty(value = "")
+  public RemoteStation getRemoteStation() {
+    return remoteStation;
+  }
+
+  public void setRemoteStation(RemoteStation remoteStation) {
+    this.remoteStation = remoteStation;
   }
 
   public SRAM status(StatusEnum status) {
@@ -313,18 +378,21 @@ public class SRAM implements Serializable {
     }
     SRAM SRAM = (SRAM) o;
     return Objects.equals(this.capabilities, SRAM.capabilities) &&
-        Objects.equals(this.capacity, SRAM.capacity) &&
         Objects.equals(this.code, SRAM.code) &&
         Objects.equals(this.enviromentalInfo, SRAM.enviromentalInfo) &&
-        Objects.equals(this.fixedCost, SRAM.fixedCost) &&
         Objects.equals(this.id, SRAM.id) &&
+        Objects.equals(this.printTime, SRAM.printTime) &&
+        Objects.equals(this.printTimeLeft, SRAM.printTimeLeft) &&
+        Objects.equals(this.printTimeLeftOrigin, SRAM.printTimeLeftOrigin) &&
         Objects.equals(this.processStatus, SRAM.processStatus) &&
+        Objects.equals(this.progressCompletion, SRAM.progressCompletion) &&
+        Objects.equals(this.remoteStation, SRAM.remoteStation) &&
         Objects.equals(this.status, SRAM.status);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(capabilities, capacity, code, enviromentalInfo, fixedCost, id, processStatus, status);
+    return Objects.hash(capabilities, code, enviromentalInfo, id, printTime, printTimeLeft, printTimeLeftOrigin, processStatus, progressCompletion, remoteStation, status);
   }
 
 
@@ -334,12 +402,15 @@ public class SRAM implements Serializable {
     sb.append("class SRAM {\n");
     
     sb.append("    capabilities: ").append(toIndentedString(capabilities)).append("\n");
-    sb.append("    capacity: ").append(toIndentedString(capacity)).append("\n");
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("    enviromentalInfo: ").append(toIndentedString(enviromentalInfo)).append("\n");
-    sb.append("    fixedCost: ").append(toIndentedString(fixedCost)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    printTime: ").append(toIndentedString(printTime)).append("\n");
+    sb.append("    printTimeLeft: ").append(toIndentedString(printTimeLeft)).append("\n");
+    sb.append("    printTimeLeftOrigin: ").append(toIndentedString(printTimeLeftOrigin)).append("\n");
     sb.append("    processStatus: ").append(toIndentedString(processStatus)).append("\n");
+    sb.append("    progressCompletion: ").append(toIndentedString(progressCompletion)).append("\n");
+    sb.append("    remoteStation: ").append(toIndentedString(remoteStation)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("}");
     return sb.toString();

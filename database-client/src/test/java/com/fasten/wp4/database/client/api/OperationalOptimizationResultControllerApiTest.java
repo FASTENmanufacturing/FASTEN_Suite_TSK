@@ -50,6 +50,22 @@ public class OperationalOptimizationResultControllerApiTest {
     }
     
     /**
+     * Save a results list
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void createOperationalOptimizationResultsTest() throws ApiException {
+        List<OperationalOptimizationResult> operationalOptimizationResults = null;
+        Object response = api.createOperationalOptimizationResults(operationalOptimizationResults);
+
+        // TODO: test validations
+    }
+    
+    /**
      * Delete a operationalOptimizationResult
      *
      * 
@@ -66,6 +82,22 @@ public class OperationalOptimizationResultControllerApiTest {
     }
     
     /**
+     * Find boolean by study
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void existsByOperationalOptimizationTest() throws ApiException {
+        Long id = null;
+        Boolean response = api.existsByOperationalOptimization(id);
+
+        // TODO: test validations
+    }
+    
+    /**
      * List all
      *
      * 
@@ -76,6 +108,22 @@ public class OperationalOptimizationResultControllerApiTest {
     @Test
     public void retrieveAllOperationalOptimizationResultTest() throws ApiException {
         List<OperationalOptimizationResult> response = api.retrieveAllOperationalOptimizationResult();
+
+        // TODO: test validations
+    }
+    
+    /**
+     * Find by study
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void retrieveByOperationalOptimizationTest() throws ApiException {
+        Long id = null;
+        List<OperationalOptimizationResult> response = api.retrieveByOperationalOptimization(id);
 
         // TODO: test validations
     }

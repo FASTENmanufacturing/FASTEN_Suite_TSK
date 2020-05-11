@@ -145,6 +145,7 @@ Class | Method | HTTP request | Description
 *DemandControllerApi* | [**retrieveCandidatesWithoutCoordinates**](docs/DemandControllerApi.md#retrieveCandidatesWithoutCoordinates) | **GET** /demand/candidates/withoutCoordinates | Count candidates in damand range (date format MM/dd/yyyy)
 *DemandControllerApi* | [**retrieveDemand**](docs/DemandControllerApi.md#retrieveDemand) | **GET** /demand/{id} | Find one demand
 *DemandControllerApi* | [**retrieveDemandByCode**](docs/DemandControllerApi.md#retrieveDemandByCode) | **GET** /demand/code/{code} | Find one demand by code
+*DemandControllerApi* | [**retrieveDemandByTacticalOptimization**](docs/DemandControllerApi.md#retrieveDemandByTacticalOptimization) | **GET** /demand/tacticalOptimization | Retrive a list of demands in a Tactical Optimization Study
 *DemandControllerApi* | [**retrieveDemandFilteredAndPaged**](docs/DemandControllerApi.md#retrieveDemandFilteredAndPaged) | **GET** /demand/filter | List paged
 *DemandControllerApi* | [**retrieveDemandPaged**](docs/DemandControllerApi.md#retrieveDemandPaged) | **GET** /demand/page | List paged
 *DemandControllerApi* | [**retrieveQuantityBetween**](docs/DemandControllerApi.md#retrieveQuantityBetween) | **GET** /demand/quantity | Count demands in damand range (date format MM/dd/yyyy)
@@ -167,13 +168,6 @@ Class | Method | HTTP request | Description
 *DemandProjectionStudyControllerApi* | [**retrieveDemandProjectionStudyFilteredAndPaged**](docs/DemandProjectionStudyControllerApi.md#retrieveDemandProjectionStudyFilteredAndPaged) | **GET** /demandProjectionStudy/filter | List paged
 *DemandProjectionStudyControllerApi* | [**retrieveDemandProjectionStudyPaged**](docs/DemandProjectionStudyControllerApi.md#retrieveDemandProjectionStudyPaged) | **GET** /demandProjectionStudy/page | List paged
 *DemandProjectionStudyControllerApi* | [**updateDemandProjectionStudy**](docs/DemandProjectionStudyControllerApi.md#updateDemandProjectionStudy) | **PUT** /demandProjectionStudy/{id} | Edit demandProjectionStudy 
-*InternalOrderControllerApi* | [**createInternalOrder**](docs/InternalOrderControllerApi.md#createInternalOrder) | **POST** /internalOrder | Create a new internal order
-*InternalOrderControllerApi* | [**deleteInternalOrder**](docs/InternalOrderControllerApi.md#deleteInternalOrder) | **DELETE** /internalOrder/{id} | Delete the internal order
-*InternalOrderControllerApi* | [**retrieveAllInternalOrder**](docs/InternalOrderControllerApi.md#retrieveAllInternalOrder) | **GET** /internalOrder | List all internal orders
-*InternalOrderControllerApi* | [**retrieveInternalOrder**](docs/InternalOrderControllerApi.md#retrieveInternalOrder) | **GET** /internalOrder/{id} | Find one internal orders
-*InternalOrderControllerApi* | [**retrieveInternalOrderFilteredAndPaged**](docs/InternalOrderControllerApi.md#retrieveInternalOrderFilteredAndPaged) | **GET** /internalOrder/filter | List paged
-*InternalOrderControllerApi* | [**retrieveInternalOrderPaged**](docs/InternalOrderControllerApi.md#retrieveInternalOrderPaged) | **GET** /internalOrder/page | List paged
-*InternalOrderControllerApi* | [**updateInternalOrder**](docs/InternalOrderControllerApi.md#updateInternalOrder) | **PUT** /internalOrder/{id} | Edit the internal order
 *InternalSupplyControllerApi* | [**createInternalSupply**](docs/InternalSupplyControllerApi.md#createInternalSupply) | **POST** /internalSupply | Create a new internal supply
 *InternalSupplyControllerApi* | [**deleteInternalSupply**](docs/InternalSupplyControllerApi.md#deleteInternalSupply) | **DELETE** /internalSupply/{id} | Delete the internal supply
 *InternalSupplyControllerApi* | [**retrieveAllInternalSupply**](docs/InternalSupplyControllerApi.md#retrieveAllInternalSupply) | **GET** /internalSupply | List all internal supply
@@ -188,13 +182,16 @@ Class | Method | HTTP request | Description
 *OperationalOptimizationControllerApi* | [**retrieveOperationalOptimizationFilteredAndPaged**](docs/OperationalOptimizationControllerApi.md#retrieveOperationalOptimizationFilteredAndPaged) | **GET** /operationalOptimization/filter | List paged
 *OperationalOptimizationControllerApi* | [**retrieveOperationalOptimizationPaged**](docs/OperationalOptimizationControllerApi.md#retrieveOperationalOptimizationPaged) | **GET** /operationalOptimization/page | List paged
 *OperationalOptimizationControllerApi* | [**updateOperationalOptimization**](docs/OperationalOptimizationControllerApi.md#updateOperationalOptimization) | **PUT** /operationalOptimization/{id} | Update a optimization
-*OptimizatorControllerApi* | [**createOptimizator**](docs/OptimizatorControllerApi.md#createOptimizator) | **POST** /optimizator | Configura a optimization
-*OptimizatorControllerApi* | [**deleteOptimizator**](docs/OptimizatorControllerApi.md#deleteOptimizator) | **DELETE** /optimizator/{id} | Delete the optimizator&#39;s configurations
-*OptimizatorControllerApi* | [**retrieveAllOptimizator**](docs/OptimizatorControllerApi.md#retrieveAllOptimizator) | **GET** /optimizator | List all configured optimizations
-*OptimizatorControllerApi* | [**retrieveOptimizator**](docs/OptimizatorControllerApi.md#retrieveOptimizator) | **GET** /optimizator/{id} | Find the optimizator configurations
-*OptimizatorControllerApi* | [**retrieveOptimizatorFilteredAndPaged**](docs/OptimizatorControllerApi.md#retrieveOptimizatorFilteredAndPaged) | **GET** /optimizator/filter | List paged
-*OptimizatorControllerApi* | [**retrieveOptimizatorPaged**](docs/OptimizatorControllerApi.md#retrieveOptimizatorPaged) | **GET** /optimizator/page | List paged
-*OptimizatorControllerApi* | [**updateOptimizator**](docs/OptimizatorControllerApi.md#updateOptimizator) | **PUT** /optimizator/{id} | Update a optimization
+*OperationalOptimizationResultControllerApi* | [**createOperationalOptimizationResult**](docs/OperationalOptimizationResultControllerApi.md#createOperationalOptimizationResult) | **POST** /operationalOptimizationResult | Save a operationalOptimizationResult
+*OperationalOptimizationResultControllerApi* | [**createOperationalOptimizationResults**](docs/OperationalOptimizationResultControllerApi.md#createOperationalOptimizationResults) | **POST** /operationalOptimizationResults | Save a results list
+*OperationalOptimizationResultControllerApi* | [**deleteOperationalOptimizationResult**](docs/OperationalOptimizationResultControllerApi.md#deleteOperationalOptimizationResult) | **DELETE** /operationalOptimizationResult/{id} | Delete a operationalOptimizationResult
+*OperationalOptimizationResultControllerApi* | [**existsByOperationalOptimization**](docs/OperationalOptimizationResultControllerApi.md#existsByOperationalOptimization) | **GET** /operationalOptimizationResult/existsByOperationalOptimization/{id} | Find boolean by study
+*OperationalOptimizationResultControllerApi* | [**retrieveAllOperationalOptimizationResult**](docs/OperationalOptimizationResultControllerApi.md#retrieveAllOperationalOptimizationResult) | **GET** /operationalOptimizationResult | List all
+*OperationalOptimizationResultControllerApi* | [**retrieveByOperationalOptimization**](docs/OperationalOptimizationResultControllerApi.md#retrieveByOperationalOptimization) | **GET** /operationalOptimizationResult/operationalOptimization/{id} | Find by study
+*OperationalOptimizationResultControllerApi* | [**retrieveOperationalOptimizationResult**](docs/OperationalOptimizationResultControllerApi.md#retrieveOperationalOptimizationResult) | **GET** /operationalOptimizationResult/{id} | Find a operationalOptimizationResult
+*OperationalOptimizationResultControllerApi* | [**retrieveOperationalOptimizationResultFilteredAndPaged**](docs/OperationalOptimizationResultControllerApi.md#retrieveOperationalOptimizationResultFilteredAndPaged) | **GET** /operationalOptimizationResult/filter | List paged
+*OperationalOptimizationResultControllerApi* | [**retrieveOperationalOptimizationResultPaged**](docs/OperationalOptimizationResultControllerApi.md#retrieveOperationalOptimizationResultPaged) | **GET** /operationalOptimizationResult/page | List paged
+*OperationalOptimizationResultControllerApi* | [**updateOperationalOptimizationResult**](docs/OperationalOptimizationResultControllerApi.md#updateOperationalOptimizationResult) | **PUT** /operationalOptimizationResult/{id} | Update a operationalOptimizationResult
 *PartControllerApi* | [**createPart**](docs/PartControllerApi.md#createPart) | **POST** /part | Create a new part
 *PartControllerApi* | [**deletePart**](docs/PartControllerApi.md#deletePart) | **DELETE** /part/{id} | Delete the part
 *PartControllerApi* | [**retrieveAllDistinctByName**](docs/PartControllerApi.md#retrieveAllDistinctByName) | **GET** /part/name | Find parts name
@@ -202,6 +199,9 @@ Class | Method | HTTP request | Description
 *PartControllerApi* | [**retrievePart**](docs/PartControllerApi.md#retrievePart) | **GET** /part/{id} | Find one parts
 *PartControllerApi* | [**retrievePartByCode**](docs/PartControllerApi.md#retrievePartByCode) | **GET** /part/code/{code} | Find one part by code
 *PartControllerApi* | [**retrievePartByCodeAndPriority**](docs/PartControllerApi.md#retrievePartByCodeAndPriority) | **GET** /part/code/{code}/priority/{priority} | Find one part by code and priority
+*PartControllerApi* | [**retrievePartByExcellName**](docs/PartControllerApi.md#retrievePartByExcellName) | **GET** /part/excellName | Retrive Part by name without space and uppercased
+*PartControllerApi* | [**retrievePartByLayout**](docs/PartControllerApi.md#retrievePartByLayout) | **GET** /part/layout/{layout} | Find one part by layout
+*PartControllerApi* | [**retrievePartByName**](docs/PartControllerApi.md#retrievePartByName) | **GET** /part/name/equal | Retrive Part by name 
 *PartControllerApi* | [**retrievePartByNameLike**](docs/PartControllerApi.md#retrievePartByNameLike) | **GET** /part/name/like/{name} | Find parts by name like
 *PartControllerApi* | [**retrievePartByPriority**](docs/PartControllerApi.md#retrievePartByPriority) | **GET** /part/priority/{priority} | Find parts by priority
 *PartControllerApi* | [**retrievePartFilteredAndPaged**](docs/PartControllerApi.md#retrievePartFilteredAndPaged) | **GET** /part/filter | List paged
@@ -217,6 +217,7 @@ Class | Method | HTTP request | Description
 *ProcessingPartControllerApi* | [**createProcessingPart**](docs/ProcessingPartControllerApi.md#createProcessingPart) | **POST** /processingPart | Create a new processing part info
 *ProcessingPartControllerApi* | [**deleteProcessingPart**](docs/ProcessingPartControllerApi.md#deleteProcessingPart) | **DELETE** /processingPart/{id} | Delete the processing part info
 *ProcessingPartControllerApi* | [**retrieveAllProcessingPart**](docs/ProcessingPartControllerApi.md#retrieveAllProcessingPart) | **GET** /processingPart | List all processing parts info
+*ProcessingPartControllerApi* | [**retrieveMaxHoursProcessing**](docs/ProcessingPartControllerApi.md#retrieveMaxHoursProcessing) | **GET** /processingPart/maxHoursProcessing | Find max time in hours spent on processing parts 
 *ProcessingPartControllerApi* | [**retrieveProcessingPart**](docs/ProcessingPartControllerApi.md#retrieveProcessingPart) | **GET** /processingPart/{id} | Find one info about processing a parts
 *ProcessingPartControllerApi* | [**retrieveProcessingPartByPart**](docs/ProcessingPartControllerApi.md#retrieveProcessingPartByPart) | **GET** /processingPart/partName/{partName} | Find processing parts by part name
 *ProcessingPartControllerApi* | [**retrieveProcessingPartByPartCodeAndSRAMCode**](docs/ProcessingPartControllerApi.md#retrieveProcessingPartByPartCodeAndSRAMCode) | **GET** /processingPart/SRAMCode | Find one info about processing a part by part code and SRAM code
@@ -232,10 +233,13 @@ Class | Method | HTTP request | Description
 *ProductionControllerApi* | [**updateProduction**](docs/ProductionControllerApi.md#updateProduction) | **PUT** /production/{id} | Edit the production of a supply
 *RemoteStationControllerApi* | [**createRemoteStation**](docs/RemoteStationControllerApi.md#createRemoteStation) | **POST** /remotestation | Register Remote Station
 *RemoteStationControllerApi* | [**deleteRemoteStation**](docs/RemoteStationControllerApi.md#deleteRemoteStation) | **DELETE** /remotestation/{id} | Delete the Remote Station
-*RemoteStationControllerApi* | [**retrieveAllByName**](docs/RemoteStationControllerApi.md#retrieveAllByName) | **GET** /remotestation/name | Find remote stations by name
+*RemoteStationControllerApi* | [**retrieveAllByName**](docs/RemoteStationControllerApi.md#retrieveAllByName) | **GET** /remotestation/names | Find remote stations by name
 *RemoteStationControllerApi* | [**retrieveAllRemoteStation**](docs/RemoteStationControllerApi.md#retrieveAllRemoteStation) | **GET** /remotestation | List all Remote Stations
 *RemoteStationControllerApi* | [**retrieveRemoteStation**](docs/RemoteStationControllerApi.md#retrieveRemoteStation) | **GET** /remotestation/{id} | Retrive one Remote Station
+*RemoteStationControllerApi* | [**retrieveRemoteStationByCityName**](docs/RemoteStationControllerApi.md#retrieveRemoteStationByCityName) | **GET** /remotestation/city | Retrive Remote Stations by city name
 *RemoteStationControllerApi* | [**retrieveRemoteStationByCode**](docs/RemoteStationControllerApi.md#retrieveRemoteStationByCode) | **GET** /remotestation/code/{code} | Retrive one Remote Station by code
+*RemoteStationControllerApi* | [**retrieveRemoteStationByExcellName**](docs/RemoteStationControllerApi.md#retrieveRemoteStationByExcellName) | **GET** /remotestation/excellName | Retrive Remote Stations by name without space and uppercased
+*RemoteStationControllerApi* | [**retrieveRemoteStationByName**](docs/RemoteStationControllerApi.md#retrieveRemoteStationByName) | **GET** /remotestation/name | Retrive one Remote Station by name
 *RemoteStationControllerApi* | [**retrieveRemoteStationByPriority**](docs/RemoteStationControllerApi.md#retrieveRemoteStationByPriority) | **GET** /remotestation/priority/{priority} | Find remote stations by priority
 *RemoteStationControllerApi* | [**retrieveRemoteStationByTacticalOptimization**](docs/RemoteStationControllerApi.md#retrieveRemoteStationByTacticalOptimization) | **GET** /remotestation/tacticalOptimization | Retrive a list of Remote Station candidates in a Tactical Optimization Study
 *RemoteStationControllerApi* | [**retrieveRemoteStationFilteredAndPaged**](docs/RemoteStationControllerApi.md#retrieveRemoteStationFilteredAndPaged) | **GET** /remotestation/filter | List paged
@@ -266,13 +270,6 @@ Class | Method | HTTP request | Description
 *StateControllerApi* | [**retrieveStateFilteredAndPaged**](docs/StateControllerApi.md#retrieveStateFilteredAndPaged) | **GET** /state/filter | List paged
 *StateControllerApi* | [**retrieveStatePaged**](docs/StateControllerApi.md#retrieveStatePaged) | **GET** /state/page | List paged
 *StateControllerApi* | [**updateState**](docs/StateControllerApi.md#updateState) | **PUT** /state/{id} | Update a state
-*StockControllerApi* | [**createStock**](docs/StockControllerApi.md#createStock) | **POST** /stock | Create a new stock configuration
-*StockControllerApi* | [**deleteStock**](docs/StockControllerApi.md#deleteStock) | **DELETE** /stock/{id} | Delete the stock configuration
-*StockControllerApi* | [**retrieveAllStock**](docs/StockControllerApi.md#retrieveAllStock) | **GET** /stock | List all stock&#39;s configuration
-*StockControllerApi* | [**retrieveStock**](docs/StockControllerApi.md#retrieveStock) | **GET** /stock/{id} | Find one stock configuration
-*StockControllerApi* | [**retrieveStockFilteredAndPaged**](docs/StockControllerApi.md#retrieveStockFilteredAndPaged) | **GET** /stock/filter | List paged
-*StockControllerApi* | [**retrieveStockPaged**](docs/StockControllerApi.md#retrieveStockPaged) | **GET** /stock/page | List paged
-*StockControllerApi* | [**updateStock**](docs/StockControllerApi.md#updateStock) | **PUT** /stock/{id} | Edit the configured stock
 *TacticalOptimizationControllerApi* | [**createTacticalOptimization**](docs/TacticalOptimizationControllerApi.md#createTacticalOptimization) | **POST** /tacticalOptimization | Configura a optimization
 *TacticalOptimizationControllerApi* | [**deleteTacticalOptimization**](docs/TacticalOptimizationControllerApi.md#deleteTacticalOptimization) | **DELETE** /tacticalOptimization/{id} | Delete the tacticalOptimization&#39;s configurations
 *TacticalOptimizationControllerApi* | [**retrieveAllTacticalOptimization**](docs/TacticalOptimizationControllerApi.md#retrieveAllTacticalOptimization) | **GET** /tacticalOptimization | List all configured optimizations
@@ -280,28 +277,39 @@ Class | Method | HTTP request | Description
 *TacticalOptimizationControllerApi* | [**retrieveTacticalOptimizationFilteredAndPaged**](docs/TacticalOptimizationControllerApi.md#retrieveTacticalOptimizationFilteredAndPaged) | **GET** /tacticalOptimization/filter | List paged
 *TacticalOptimizationControllerApi* | [**retrieveTacticalOptimizationPaged**](docs/TacticalOptimizationControllerApi.md#retrieveTacticalOptimizationPaged) | **GET** /tacticalOptimization/page | List paged
 *TacticalOptimizationControllerApi* | [**updateTacticalOptimization**](docs/TacticalOptimizationControllerApi.md#updateTacticalOptimization) | **PUT** /tacticalOptimization/{id} | Update a optimization
+*TacticalOptimizationControllerApi* | [**validateTacticalOptimization**](docs/TacticalOptimizationControllerApi.md#validateTacticalOptimization) | **PUT** /tacticalOptimization/status | Validate a tactical optimization
+*TacticalOptimizationResultControllerApi* | [**createTacticalOptimizationResult**](docs/TacticalOptimizationResultControllerApi.md#createTacticalOptimizationResult) | **POST** /tacticalOptimizationResult | Save a tacticalOptimizationResult
+*TacticalOptimizationResultControllerApi* | [**createTacticalOptimizationResults**](docs/TacticalOptimizationResultControllerApi.md#createTacticalOptimizationResults) | **POST** /tacticalOptimizationResults | Save a results list
+*TacticalOptimizationResultControllerApi* | [**deleteTacticalOptimizationResult**](docs/TacticalOptimizationResultControllerApi.md#deleteTacticalOptimizationResult) | **DELETE** /tacticalOptimizationResult/{id} | Delete a tacticalOptimizationResult
+*TacticalOptimizationResultControllerApi* | [**existsByTacticalOptimization**](docs/TacticalOptimizationResultControllerApi.md#existsByTacticalOptimization) | **GET** /tacticalOptimizationResult/existsByTacticalOptimization/{id} | Find boolean by study
+*TacticalOptimizationResultControllerApi* | [**retrieveAllTacticalOptimizationResult**](docs/TacticalOptimizationResultControllerApi.md#retrieveAllTacticalOptimizationResult) | **GET** /tacticalOptimizationResult | List all
+*TacticalOptimizationResultControllerApi* | [**retrieveByTacticalOptimization**](docs/TacticalOptimizationResultControllerApi.md#retrieveByTacticalOptimization) | **GET** /tacticalOptimizationResult/tacticalOptimization/{id} | Find by study
+*TacticalOptimizationResultControllerApi* | [**retrieveTacticalOptimizationResult**](docs/TacticalOptimizationResultControllerApi.md#retrieveTacticalOptimizationResult) | **GET** /tacticalOptimizationResult/{id} | Find a tacticalOptimizationResult
+*TacticalOptimizationResultControllerApi* | [**retrieveTacticalOptimizationResultFilteredAndPaged**](docs/TacticalOptimizationResultControllerApi.md#retrieveTacticalOptimizationResultFilteredAndPaged) | **GET** /tacticalOptimizationResult/filter | List paged
+*TacticalOptimizationResultControllerApi* | [**retrieveTacticalOptimizationResultPaged**](docs/TacticalOptimizationResultControllerApi.md#retrieveTacticalOptimizationResultPaged) | **GET** /tacticalOptimizationResult/page | List paged
+*TacticalOptimizationResultControllerApi* | [**updateTacticalOptimizationResult**](docs/TacticalOptimizationResultControllerApi.md#updateTacticalOptimizationResult) | **PUT** /tacticalOptimizationResult/{id} | Update a tacticalOptimizationResult
 
 
 ## Documentation for Models
 
+ - [Address](docs/Address.md)
  - [City](docs/City.md)
  - [Delivery](docs/Delivery.md)
  - [Demand](docs/Demand.md)
  - [DemandProjected](docs/DemandProjected.md)
  - [DemandProjectionStudy](docs/DemandProjectionStudy.md)
- - [InternalOrder](docs/InternalOrder.md)
+ - [ErrorProjected](docs/ErrorProjected.md)
  - [InternalSupply](docs/InternalSupply.md)
  - [OperationalOptimization](docs/OperationalOptimization.md)
- - [Optimizator](docs/Optimizator.md)
+ - [OperationalOptimizationResult](docs/OperationalOptimizationResult.md)
  - [PageOfCity](docs/PageOfCity.md)
  - [PageOfDelivery](docs/PageOfDelivery.md)
  - [PageOfDemand](docs/PageOfDemand.md)
  - [PageOfDemandProjected](docs/PageOfDemandProjected.md)
  - [PageOfDemandProjectionStudy](docs/PageOfDemandProjectionStudy.md)
- - [PageOfInternalOrder](docs/PageOfInternalOrder.md)
  - [PageOfInternalSupply](docs/PageOfInternalSupply.md)
  - [PageOfOperationalOptimization](docs/PageOfOperationalOptimization.md)
- - [PageOfOptimizator](docs/PageOfOptimizator.md)
+ - [PageOfOperationalOptimizationResult](docs/PageOfOperationalOptimizationResult.md)
  - [PageOfPart](docs/PageOfPart.md)
  - [PageOfPrediction](docs/PageOfPrediction.md)
  - [PageOfProcessingPart](docs/PageOfProcessingPart.md)
@@ -311,8 +319,8 @@ Class | Method | HTTP request | Description
  - [PageOfSRAM](docs/PageOfSRAM.md)
  - [PageOfSRAMsAllocated](docs/PageOfSRAMsAllocated.md)
  - [PageOfState](docs/PageOfState.md)
- - [PageOfStock](docs/PageOfStock.md)
  - [PageOfTacticalOptimization](docs/PageOfTacticalOptimization.md)
+ - [PageOfTacticalOptimizationResult](docs/PageOfTacticalOptimizationResult.md)
  - [Pageable](docs/Pageable.md)
  - [Part](docs/Part.md)
  - [Prediction](docs/Prediction.md)
@@ -326,8 +334,8 @@ Class | Method | HTTP request | Description
  - [SRAMsAllocated](docs/SRAMsAllocated.md)
  - [Sort](docs/Sort.md)
  - [State](docs/State.md)
- - [Stock](docs/Stock.md)
  - [TacticalOptimization](docs/TacticalOptimization.md)
+ - [TacticalOptimizationResult](docs/TacticalOptimizationResult.md)
 
 
 ## Documentation for Authorization

@@ -56,7 +56,9 @@ public class DefaultApi {
 
     /**
      * Build call for allocatePost
-     * @param origin The delivery location (optional)
+     * @param orderID Production Order Indentification (optional)
+     * @param longitude The delivery longitude location (optional)
+     * @param latitude The delivery latitude location (optional)
      * @param quantity The quantity to be allocate (optional)
      * @param part The type of spare part (ex.: Button, Dosing chamber, Grid Air Condition, Support for escalator, Home Lift frame) (optional)
      * @param progressListener Progress listener
@@ -64,7 +66,7 @@ public class DefaultApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call allocatePostCall(String origin, String quantity, String part, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call allocatePostCall(String orderID, String longitude, String latitude, String quantity, String part, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -72,8 +74,12 @@ public class DefaultApi {
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        if (origin != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("origin", origin));
+        if (orderID != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("orderID", orderID));
+        if (longitude != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("longitude", longitude));
+        if (latitude != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("latitude", latitude));
         if (quantity != null)
         localVarQueryParams.addAll(apiClient.parameterToPair("quantity", quantity));
         if (part != null)
@@ -112,10 +118,10 @@ public class DefaultApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call allocatePostValidateBeforeCall(String origin, String quantity, String part, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call allocatePostValidateBeforeCall(String orderID, String longitude, String latitude, String quantity, String part, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
 
-        com.squareup.okhttp.Call call = allocatePostCall(origin, quantity, part, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = allocatePostCall(orderID, longitude, latitude, quantity, part, progressListener, progressRequestListener);
         return call;
 
     }
@@ -123,28 +129,32 @@ public class DefaultApi {
     /**
      *  allocate production order
      * 
-     * @param origin The delivery location (optional)
+     * @param orderID Production Order Indentification (optional)
+     * @param longitude The delivery longitude location (optional)
+     * @param latitude The delivery latitude location (optional)
      * @param quantity The quantity to be allocate (optional)
      * @param part The type of spare part (ex.: Button, Dosing chamber, Grid Air Condition, Support for escalator, Home Lift frame) (optional)
      * @return AllocationResult
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public AllocationResult allocatePost(String origin, String quantity, String part) throws ApiException {
-        ApiResponse<AllocationResult> resp = allocatePostWithHttpInfo(origin, quantity, part);
+    public AllocationResult allocatePost(String orderID, String longitude, String latitude, String quantity, String part) throws ApiException {
+        ApiResponse<AllocationResult> resp = allocatePostWithHttpInfo(orderID, longitude, latitude, quantity, part);
         return resp.getData();
     }
 
     /**
      *  allocate production order
      * 
-     * @param origin The delivery location (optional)
+     * @param orderID Production Order Indentification (optional)
+     * @param longitude The delivery longitude location (optional)
+     * @param latitude The delivery latitude location (optional)
      * @param quantity The quantity to be allocate (optional)
      * @param part The type of spare part (ex.: Button, Dosing chamber, Grid Air Condition, Support for escalator, Home Lift frame) (optional)
      * @return ApiResponse&lt;AllocationResult&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<AllocationResult> allocatePostWithHttpInfo(String origin, String quantity, String part) throws ApiException {
-        com.squareup.okhttp.Call call = allocatePostValidateBeforeCall(origin, quantity, part, null, null);
+    public ApiResponse<AllocationResult> allocatePostWithHttpInfo(String orderID, String longitude, String latitude, String quantity, String part) throws ApiException {
+        com.squareup.okhttp.Call call = allocatePostValidateBeforeCall(orderID, longitude, latitude, quantity, part, null, null);
         Type localVarReturnType = new TypeToken<AllocationResult>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -152,14 +162,16 @@ public class DefaultApi {
     /**
      *  allocate production order (asynchronously)
      * 
-     * @param origin The delivery location (optional)
+     * @param orderID Production Order Indentification (optional)
+     * @param longitude The delivery longitude location (optional)
+     * @param latitude The delivery latitude location (optional)
      * @param quantity The quantity to be allocate (optional)
      * @param part The type of spare part (ex.: Button, Dosing chamber, Grid Air Condition, Support for escalator, Home Lift frame) (optional)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call allocatePostAsync(String origin, String quantity, String part, final ApiCallback<AllocationResult> callback) throws ApiException {
+    public com.squareup.okhttp.Call allocatePostAsync(String orderID, String longitude, String latitude, String quantity, String part, final ApiCallback<AllocationResult> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -180,7 +192,7 @@ public class DefaultApi {
             };
         }
 
-        com.squareup.okhttp.Call call = allocatePostValidateBeforeCall(origin, quantity, part, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = allocatePostValidateBeforeCall(orderID, longitude, latitude, quantity, part, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<AllocationResult>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;

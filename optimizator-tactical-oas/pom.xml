@@ -26,7 +26,7 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<!-- Spring boot main class -->
-		<start-class>com.fasten.wp4.optimizator.tactical.TacticalOptimizatorOAS</start-class>
+		<start-class>com.fasten.wp4.TacticalOptimizatorOAS</start-class>
 	</properties>
 
 	<dependencies>
@@ -158,12 +158,18 @@
 		    <artifactId>email-client</artifactId>
 		    <version>0.0.1-SNAPSHOT</version>
 		</dependency>
-	<dependency>
-	    <groupId>com.google.code.gson</groupId>
-	    <artifactId>gson</artifactId>
-	</dependency>
+		<dependency>
+		    <groupId>com.google.code.gson</groupId>
+		    <artifactId>gson</artifactId>
+		</dependency>
 
-		
+		<!-- PERSISTENCIA -->
+		<dependency>
+		  	<groupId>com.fasten.wp4</groupId>
+		    <artifactId>fpsot-persistence</artifactId>
+		    <version>0.0.1-SNAPSHOT</version>
+		  	<scope>compile</scope>
+		</dependency>
 	</dependencies>
 
 	<!-- https://www.baeldung.com/executable-jar-with-maven https://docs.spring.io/spring-boot/docs/current/maven-plugin/usage.html 
@@ -188,6 +194,30 @@
 					<!-- </archive> -->
 					<mainClass>${start-class}</mainClass>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<version>1.4.13</version>
+				<configuration>
+					<repository>filipemb/${project.artifactId}</repository>
+<!-- 					<tag>${project.version}</tag> -->
+					<tag>latest</tag>
+					<buildArgs>
+						<JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
+					</buildArgs>
+                    <username>filipemb</username>   
+                    <password>m9s2h3u7O!</password>
+                </configuration>
+				<executions>
+					<execution>
+						<id>default</id>
+						<phase>install</phase>
+						<goals>
+							<goal>build</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

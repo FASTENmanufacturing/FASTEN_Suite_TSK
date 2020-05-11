@@ -92,6 +92,15 @@ public class PartController {
 		resource.add(linkTo.withRel("all"));
 		return resource;
 	}
+
+	@GetMapping("/part/layout/{layout}")
+	@ApiOperation(nickname="retrievePartByLayout", value = "Find one part by layout")
+	public Part retrieveByLayout(@PathVariable String layout) {
+		Optional<Part> retrivedObject = repository.findByLayout(layout);
+		if (!retrivedObject.isPresent())
+			throw new NotFoundException();
+		return retrivedObject.get();
+	}
 	
 	@GetMapping(value="/part/name")
 	@ApiOperation(nickname="retrieveAllDistinctByName", value = "Find parts name")

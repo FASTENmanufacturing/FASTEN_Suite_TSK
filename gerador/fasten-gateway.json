@@ -1,0 +1,421 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "API v1",
+    "version" : "1.0",
+    "title" : "Core API v1"
+  },
+  "basePath" : "/api/v1",
+  "tags" : [ {
+    "name" : "default",
+    "description" : "Default namespace"
+  } ],
+  "consumes" : [ "application/json" ],
+  "produces" : [ "application/json" ],
+  "paths" : {
+    "/equips" : {
+      "get" : {
+        "tags" : [ "default" ],
+        "operationId" : "get_rest_equips",
+        "parameters" : [ {
+          "name" : "X-Fields",
+          "in" : "header",
+          "description" : "An optional fields mask",
+          "required" : false,
+          "type" : "string",
+          "format" : "mask"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Equip successfully read."
+          }
+        }
+      }
+    },
+    "/orders" : {
+      "get" : {
+        "tags" : [ "default" ],
+        "operationId" : "get_rest_orders",
+        "parameters" : [ {
+          "name" : "X-Fields",
+          "in" : "header",
+          "description" : "An optional fields mask",
+          "required" : false,
+          "type" : "string",
+          "format" : "mask"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Orders successfully read."
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "default" ],
+        "summary" : "Creates an order",
+        "operationId" : "post_rest_orders",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "payload",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/order"
+          }
+        }, {
+          "name" : "X-Fields",
+          "in" : "header",
+          "description" : "An optional fields mask",
+          "required" : false,
+          "type" : "string",
+          "format" : "mask"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "schema" : {
+              "$ref" : "#/definitions/order"
+            }
+          },
+          "201" : {
+            "description" : "Order successfully created."
+          },
+          "400" : {
+            "description" : "Error in payload validation."
+          },
+          "409" : {
+            "description" : "Error in order creation."
+          }
+        }
+      }
+    },
+    "/orders/{order_id}" : {
+      "get" : {
+        "tags" : [ "default" ],
+        "operationId" : "get_rest_order_item",
+        "parameters" : [ {
+          "name" : "order_id",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer"
+        }, {
+          "name" : "X-Fields",
+          "in" : "header",
+          "description" : "An optional fields mask",
+          "required" : false,
+          "type" : "string",
+          "format" : "mask"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Order successfully read."
+          }
+        }
+      }
+    },
+    "/orders/{order_id}/optimization" : {
+      "post" : {
+        "tags" : [ "default" ],
+        "operationId" : "post_rest_order_optimization_item",
+        "parameters" : [ {
+          "name" : "order_id",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "payload",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/order_optimization_list"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success"
+          }
+        }
+      }
+    },
+    "/partorders" : {
+      "get" : {
+        "tags" : [ "default" ],
+        "operationId" : "get_rest_part_orders",
+        "parameters" : [ {
+          "name" : "X-Fields",
+          "in" : "header",
+          "description" : "An optional fields mask",
+          "required" : false,
+          "type" : "string",
+          "format" : "mask"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Part order successfully read."
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "default" ],
+        "summary" : "Creates an part order",
+        "operationId" : "post_rest_part_orders",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "payload",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/partorder_scheme_post"
+          }
+        }, {
+          "name" : "X-Fields",
+          "in" : "header",
+          "description" : "An optional fields mask",
+          "required" : false,
+          "type" : "string",
+          "format" : "mask"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Success",
+            "schema" : {
+              "$ref" : "#/definitions/partorder"
+            }
+          },
+          "201" : {
+            "description" : "Part order successfully created."
+          },
+          "400" : {
+            "description" : "Error in payload validation."
+          },
+          "409" : {
+            "description" : "Error in part order creation."
+          }
+        }
+      }
+    },
+    "/parts" : {
+      "get" : {
+        "tags" : [ "default" ],
+        "operationId" : "get_rest_parts",
+        "parameters" : [ {
+          "name" : "X-Fields",
+          "in" : "header",
+          "description" : "An optional fields mask",
+          "required" : false,
+          "type" : "string",
+          "format" : "mask"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Part successfully read."
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "order" : {
+      "type" : "object",
+      "required" : [ "client", "so_number", "uf" ],
+      "properties" : {
+        "id" : {
+          "type" : "integer"
+        },
+        "so_number" : {
+          "type" : "string"
+        },
+        "client" : {
+          "type" : "string"
+        },
+        "zipcode" : {
+          "type" : "string"
+        },
+        "neighborhood" : {
+          "type" : "string"
+        },
+        "country" : {
+          "type" : "string"
+        },
+        "city" : {
+          "type" : "string"
+        },
+        "uf" : {
+          "type" : "string"
+        },
+        "street" : {
+          "type" : "string"
+        },
+        "number" : {
+          "type" : "string"
+        },
+        "complement" : {
+          "type" : "string"
+        },
+        "latitude" : {
+          "type" : "number"
+        },
+        "longitude" : {
+          "type" : "number"
+        }
+      }
+    },
+    "demand" : {
+      "type" : "object",
+      "properties" : {
+        "orderID" : {
+          "type" : "string"
+        },
+        "origin" : {
+          "$ref" : "#/definitions/demand_origin"
+        },
+        "quantity" : {
+          "type" : "integer"
+        },
+        "part" : {
+          "$ref" : "#/definitions/demand_part"
+        }
+      }
+    },
+    "order_optimization_list" : {
+      "type" : "object",
+      "required" : [ "optimizationResults" ],
+      "properties" : {
+        "orderID" : {
+          "type" : "string"
+        },
+        "optimizationResults" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/order_optimization"
+          }
+        }
+      }
+    },
+    "order_optimization" : {
+      "type" : "object",
+      "required" : [ "SRAM" ],
+      "properties" : {
+        "SRAM" : {
+          "type" : "string"
+        },
+        "queueTime" : {
+          "type" : "number"
+        },
+        "timeProduction" : {
+          "type" : "number"
+        },
+        "timeTravel" : {
+          "type" : "number"
+        },
+        "totalTime" : {
+          "type" : "number"
+        }
+      }
+    },
+    "partorder_scheme_post" : {
+      "type" : "object",
+      "properties" : {
+        "quantity" : {
+          "type" : "integer"
+        },
+        "part_id" : {
+          "type" : "integer"
+        }
+      }
+    },
+    "partorder" : {
+      "type" : "object",
+      "required" : [ "order_number", "status" ],
+      "properties" : {
+        "status" : {
+          "type" : "string"
+        },
+        "order_number" : {
+          "type" : "string"
+        },
+        "estimated_time" : {
+          "type" : "string"
+        },
+        "elapsed_time" : {
+          "type" : "string"
+        },
+        "quantity" : {
+          "type" : "integer"
+        },
+        "part" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/part_scheme"
+          }
+        }
+      }
+    },
+    "part_scheme" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer"
+        },
+        "part_number" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string"
+        }
+      }
+    },
+    "demand_origin" : {
+      "type" : "object",
+      "properties" : {
+        "zipcode" : {
+          "type" : "string"
+        },
+        "neighborhood" : {
+          "type" : "string"
+        },
+        "country" : {
+          "type" : "string"
+        },
+        "city" : {
+          "type" : "string"
+        },
+        "uf" : {
+          "type" : "string"
+        },
+        "street" : {
+          "type" : "string"
+        },
+        "number" : {
+          "type" : "string"
+        },
+        "complement" : {
+          "type" : "string"
+        },
+        "latitude" : {
+          "type" : "number"
+        },
+        "longitude" : {
+          "type" : "number"
+        }
+      }
+    },
+    "demand_part" : {
+      "type" : "object",
+      "properties" : {
+        "part_number" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string"
+        }
+      }
+    }
+  },
+  "responses" : {
+    "ParseError" : {
+      "description" : "When a mask can't be parsed"
+    },
+    "MaskError" : {
+      "description" : "When any error occurs on mask"
+    }
+  }
+}

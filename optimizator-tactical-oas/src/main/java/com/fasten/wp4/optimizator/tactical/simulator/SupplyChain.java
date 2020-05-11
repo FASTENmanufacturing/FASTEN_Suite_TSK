@@ -5,8 +5,6 @@
  */
 package com.fasten.wp4.optimizator.tactical.simulator;
 
-import java.io.IOException;
-import java.util.Iterator;
 import java.util.ArrayList;
 
 /**
