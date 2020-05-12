@@ -8,42 +8,25 @@
 
 
 
-# IntelliJ
+*.class
 
-*.iml
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
 
-*.ipr
+# Package Files #
+*.jar
+*.war
+*.ear
 
-*.iws
+# exclude jar for gradle wrapper
+!gradle/wrapper/*.jar
 
-.idea
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
 
-.settings
-
-
-
-# Maven
-
-target/
-
-
-
-#Gradle
-
+# build files
+**/target
+target
 .gradle
-
-
-
-# TestNG
-
-test-output/
-
-
-
-
-*.log
-
-#linux te files
-*~
-/aws-iot-data-emulator.pem
-/aws-iot-data-emulator.ppk
+build
+/bin/

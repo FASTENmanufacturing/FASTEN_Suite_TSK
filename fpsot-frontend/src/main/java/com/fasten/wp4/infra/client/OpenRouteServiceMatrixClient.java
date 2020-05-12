@@ -24,6 +24,7 @@ public class OpenRouteServiceMatrixClient implements Serializable {
 		matrixApi.getApiClient().setDebugging(true);
 		matrixApi.getApiClient().setConnectTimeout(0);
 		matrixApi.getApiClient().setReadTimeout(0);
+		matrixApi.getApiClient().setApiKey(ORS_API_KEY);
 	}
 
 	@Produces

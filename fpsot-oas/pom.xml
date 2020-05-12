@@ -117,7 +117,7 @@
 		    <version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>com.wp5.fastengateway</groupId>
+			<groupId>com.fasten.wp5</groupId>
 		    <artifactId>fastengateway-client</artifactId>
 		    <version>0.0.1-SNAPSHOT</version>
 		</dependency>

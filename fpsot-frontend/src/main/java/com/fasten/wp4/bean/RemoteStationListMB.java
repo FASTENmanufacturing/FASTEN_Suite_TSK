@@ -33,6 +33,7 @@ import com.fasten.wp4.database.client.model.PageOfRemoteStation;
 import com.fasten.wp4.database.client.model.RemoteStation;
 import com.fasten.wp4.infra.async.AsyncCall;
 import com.fasten.wp4.infra.async.AsyncRequestUtils;
+import com.fasten.wp4.infra.client.OpenRouteServiceGeocodeClient;
 import com.github.adminfaces.template.exception.BusinessException;
 import com.squareup.okhttp.Call;
 
@@ -129,7 +130,7 @@ public class RemoteStationListMB implements Serializable {
 	
 
 	public void getCoordinates(RemoteStation remoteStation) {
-		String apiKey = "5b3ce3597851110001cf6248f61f0e8e01c1439b977e4410e5cd757a";
+		String apiKey = OpenRouteServiceGeocodeClient.ORS_API_KEY;
 		String text = remoteStation.getAddress().getCity().getName()+", "+remoteStation.getAddress().getCity().getState().getName()+", Brazil";
 		Float focusPointLon = null;
 		Float focusPointLat = null;

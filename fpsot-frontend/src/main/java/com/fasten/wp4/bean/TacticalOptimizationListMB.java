@@ -30,8 +30,6 @@ import com.fasten.wp4.database.client.api.TacticalOptimizationResultControllerAp
 import com.fasten.wp4.database.client.invoker.ApiException;
 import com.fasten.wp4.database.client.model.PageOfTacticalOptimization;
 import com.fasten.wp4.database.client.model.TacticalOptimization;
-import com.fasten.wp4.email.client.api.EmailControllerApi;
-import com.fasten.wp4.email.client.model.Email;
 import com.fasten.wp4.infra.async.AsyncCall;
 import com.fasten.wp4.infra.async.AsyncRequestUtils;
 import com.fasten.wp4.infra.security.LogonMB;

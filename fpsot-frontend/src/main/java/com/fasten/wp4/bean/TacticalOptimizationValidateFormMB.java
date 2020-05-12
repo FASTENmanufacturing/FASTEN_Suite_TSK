@@ -38,6 +38,7 @@ import com.fasten.wp4.database.client.invoker.ApiException;
 import com.fasten.wp4.database.client.model.Delivery;
 import com.fasten.wp4.database.client.model.RemoteStation;
 import com.fasten.wp4.database.client.model.TacticalOptimization;
+import com.fasten.wp4.infra.client.OpenRouteServiceGeocodeClient;
 import com.github.adminfaces.template.exception.BusinessException;
 
 @Named
@@ -191,7 +192,7 @@ public class TacticalOptimizationValidateFormMB implements Serializable {
 			List<RemoteStation> requestGroup = requestGroupsIterator.next();
 			for (RemoteStation r : requestGroup) {
 
-				String apiKey = "5b3ce3597851110001cf6248f61f0e8e01c1439b977e4410e5cd757a";
+				String apiKey = OpenRouteServiceGeocodeClient.ORS_API_KEY;
 				String text = r.getAddress().getCity().getName()+", "+r.getAddress().getCity().getState().getName()+", Brazil";
 				Float focusPointLon = null;
 				Float focusPointLat = null;

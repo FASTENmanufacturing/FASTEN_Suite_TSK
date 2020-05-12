@@ -23,7 +23,7 @@ public class ApiKeyAuth implements Authentication {
   private final String location;
   private final String paramName;
 
-  private String apiKey="5b3ce3597851110001cf6248f61f0e8e01c1439b977e4410e5cd757a";
+  private String apiKey;
   private String apiKeyPrefix;
 
   public ApiKeyAuth(String location, String paramName) {

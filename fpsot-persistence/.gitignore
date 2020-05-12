@@ -1,30 +1,32 @@
-/target/
-!.mvn/wrapper/maven-wrapper.jar
+# Eclipse
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
 .project
-.settings
-.springBeans
-.sts4-cache
 
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
+.classpath
 
-### NetBeans ###
-/nbproject/private/
-/build/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
+.settings/
 
-### SSP ###
-.svn
-application.pid
-bin/
+
+
+*.class
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# exclude jar for gradle wrapper
+!gradle/wrapper/*.jar
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# build files
+**/target
+target
+.gradle
+build
+/bin/

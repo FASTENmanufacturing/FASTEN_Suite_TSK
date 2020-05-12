@@ -7,8 +7,8 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Named;
 
-
 import com.fasten.wp4.email.client.api.EmailControllerApi;
+
 
 @Named
 @ApplicationScoped
