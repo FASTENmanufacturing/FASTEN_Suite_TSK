@@ -43,6 +43,8 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<!-- Spring boot main class -->
 		<start-class>com.fasten.wp4.email.EmailOAS</start-class>
+		<!-- dependabot -->
+		<hibernate-validator.version>6.1.0.Final</hibernate-validator.version>
 	</properties>
 	<dependencies>
 		<dependency>

@@ -28,6 +28,8 @@
 		<!-- Spring boot main class -->
 		<start-class>com.fasten.wp4.DatabaseOAS</start-class>
 		<postgresql.version>42.2.12</postgresql.version>
+		<!-- dependabot -->
+		<hibernate-validator.version>6.1.0.Final</hibernate-validator.version>
 	</properties>
 
 	<dependencies>
