@@ -17,11 +17,11 @@ The model performs a local optimization for each production order to an SRAM uni
 
 The __objective function__ should minimize the total response time:
 
-![](eq.png)
+![](images/eq.png)
 
 The model integration with the FASTEN platform and the main technologies related are showed in this diagram:
 
-![](model.png)
+![](images/model.png)
 
 ## Requirements, Installation and Execution
 
