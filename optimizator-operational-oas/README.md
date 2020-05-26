@@ -33,7 +33,7 @@ sudo apt-get update
 sudo apt install docker.io
 ```
 
-- To build the container image go to the 'src' directory that contain the application and the 'dockerfile' that defines the container dependencies and structure. Use the command to build the image:
+- To build the container image go to the `src` directory that contain the application and the 'dockerfile' that defines the container dependencies and structure. Use the command to build the image:
 ```
 docker build -t api-allocate .
 ```
