@@ -1,0 +1,107 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Nov 22 00:26:24 2019
+
+@author: saymongb
+"""
+
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Nov  4 22:30:13 2019
+Author:     Saymon G. Bandeira
+Contact:    saymongb@gmail.com
+Summary:    Code to run performance evaluation and save results.
+Note:       a) Save results in a ".xlsx" file.
+            b) Tests with all models in pool.
+
+Fix: 
+Status: Validating         
+Next:
+       
+"""
+
+# Imports
+import os,sys
+sys.path.append(os.getcwd()[0:-11]) # run into tests
+import matplotlib.pyplot as plt
+import pandas as pd
+import objects as obj
+import utils.util as ut
+import numpy as np
+import datetime as dt
+import math
+import modelSeletor as ms
+import warnings
+import re # REGEX Operation
+
+warnings.filterwarnings("ignore")
+
+# Data source, directory data
+dataFile = u'Demanda corrediça.xlsx'
+#dataFile = 'M3C.xls'
+path = '../Dataset/'
+imagePath = '../Images/'
+m3 = dataFile=='M3C.xls'
+freq = 'M'
+mean = 0
+# Experiment configuration
+
+data = pd.read_excel(path+dataFile,None)
+
+if not m3:
+    
+    # Specific corrediça spreadsheet operations
+    outputFileName = 'performance_corredica'
+    sheet_names = ['2017','2018','2019'] # For corrediça spreadsheet
+    filiais = pd.read_excel(path+dataFile,'2017')
+    filiais = filiais['Unidade'].str.replace("  +","") #remove space
+    names = filiais.unique()
+    names.sort()
+    #names = ['Porto Velho','São Paulo'] # coment this line for executions
+    
+else:
+    
+    # Specific to M3-Competition monthly data
+    # Extract series conform to https://doi.org/10.1016/j.jbusres.2015.03.028
+    outputFileName = 'performance_M3'
+    frequency = ['M']
+    data = data.pop('M3Month')
+    #data = data[data['N']>=126]
+    names = data['Series'].unique()
+    names.sort()
+    #names = ['N2801','N1404'] # coment this line for executions
+count=0
+for serieName in names:
+    
+    print()
+    print('Series:'+serieName)
+
+    if not m3:
+        # Get data
+        serie = ut.Utils.readCorredica(serieName,data,sheet_names)
+        # Proccess series on same frequency
+        sampleObj = serie.resample(freq)
+        newSeries  = sampleObj.sum()
+    else:
+        newSeries = ut.Utils.buildM3DataFrame(data,serieName)
+        
+    cv = ut.Utils.getCV(newSeries)
+    adi = ut.Utils.getADI(newSeries)
+    mean += len(newSeries)
+    
+    print('CV:'+str(cv)+',ADI:'+str(adi))
+    print(ut.Utils.getDemandType(cv,adi))
+    if ut.Utils.getDemandType(cv,adi) in ['lumpy','intermittent']:
+        count+=1
+    #plt.title('Series nº '+serieName[1:])
+    #plt.xlabel('Time')
+    #plt.ylabel('Demand value')
+    #plt.plot(newSeries)
+    #plt.gcf().autofmt_xdate()
+    #plt.savefig(imagePath+serieName+'.png',dpi = 800)
+    #plt.close()
+print(100*count/54)
+print(count)
+print(mean/54)
