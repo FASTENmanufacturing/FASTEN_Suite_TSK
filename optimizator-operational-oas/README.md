@@ -17,7 +17,7 @@ The model performs a local optimization for each production order to an SRAM uni
 
 The __objective function__ should minimize the total response time:
 
-![](https://latex.codecogs.com/png.download?rt%20%3D%20min%20%5Csum%20queue%20+%20setup%20+%20production%20+%20transportation)
+![](eq.png)
 
 The model integration with the FASTEN platform and the main technologies related are showed in this diagram:
 
