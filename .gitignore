@@ -27,3 +27,5 @@ matrix-client/.settings/org.eclipse.jdt.core.prefs
 optimizator-operational-client/.settings/org.eclipse.jdt.core.prefs
 predictive-client/.settings/org.eclipse.jdt.core.prefs
 kafka-response-client/.classpath
+.Rproj.user
+FASTEN_Suite_TSK.Rproj
