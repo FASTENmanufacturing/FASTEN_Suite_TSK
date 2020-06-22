@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/iot-fiware-oas/src/main/java/com/fasten/wp4/IoTFiwareOAS.java"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="1"/>
+</listAttribute>
+<mapAttribute key="org.eclipse.debug.core.environmentVariables">
+<mapEntry key="DATASOURCE_PASSWORD" value="#fasten-0917!"/>
+<mapEntry key="DATASOURCE_URL" value="jdbc:postgresql://200.131.17.17:11003/wp4"/>
+<mapEntry key="DATASOURCE_USER" value="fasten"/>
+<mapEntry key="FPSOT_FRONTEND_URL" value="http://200.131.17.17:11010/rest/notify"/>
+<mapEntry key="IOT_FIWARE_OAS_URL" value="http://10.5.18.149:4444"/>
+<mapEntry key="ORION_URL" value="http://200.131.17.17:11012/v2"/>
+</mapAttribute>
+<listAttribute key="org.eclipse.debug.ui.favoriteGroups">
+<listEntry value="org.eclipse.debug.ui.launchGroup.run"/>
+</listAttribute>
+<booleanAttribute key="org.eclipse.jdt.launching.ATTR_EXCLUDE_TEST_CODE" value="true"/>
+<booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
+<stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.eclipse.m2e.launchconfig.classpathProvider"/>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="com.fasten.wp4.IoTFiwareOAS"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="iot-fiware-oas"/>
+<stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.m2e.launchconfig.sourcepathProvider"/>
+</launchConfiguration>

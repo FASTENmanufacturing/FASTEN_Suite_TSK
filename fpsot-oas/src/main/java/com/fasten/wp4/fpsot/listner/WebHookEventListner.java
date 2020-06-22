@@ -40,6 +40,8 @@ public class WebHookEventListner {
 		}
 
 		for (WebHook webHook : webHooksByEvent) {
+			//TODO testar se é o mesmo que o .toJson abaixo
+			//webHookControllerApi.getApiClient().getJSON().serialize(webHook);
 			webHookNotify.notifyConsumerService(webHook.getUrl(), webHookEvent.toJson());
 		}
 	}

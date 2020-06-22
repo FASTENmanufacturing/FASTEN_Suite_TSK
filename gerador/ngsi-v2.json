@@ -1609,6 +1609,101 @@
         }
       }
     },
+    "3Dprinter1ExtruderResponse" : {
+      "type" : "object",
+      "properties" : {
+        "subscriptionId" : {
+          "type" : "string"
+        },
+        "data" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/3Dprinter1Extruder"
+          }
+        }
+      }
+    },
+    "3Dprinter1Extruder" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "type" : {
+          "type" : "string"
+        },
+        "jobFilamentLength" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "jobFilamentVolume" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "jobFileName" : {
+          "type" : "string",
+          "format" : "double"
+        },
+        "printer3dState" : {
+          "type" : "string"
+        },
+        "progress" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "roomHumidity" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "roomTemperature" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "tempBedActual" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "tempBedGoal" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "tempTool1Actual" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "tempTool1Goal" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "timeElapsed" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "timeLeft" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "timestamp" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "averagePrintTime" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "estimatedPrintTime" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "lastPrintTime" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "printTimeLeftOrigin" : {
+          "type" : "string"
+        }
+      }
+    },
     "BatchOperation" : {
       "required" : [ "actionType", "entities" ],
       "properties" : {

@@ -40,15 +40,15 @@
             <p:panel styleClass="box-primary" >
             	<div class="ui-sm-12 ui-g-6 ui-g-nopad">
 						<div class="ui-sm-12 ui-g-11">
-							<p:outputLabel value="#{adm['remoteStation']}" for="remoteStation" />
+							<p:outputLabel value="#{adm['distributionCenter']}" for="distributionCenter" />
 						</div>
 						<div class="ui-sm-12 ui-g-11">
-							<p:selectOneMenu dynamic="true" id="remoteStation" value="#{demandFormMB.demand.remoteStation}" filter="true" filterMatchMode="contains">
+							<p:selectOneMenu dynamic="true" id="distributionCenter" value="#{demandFormMB.demand.distributionCenter}" filter="true" filterMatchMode="contains">
 								<f:converter converterId="entityApiConverter" />
 								<f:selectItem itemLabel="#{adm['combo.box.select.one']}" itemValue="#{null}" noSelectionOption="true" />
-								<f:selectItems value="#{demandFormMB.remoteStations}" var="remoteStation" itemLabel="#{remoteStation.name}" itemValue="#{remoteStation}" />
+								<f:selectItems value="#{demandFormMB.distributionCenters}" var="distributionCenter" itemLabel="#{distributionCenter.name}" itemValue="#{distributionCenter}" />
 							</p:selectOneMenu>
-							<span class="help-block"> <p:message for="remoteStation" />
+							<span class="help-block"> <p:message for="distributionCenter" />
 							</span>
 						</div>
 					</div>

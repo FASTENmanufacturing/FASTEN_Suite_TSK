@@ -129,6 +129,22 @@ public class OperationalOptimizationResultControllerApiTest {
     }
     
     /**
+     * Find by orderID
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void retrieveByOrderIDTest() throws ApiException {
+        String orderID = null;
+        List<OperationalOptimizationResult> response = api.retrieveByOrderID(orderID);
+
+        // TODO: test validations
+    }
+    
+    /**
      * Find a operationalOptimizationResult
      *
      * 

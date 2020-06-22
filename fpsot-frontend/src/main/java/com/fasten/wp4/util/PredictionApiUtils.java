@@ -34,7 +34,7 @@ public class PredictionApiUtils {
 		forecastingStudy.setHorizon(prediction.getHorizon());
 		forecastingStudy.setModels(convertToForecastingStudyModel(prediction));
 		forecastingStudy.setPart((prediction.getPart()!=null && prediction.getPart().getName()!=null)?prediction.getPart().getName():"All");
-		forecastingStudy.setRemoteStation((prediction.getRemoteStation()!=null && prediction.getRemoteStation().getName()!=null)?prediction.getRemoteStation().getName():"All");
+		forecastingStudy.setRemoteStation((prediction.getDistributionCenter()!=null && prediction.getDistributionCenter().getName()!=null)?prediction.getDistributionCenter().getName():"All");
 		forecastingStudy.setFrequency(convert(prediction.getGranularity()));
 		return forecastingStudy;
 	}
@@ -186,7 +186,7 @@ public class PredictionApiUtils {
 			d.setDemandType(type);
 			d.setDemandSubtype(demandSubtypeEnum);
 			d.setPart(prediction.getPart());
-			d.setRemoteStation(prediction.getRemoteStation());
+			d.setDistributionCenter(prediction.getDistributionCenter());
 			try {d.setProjectedOrderDate(new SimpleDateFormat("dd/MM/yyyy").parse(demandData.getDemandDate()));} catch (ParseException e) {}
 			d.setQuantity(demandData.getDemandValue());
 			demandProjecteds.add(d);

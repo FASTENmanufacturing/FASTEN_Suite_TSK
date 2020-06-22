@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui" xmlns:adm="http://github.com/adminfaces"
+                xmlns:of="http://omnifaces.org/functions"
+                xmlns:o="http://omnifaces.org/ui"
+                template="#{layoutMB.template}">
+
+    <ui:define name="metadata">
+        <f:metadata>
+            <f:viewParam name="id" value="#{distributionCenterFormMB.id}" converter="javax.faces.Long"/>
+            <!-- use view action if you are in a Java EE 7 server: <f:viewAction action="#{distributionCenterFormMB.init()}"/>-->
+            <f:viewAction action="#{distributionCenterFormMB.init()}"/>
+        </f:metadata>
+        <ui:param name="renderAsterisks" value="true"/>
+    </ui:define>
+    
+    <ui:define name="head-end">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+		  integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+		  crossorigin=""/>
+		<style type="text/css">
+			#mapid { height: 300px; }
+        </style>
+		<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+		  integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+		  crossorigin=""></script>
+		
+		<script type="text/javascript">
+			function renderMap(lat,lon,markerPopup){
+	            
+				var mymap = L.map('mapid').setView([lat,lon], 13);
+
+	            L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+	            	attribution: 'Map data &amp;copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+	            	maxZoom: 18
+	            }).addTo(mymap);
+	            
+	            var marker = L.marker([lat,lon],{draggable: true}).addTo(mymap);
+	            marker.bindPopup(markerPopup).openPopup();
+	            
+	            marker.on('dragend', function (e) {
+	            	updateLatLng(marker.getLatLng().lat, marker.getLatLng().lng);
+            	});
+            	
+	            mymap.on('click', function (e) {
+	            	marker.setLatLng(e.latlng);
+	            	updateLatLng(marker.getLatLng().lat, marker.getLatLng().lng);
+            	});
+
+				function updateLatLng(lat,lng,reverse) {
+	        		if(reverse) {
+		        		marker.setLatLng([lat,lng]);
+		        		mymap.panTo([lat,lng]);
+	        		} else {
+	        			PF('latitude').jq.val(marker.getLatLng().lat);
+	        			PF('longitude').jq.val(marker.getLatLng().lng);
+	            		mymap.panTo([lat,lng]);
+	        		}
+        		}
+        	
+           }
+      </script>
+    </ui:define>
+    
+    <ui:define name="title">
+        #{adm['distributionCenter']}
+    </ui:define>
+    <ui:define name="body">
+        <adm:breadcrumb title="#{distributionCenterFormMB.breadcum}" link="distribution-center-form.xhtml?id=#{distributionCenterFormMB.id}" />
+        <h:form id="form" >
+            <p:focus context="@form"/>
+			<div class="ui-g ui-fluid">
+				<div class="ui-sm-12 ui-g-6 ui-g-nopad"> 
+                        <div class="ui-sm-12 ui-g-11">
+                            <p:outputLabel for="id" value="ID"/>
+                        </div>
+                        <div class="ui-sm-12 ui-g-11">
+                            <p:inputText id="id" value="#{distributionCenterFormMB.distributionCenter.id}" readonly="true"
+                                         styleClass="form-control ui-state-disabled" style="width: 100%"/>
+                            <span class="help-block">
+                                    <p:message for="id"/>
+                            </span>
+                        </div>
+                </div>  
+			</div>
+            <p:panel styleClass="box-primary" header="#{adm['distribution.center.geolocalization']}:" >
+                  <div class="ui-g ui-fluid">
+                  <ui:fragment rendered="#{!distributionCenterFormMB.isNew()}">
+	                  <div class="ui-sm-12 ui-g-12 ui-g-nopad">     
+	                        <div class="ui-sm-12 ui-g-11">
+	                            <p:outputLabel value="Map"/>
+	                        </div>
+	                        <div class="ui-sm-12 ui-g-11">
+	                            <div id="mapid"></div>
+		                            <script type="text/javascript">
+									    jQuery(document).ready(function() {
+									    	renderMap(#{distributionCenterFormMB.distributionCenter.address.latitude},
+											    	  #{distributionCenterFormMB.distributionCenter.address.longitude},
+											    	  "#{distributionCenterFormMB.distributionCenter.code} - #{distributionCenterFormMB.distributionCenter.name}");
+									    });
+									</script>
+	                        </div>
+	                    </div>
+				  </ui:fragment>
+                  
+                  <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
+                        <div class="ui-sm-12 ui-g-11">
+                            <p:outputLabel value="Latitude" for="latitude"/>
+                        </div>
+                        <div class="ui-sm-12 ui-g-11">
+                            <p:inputText id="latitude" widgetVar="latitude" value="#{distributionCenterFormMB.distributionCenter.address.latitude}" required="true"/>
+                            <span class="help-block"> 
+                                <p:message for="latitude"/>
+                            </span>
+                        </div>
+                   </div>
+                   <div class="ui-sm-12 ui-g-6 ui-g-nopad">
+                        <div class="ui-sm-12 ui-g-11">
+                            <p:outputLabel value="Longitude" for="longitude"/>
+                        </div>
+                        <div class="ui-sm-12 ui-g-11">
+                            <p:inputText id="longitude" widgetVar="longitude" value="#{distributionCenterFormMB.distributionCenter.address.longitude}" required="true"/>
+                            <span class="help-block"> 
+                                <p:message for="longitude"/>
+                            </span>
+                        </div>
+                    </div>
+                    
+                 </div>
+            </p:panel>
+            <p:spacer height="15px"></p:spacer>
+            <p:panel styleClass="box-primary" header="#{adm['distribution.center.information']}:">
+                <div class="ui-g ui-fluid">
+                    
+                    
+                    <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
+                        <div class="ui-sm-12 ui-g-11">
+                            <p:outputLabel value="#{adm['form.colum.code']}" for="code"/>
+                        </div>
+                        <div class="ui-sm-12 ui-g-11">
+                            <p:inputText id="code" value="#{distributionCenterFormMB.distributionCenter.code}" required="true"/>
+                            <span class="help-block"> 
+                                <p:message for="code"/>
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
+                        <div class="ui-sm-12 ui-g-11">
+                            <p:outputLabel value="#{adm['form.colum.name']}" for="name"/>
+                        </div>
+                        <div class="ui-sm-12 ui-g-11">
+                            <p:inputText id="name" value="#{distributionCenterFormMB.distributionCenter.name}" required="true"/>
+                            <span class="help-block"> 
+                                <p:message for="name"/>
+                            </span>
+                        </div>
+                    </div> 
+
+                    <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
+                        <div class="ui-sm-12 ui-g-11">
+                            <p:outputLabel value="#{adm['form.colum.unit']}" for="unidade"/>
+                        </div>
+                        <div class="ui-sm-12 ui-g-11">
+                            <p:inputText id="unidade" value="#{distributionCenterFormMB.distributionCenter.unidade}"/>
+                            <span class="help-block"> 
+                                <p:message for="unidade"/>
+                            </span>
+                        </div>
+                    </div> 
+                    
+
+                    <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
+                        <div class="ui-sm-12 ui-g-11">
+                            <p:outputLabel value="#{adm['form.colum.freight']}" for="frete"/>
+                        </div>
+                        <div class="ui-sm-12 ui-g-11">
+                            <p:inputText id="frete" value="#{distributionCenterFormMB.distributionCenter.frete}" />
+                            <span class="help-block"> 
+                                <p:message for="frete"/>
+                            </span>
+                        </div>
+                    </div> 
+                    
+                     <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
+		               <div class="ui-sm-12 ui-g-11">
+		                   <p:outputLabel value="#{adm['form.colum.state']}" for="state"/>
+		               </div>
+		               <div class="ui-sm-12 ui-g-11">
+		                   <p:selectOneMenu dynamic="true" filter="true" filterMatchMode="contains" id="state" value="#{distributionCenterFormMB.distributionCenter.address.state}">
+		                   		<f:converter converterId="entityApiConverter"/>
+		                   		<p:ajax process="state" update="city" global="false" partialSubmit="true" event="itemSelect" listener="#{distributionCenterFormMB.onStateSelect}"/>
+			                    <f:selectItem itemLabel="#{adm['combo.box.select.one']}" itemValue="#{null}" noSelectionOption="true" />
+			                    <f:selectItems value="#{distributionCenterFormMB.states}" var="state" itemLabel="#{state.stateAcronym} - #{state.name}" itemValue="#{state}" />
+		                	</p:selectOneMenu>
+		                   <span class="help-block"> 
+		                       <p:message for="state"/>
+		                   </span>
+		               </div>
+		           </div>
+		           <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
+		               <div class="ui-sm-12 ui-g-11">
+		                   <p:outputLabel value="#{adm['form.colum.city']}" for="city"/>
+		               </div>
+		               <div class="ui-sm-12 ui-g-11">
+		                   <p:selectOneMenu dynamic="true" disabled="#{empty distributionCenterFormMB.distributionCenter.address.state}" filter="true" filterMatchMode="contains" id="city" value="#{distributionCenterFormMB.distributionCenter.address.city}">
+		                   		<f:converter converterId="entityApiConverter"/>
+			                    <f:selectItem itemLabel="#{adm['combo.box.select.one']}" itemValue="#{null}" noSelectionOption="true" />
+			                    <f:selectItems value="#{distributionCenterFormMB.cities}" var="city" itemLabel="#{city.name}" itemValue="#{city}" />
+		                	</p:selectOneMenu>
+		                   <span class="help-block"> 
+		                       <p:message for="city"/>
+		                   </span>
+		               </div>
+		           </div>
+                    
+                    <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
+                        <div class="ui-sm-12 ui-g-11">
+                            <p:outputLabel value="#{adm['form.colum.priority']}" for="priority"/>
+                        </div>
+                        <div class="ui-sm-12 ui-g-11">
+							<o:importConstants type="com.fasten.wp4.database.client.model.DistributionCenter.PriorityEnum" />
+							<p:selectOneMenu id="priority" required="true" value="#{distributionCenterFormMB.distributionCenter.priority}">
+								<f:selectItems value="#{PriorityEnum}" var="priority" itemLabel="#{priority.value}" itemValue="#{priority}" />
+								<f:selectItem itemLabel="#{adm['combo.box.select.one']}" itemValue="#{null}" noSelectionOption="true" />
+							</p:selectOneMenu>
+                            <span class="help-block"> 
+                                <p:message for="priority"/>
+                            </span>
+                        </div>
+                    </div>
+                    
+                </div>
+                </p:panel>
+                <p:spacer height="15px"/>
+                <h:panelGroup id="footer" layout="block" >
+                	<div id="main-buttons" class="hidden-sm hidden-xs">
+                	
+	                    <p:commandButton value="#{adm['save']}" action="#{distributionCenterFormMB.save}" update="@form"
+	                                     icon="fa fa-check" styleClass="btn-primary"/>
+	                    <p:spacer width="5" rendered="#{distributionCenterFormMB.isNew()}"/>
+	                    <p:commandButton value="#{adm['clear']}" action="#{distributionCenterFormMB.clear}" process="@this"
+	                                     icon="fa fa-refresh" styleClass="btn-success"
+	                                     update="@form" resetValues="true"/>
+	                    <p:spacer width="5" rendered="#{not distributionCenterFormMB.isNew()}"/>
+	
+	                    <p:commandButton value="#{adm['delete']}" action="#{distributionCenterFormMB.remove}" process="@this"
+	                                     rendered="#{not distributionCenterFormMB.isNew()}" icon="fa fa-trash"
+	                                     styleClass="btn-danger">
+	                        <f:setPropertyActionListener value="true"
+	                                                     target="#{facesContext.externalContext.flash.keepMessages}"/>
+	                        <p:confirm header="#{adm['confirmation']}" message="#{adm['confirmation.message']}" icon="ui-icon-danger"/>
+	                    </p:commandButton>
+	                    <p:spacer width="5"/>
+	                    <p:commandButton value="#{adm['back']}" immediate="true"
+	                                     action="distribution-center-list?faces-redirect=true"
+	                                     process="@this"
+	                                     icon="fa fa-reply"/>
+	                </div>
+				</h:panelGroup>
+                    <p:splitButton value="#{adm['save']}" action="#{distributionCenterFormMB.save}" update="@form"
+                                   icon="fa fa-check"
+                                   styleClass="hidden-md hidden-lg btn-primary">
+                        <p:menuitem value="#{adm['reset']}" action="#{distributionCenterFormMB.clear}"
+                                    process="@this" update="@form" rendered="#{distributionCenterFormMB.isNew()}"
+                                    resetValues="true" icon="fa fa-refresh"/>
+                        <p:menuitem value="#{adm['delete']}" action="#{distributionCenterFormMB.remove}" process="@this"
+                                    rendered="#{not distributionCenterFormMB.isNew()}" icon="fa fa-trash">
+                            <f:setPropertyActionListener value="true"
+                                                         target="#{facesContext.externalContext.flash.keepMessages}"/>
+                            <p:confirm header="#{adm['confirmation']}" message="#{adm['confirmation.message']}" icon="ui-icon-danger"/>
+                        </p:menuitem>
+                        <p:separator/>
+                        <p:menuitem value="#{adm['back']}" action="distribution-center-list?faces-redirect=true"
+                                    process="@this" immediate="true"
+                                    icon="fa fa-reply"/>
+                    </p:splitButton>
+
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" styleClass="box-danger box-solid">
+                <p:commandButton value="Yes" type="button" styleClass="btn-material btn-primary ui-confirmdialog-yes"
+                                 icon="fa fa-check"/>
+                <p:commandButton value="No" type="button" styleClass="btn-material btn-danger ui-confirmdialog-no"
+                                 icon="fa fa-close"/>
+            </p:confirmDialog>
+        </h:form>
+
+
+    </ui:define>
+
+</ui:composition>

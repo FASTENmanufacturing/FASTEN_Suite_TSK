@@ -46,8 +46,8 @@
 					</div>
 					<div class="ui-sm-12 ui-g-4" style="margin-bottom: 10px;">
 					    <div style="text-align: center;" class="ui-sm-12 ui-g-10 ui-g-nopad">
-						    <p:progressBar widgetVar="progressBarGeolocate" display="output" ajax="true" value="#{tacticalOptimizationValidateFormMB.progressGeolocateRemoteStations}" labelTemplate="{value}%" styleClass="animated" global="false">
-						        <p:ajax event="complete" listener="#{tacticalOptimizationValidateFormMB.onCompleteGeolocate}" update="geolocateRatio geolocateRemoteStationsStatus geolocateButton" />
+						    <p:progressBar widgetVar="progressBarGeolocate" display="output" ajax="true" value="#{tacticalOptimizationValidateFormMB.progressGeolocateDistributionCenters}" labelTemplate="{value}%" styleClass="animated" global="false">
+						        <p:ajax event="complete" listener="#{tacticalOptimizationValidateFormMB.onCompleteGeolocate}" update="geolocateRatio geolocateDistributionCentersStatus geolocateButton" />
 						    </p:progressBar>
 					    </div>
 					    <div class="ui-sm-12 ui-g-2 ui-g-nopad">
@@ -58,7 +58,7 @@
 					    </div>
 					</div>
 					<div style="text-align: center;" class="ui-sm-12 ui-g-1">
-						<h:panelGroup id="geolocateRemoteStationsStatus" style="text-align:center" layout="block" >
+						<h:panelGroup id="geolocateDistributionCentersStatus" style="text-align:center" layout="block" >
 							<h:panelGroup rendered="#{tacticalOptimizationValidateFormMB.geolocateStatus eq 'proceeding'}"  style="text-align:center" layout="block" >
 						    	<span class="label label-info">Proceeding</span>
 					    	</h:panelGroup>
@@ -72,7 +72,7 @@
 					</div>
 					<div style="text-align: center;" class="ui-sm-12 ui-g-2 ui-g-nopad" >
 						<p:commandButton value="Geolocate" type="button" onclick="PF('progressBarGeolocate').start();PF('geolocateButton').disable();" disabled="#{tacticalOptimizationValidateFormMB.geolocateStatus eq 'success'}" widgetVar="geolocateButton" id="geolocateButton" icon="fa fa-check" styleClass="btn-primary" >
-							<p:ajax event="click" listener="#{tacticalOptimizationValidateFormMB.onClickGeolocate}" update="geolocateRemoteStationsStatus geolocateRatio" global="false"/>
+							<p:ajax event="click" listener="#{tacticalOptimizationValidateFormMB.onClickGeolocate}" update="geolocateDistributionCentersStatus geolocateRatio" global="false"/>
 						</p:commandButton>
 					</div>
 				</div>
@@ -85,8 +85,8 @@
 					</div>
 					<div class="ui-sm-12 ui-g-4" style="margin-bottom: 10px;">
 					    <div style="text-align: center;" class="ui-sm-12 ui-g-10 ui-g-nopad">
-						    <p:progressBar widgetVar="progressBarMatrix" display="output" ajax="true" value="#{tacticalOptimizationValidateFormMB.progressMatrixRemoteStations}" labelTemplate="{value}%" styleClass="animated" global="false">
-						        <p:ajax event="complete" listener="#{tacticalOptimizationValidateFormMB.onCompleteMatrix}" update="matrixRatio matrixRemoteStationsStatus matrixButton" />
+						    <p:progressBar widgetVar="progressBarMatrix" display="output" ajax="true" value="#{tacticalOptimizationValidateFormMB.progressMatrixDistributionCenters}" labelTemplate="{value}%" styleClass="animated" global="false">
+						        <p:ajax event="complete" listener="#{tacticalOptimizationValidateFormMB.onCompleteMatrix}" update="matrixRatio matrixDistributionCentersStatus matrixButton" />
 						    </p:progressBar>
 					    </div>
 					    <div class="ui-sm-12 ui-g-2 ui-g-nopad">
@@ -97,7 +97,7 @@
 					    </div>
 					</div>
 					<div style="text-align: center;" class="ui-sm-12 ui-g-1">
-						<h:panelGroup id="matrixRemoteStationsStatus" style="text-align:center" layout="block" >
+						<h:panelGroup id="matrixDistributionCentersStatus" style="text-align:center" layout="block" >
 							<h:panelGroup rendered="#{tacticalOptimizationValidateFormMB.matrixStatus eq 'proceeding'}"  style="text-align:center" layout="block" >
 						    	<span class="label label-info">Proceeding</span>
 					    	</h:panelGroup>
@@ -111,7 +111,7 @@
 					</div>
 					<div style="text-align: center;" class="ui-sm-12 ui-g-2 ui-g-nopad" >
 						<p:commandButton value="Update" type="button" onclick="PF('progressBarMatrix').start();PF('matrixButton').disable();" disabled="#{tacticalOptimizationValidateFormMB.matrixStatus eq 'success'}" widgetVar="matrixButton" id="matrixButton" icon="fa fa-check" styleClass="btn-primary" >
-							<p:ajax event="click" listener="#{tacticalOptimizationValidateFormMB.onClickMatrix}" update="matrixRemoteStationsStatus matrixRatio" global="false"/>
+							<p:ajax event="click" listener="#{tacticalOptimizationValidateFormMB.onClickMatrix}" update="matrixDistributionCentersStatus matrixRatio" global="false"/>
 						</p:commandButton>
 					</div>
 				</div>

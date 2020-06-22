@@ -9,11 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModel;
 
@@ -24,6 +21,14 @@ public class TacticalOptimizationResult implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	private Double objectivePercent;
+	
+	private Double pPercent;
+	
+	private Boolean costBenefit;
+	
+	private Boolean unfeasible;
 
 	@ManyToOne
 	private TacticalOptimization study;
@@ -34,29 +39,9 @@ public class TacticalOptimizationResult implements Serializable {
 	@OneToMany(mappedBy = "tacticalOptimizationResult",fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Route> routes;
 
-	@OneToMany(mappedBy = "tacticalOptimizationResult",fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<InternalSupply> internalSuppliers;
-
-	@OneToMany(mappedBy = "tacticalOptimizationResult",fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Production> productions;
-	
 	public TacticalOptimizationResult() {
 		super();
 	}
-
-	public TacticalOptimizationResult(Long id, TacticalOptimization study, List<SRAMsAllocated> printers,
-			List<Route> routes, List<InternalSupply> internalSuppliers, List<Production> productions,
-			TacticalOptimizationResult tacticalOptimizationResult) {
-		super();
-		this.id = id;
-		this.study = study;
-		this.printers = printers;
-		this.routes = routes;
-		this.internalSuppliers = internalSuppliers;
-		this.productions = productions;
-	}
-
-
 
 	public Long getId() {
 		return id;
@@ -89,23 +74,39 @@ public class TacticalOptimizationResult implements Serializable {
 	public void setRoutes(List<Route> routes) {
 		this.routes = routes;
 	}
-
-	public List<InternalSupply> getInternalSuppliers() {
-		return internalSuppliers;
+	
+	public Double getObjectivePercent() {
+		return objectivePercent;
 	}
 
-	public void setInternalSuppliers(List<InternalSupply> internalSuppliers) {
-		this.internalSuppliers = internalSuppliers;
+	public void setObjectivePercent(Double objectivePercent) {
+		this.objectivePercent = objectivePercent;
 	}
 
-	public List<Production> getProductions() {
-		return productions;
+	public Double getpPercent() {
+		return pPercent;
 	}
 
-	public void setProductions(List<Production> productions) {
-		this.productions = productions;
+	public void setpPercent(Double pPercent) {
+		this.pPercent = pPercent;
 	}
 	
+	public Boolean getCostBenefit() {
+		return costBenefit;
+	}
+
+	public void setCostBenefit(Boolean costBenefit) {
+		this.costBenefit = costBenefit;
+	}
+	
+	public Boolean getUnfeasible() {
+		return unfeasible;
+	}
+
+	public void setUnfeasible(Boolean unfeasible) {
+		this.unfeasible = unfeasible;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -133,8 +134,10 @@ public class TacticalOptimizationResult implements Serializable {
 
 	@Override
 	public String toString() {
-		return "TacticalOptimizationResult [id=" + id + ", study=" + study + ", printers=" + printers + ", routes="
-				+ routes + ", internalSuppliers=" + internalSuppliers + ", productions=" + productions + "]";
+		return "TacticalOptimizationResult [id=" + id + ", objectivePercent=" + objectivePercent + ", pPercent="
+				+ pPercent + ", costBenefit=" + costBenefit + ", unfeasible=" + unfeasible + ", study=" + study
+				+ ", printers=" + printers + ", routes=" + routes + "]";
 	}
+
 
 }

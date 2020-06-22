@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.jst.server.tomcat.core.launchConfigurationType">
+<mapAttribute key="org.eclipse.debug.core.environmentVariables">
+<mapEntry key="DATABASE_OAS_URL" value="http://200.131.17.17:11007"/>
+<mapEntry key="EMAIL_OAS_URL" value="http://200.131.17.17:11001"/>
+<mapEntry key="FPSOT_OAS_URL" value="http://200.131.17.17:11005"/>
+<mapEntry key="IOT_KAFKA_OAS_URL" value="http://200.131.17.17:11008"/>
+<mapEntry key="OPTIMIZATOR_OPERATIONAL_URL" value="http://200.131.17.17:11002"/>
+<mapEntry key="OPTIMIZATOR_TACTICAL_URL" value="http://200.131.17.17:11004"/>
+<mapEntry key="ORS_API_KEY" value="5b3ce3597851110001cf6248c4a795ab30aa432fafb7666ccd39ca78"/>
+<mapEntry key="PPA_URL" value="http://200.131.17.17:11009"/>
+<mapEntry key="PROBABILITY_DISTRIBUTION_URL" value="http://200.131.17.17:11005"/>
+</mapAttribute>
+<listAttribute key="org.eclipse.debug.ui.favoriteGroups">
+<listEntry value="org.eclipse.debug.ui.launchGroup.run"/>
+</listAttribute>
+<booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
+<listAttribute key="org.eclipse.jdt.launching.CLASSPATH">
+<listEntry value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#10;&lt;runtimeClasspathEntry containerPath=&quot;org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.launching.macosx.MacOSXType/Java SE 8 [1.8.0_25]&quot; path=&quot;2&quot; type=&quot;4&quot;/&gt;&#10;"/>
+<listEntry value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#10;&lt;runtimeClasspathEntry externalArchive=&quot;/Users/filipemb/Documents/workspace_fhsot/apache-tomcat-9.0.27/bin/bootstrap.jar&quot; path=&quot;3&quot; type=&quot;2&quot;/&gt;&#10;"/>
+<listEntry value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#10;&lt;runtimeClasspathEntry externalArchive=&quot;/Users/filipemb/Documents/workspace_fhsot/apache-tomcat-9.0.27/bin/tomcat-juli.jar&quot; path=&quot;3&quot; type=&quot;2&quot;/&gt;&#10;"/>
+<listEntry value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#10;&lt;runtimeClasspathEntry externalArchive=&quot;/Library/Java/JavaVirtualMachines/jdk1.8.0_25.jdk/Contents/Home/lib/tools.jar&quot; path=&quot;3&quot; type=&quot;2&quot;/&gt;&#10;"/>
+</listAttribute>
+<booleanAttribute key="org.eclipse.jdt.launching.DEFAULT_CLASSPATH" value="false"/>
+<stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.launching.macosx.MacOSXType/Java SE 8 [1.8.0_25]"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="start"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dcatalina.base=&quot;/Users/filipemb/Documents/workspace_fhsot/.metadata/.plugins/org.eclipse.wst.server.core/tmp0&quot; -Dcatalina.home=&quot;/Users/filipemb/Documents/workspace_fhsot/apache-tomcat-9.0.27&quot; -Dwtp.deploy=&quot;/Users/filipemb/Documents/workspace_fhsot/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps&quot; -Djava.endorsed.dirs=&quot;/Users/filipemb/Documents/workspace_fhsot/apache-tomcat-9.0.27/endorsed&quot;"/>
+<stringAttribute key="server-id" value="Tomcat v9.0 Server at localhost"/>
+</launchConfiguration>

@@ -103,30 +103,30 @@
 					
 					<div class="ui-sm-12 ui-g-6 ui-g-nopad">
 						<div class="ui-sm-12 ui-g-11">
-							<p:outputLabel value="#{adm['form.colum.origin']}" for="remoteStationOrigin" />
+							<p:outputLabel value="#{adm['form.colum.origin']}" for="distributionCenterOrigin" />
 						</div>
 						<div class="ui-sm-12 ui-g-11">
-							<p:selectOneMenu id="remoteStationOrigin" dynamic="true" value="#{deliveryFormMB.delivery.origin}" filter="true" filterMatchMode="contains">
+							<p:selectOneMenu id="distributionCenterOrigin" dynamic="true" value="#{deliveryFormMB.delivery.origin}" filter="true" filterMatchMode="contains">
 								<f:converter converterId="entityApiConverter" />
 								<f:selectItem itemLabel="#{adm['combo.box.select.one']}" itemValue="#{null}" noSelectionOption="true" />
-								<f:selectItems value="#{deliveryFormMB.remoteStations}" var="remoteStation" itemLabel="#{remoteStation.name}" itemValue="#{remoteStation}" />
+								<f:selectItems value="#{deliveryFormMB.distributionCenters}" var="distributionCenter" itemLabel="#{distributionCenter.name}" itemValue="#{distributionCenter}" />
 							</p:selectOneMenu>
-							<span class="help-block"> <p:message for="remoteStationOrigin" />
+							<span class="help-block"> <p:message for="distributionCenterOrigin" />
 							</span>
 						</div>
 					</div>
 					
 					<div class="ui-sm-12 ui-g-6 ui-g-nopad">
 						<div class="ui-sm-12 ui-g-11">
-							<p:outputLabel value="#{adm['form.colum.destination']}" for="remoteStationDestination" />
+							<p:outputLabel value="#{adm['form.colum.destination']}" for="distributionCenterDestination" />
 						</div>
 						<div class="ui-sm-12 ui-g-11">
-							<p:selectOneMenu id="remoteStationDestination" dynamic="true" value="#{deliveryFormMB.delivery.destination}"  filter="true" filterMatchMode="contains">
+							<p:selectOneMenu id="distributionCenterDestination" dynamic="true" value="#{deliveryFormMB.delivery.destination}"  filter="true" filterMatchMode="contains">
 								<f:converter converterId="entityApiConverter" />
 								<f:selectItem itemLabel="#{adm['combo.box.select.one']}" itemValue="#{null}" noSelectionOption="true" />
-								<f:selectItems value="#{deliveryFormMB.remoteStations}" var="remoteStation" itemLabel="#{remoteStation.name}" itemValue="#{remoteStation}" />
+								<f:selectItems value="#{deliveryFormMB.distributionCenters}" var="distributionCenter" itemLabel="#{distributionCenter.name}" itemValue="#{distributionCenter}" />
 							</p:selectOneMenu>
-							<span class="help-block"> <p:message for="remoteStationDestination" />
+							<span class="help-block"> <p:message for="distributionCenterDestination" />
 							</span>
 						</div>
 					</div>

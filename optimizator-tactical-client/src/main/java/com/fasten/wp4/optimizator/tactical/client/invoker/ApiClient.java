@@ -105,7 +105,7 @@ public class ApiClient {
     /**
      * Set base path
      *
-     * @param basePath Base path of the URL (e.g http://localhost:8082
+     * @param basePath Base path of the URL (e.g http://localhost:5050
      * @return An instance of OkHttpClient
      */
     public ApiClient setBasePath(String basePath) {

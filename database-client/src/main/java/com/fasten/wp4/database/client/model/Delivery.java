@@ -15,7 +15,7 @@ package com.fasten.wp4.database.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.fasten.wp4.database.client.model.RemoteStation;
+import com.fasten.wp4.database.client.model.DistributionCenter;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -39,7 +39,7 @@ public class Delivery implements Serializable {
   private BigDecimal cost = null;
 
   @SerializedName("destination")
-  private RemoteStation destination = null;
+  private DistributionCenter destination = null;
 
   @SerializedName("destinationCep")
   private String destinationCep = null;
@@ -51,7 +51,7 @@ public class Delivery implements Serializable {
   private Long id = null;
 
   @SerializedName("origin")
-  private RemoteStation origin = null;
+  private DistributionCenter origin = null;
 
   @SerializedName("originCep")
   private String originCep = null;
@@ -77,7 +77,7 @@ public class Delivery implements Serializable {
     this.cost = cost;
   }
 
-  public Delivery destination(RemoteStation destination) {
+  public Delivery destination(DistributionCenter destination) {
     this.destination = destination;
     return this;
   }
@@ -87,11 +87,11 @@ public class Delivery implements Serializable {
    * @return destination
   **/
   @ApiModelProperty(value = "")
-  public RemoteStation getDestination() {
+  public DistributionCenter getDestination() {
     return destination;
   }
 
-  public void setDestination(RemoteStation destination) {
+  public void setDestination(DistributionCenter destination) {
     this.destination = destination;
   }
 
@@ -149,7 +149,7 @@ public class Delivery implements Serializable {
     this.id = id;
   }
 
-  public Delivery origin(RemoteStation origin) {
+  public Delivery origin(DistributionCenter origin) {
     this.origin = origin;
     return this;
   }
@@ -159,11 +159,11 @@ public class Delivery implements Serializable {
    * @return origin
   **/
   @ApiModelProperty(value = "")
-  public RemoteStation getOrigin() {
+  public DistributionCenter getOrigin() {
     return origin;
   }
 
-  public void setOrigin(RemoteStation origin) {
+  public void setOrigin(DistributionCenter origin) {
     this.origin = origin;
   }
 

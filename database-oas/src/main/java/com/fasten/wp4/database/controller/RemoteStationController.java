@@ -80,12 +80,6 @@ public class RemoteStationController {
 		return retrivedObject.get();
 	}
 	
-	@GetMapping(value = "/remotestation/tacticalOptimization", params = { "id"})
-	@ApiOperation(nickname="retrieveRemoteStationByTacticalOptimization", value = "Retrive a list of Remote Station candidates in a Tactical Optimization Study")
-	public List<RemoteStation> retrieveByTacticalOptimization(@ApiParam(example="1") @RequestParam(value = "id") Long id) {
-		return repository.retrieveRemoteStationByTacticalOptimization(id);
-	}
-	
 	@GetMapping("/remotestation/code/{code}")
 	@ApiOperation(nickname="retrieveRemoteStationByCode", value = "Retrive one Remote Station by code", notes = "Also returns a link to retrieve all remote station with rel - all")
 	public RemoteStation retrieveByCode(@PathVariable String code) {
@@ -127,7 +121,7 @@ public class RemoteStationController {
 	}
 	
 	@GetMapping(value="/remotestation/names")
-	@ApiOperation(nickname="retrieveAllByName", value = "Find remote stations by name")
+	@ApiOperation(nickname="retrieveAllRemoteStationByName", value = "Find remote stations by name")
 	public List<String> retrieveAllByName() {
 		return repository.findAllByNameOrderByName();
 	}

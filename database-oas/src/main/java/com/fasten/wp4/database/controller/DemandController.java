@@ -142,7 +142,7 @@ public class DemandController {
 	@ApiOperation(nickname="retrieveByPredictionParams", value = "Retrieve demands for a prediction study")
 	public Integer retrieveByPredictionParams( @ApiParam(example="06/26/2015",required=false) @RequestParam(value = "start",required=false) String start,
 													@ApiParam(example="06/28/2017",required=false)	@RequestParam(value = "end",required=false)	String end,
-													@ApiParam(example="1",required=false) @RequestParam(value = "remoteStationId",required=false) Long remoteStationId,
+													@ApiParam(example="1",required=false) @RequestParam(value = "distributionCenterId",required=false) Long distributionCenterId,
 													@ApiParam(example="1",required=false) @RequestParam(value = "partId",required=false) Long partId) throws ParseException {
 		SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
 		Date startDate = null;
@@ -150,7 +150,7 @@ public class DemandController {
 		Date endDate=null;
 		try{endDate=format.parse(end);}catch(Exception e){};
 
-		return repository.retrieveByPredictionParams(startDate, endDate, remoteStationId, partId).size();
+		return repository.retrieveByPredictionParams(startDate, endDate, distributionCenterId, partId).size();
 	}
 	
 	@GetMapping(value = "/demand/tacticalOptimization", params = { "id"})

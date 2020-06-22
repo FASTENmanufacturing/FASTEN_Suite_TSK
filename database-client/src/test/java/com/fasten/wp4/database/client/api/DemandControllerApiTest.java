@@ -138,11 +138,11 @@ public class DemandControllerApiTest {
      */
     @Test
     public void retrieveByPredictionParamsTest() throws ApiException {
+        Long distributionCenterId = null;
         String end = null;
         Long partId = null;
-        Long remoteStationId = null;
         String start = null;
-        Integer response = api.retrieveByPredictionParams(end, partId, remoteStationId, start);
+        Integer response = api.retrieveByPredictionParams(distributionCenterId, end, partId, start);
 
         // TODO: test validations
     }

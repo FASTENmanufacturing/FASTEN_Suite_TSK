@@ -62,7 +62,7 @@
 		<div class="col-lg-2 col-md-3 col-sm-3 ">
 		    <p:link outcome="/processing-part-list">
 				<p:panelGrid class="text-center info-box box-primary card " columns="1" layout="grid">
-	                <i class="text-aqua fa fa-industry fa-3x"></i>
+	                <i class="text-aqua fa fa-wrench fa-3x"></i>
 				    <h:outputText styleClass="text-aqua text-uppercase" value="#{adm['menu.item.processingparts']}" />
 				</p:panelGrid>
          	</p:link>
@@ -72,7 +72,7 @@
 		<div class="col-lg-2 col-lg-offset-3 col-md-3 col-sm-3 col-sm-offset-2">
 		    <p:link outcome="/part-list">
 				<p:panelGrid class="text-center info-box box-primary card " columns="1" layout="grid">
-	                <i class="text-aqua fa fa-cubes fa-3x"></i>
+	                <i class="text-aqua fa fa-cube fa-3x"></i>
 				    <h:outputText styleClass="text-aqua text-uppercase" value="#{adm['menu.item.parts']}" />
 				</p:panelGrid>
          	</p:link>
@@ -88,8 +88,18 @@
 		<div class="col-lg-2 col-md-3 col-sm-3 ">
 		    <p:link outcome="/remote-station-list">
 				<p:panelGrid class="text-center info-box box-primary card " columns="1" layout="grid">
-	                <i class="text-aqua fa fa-desktop fa-3x"></i>
+	                <i class="text-aqua fa fa-industry fa-3x"></i>
 				    <h:outputText styleClass="text-aqua text-uppercase" value="#{adm['menu.item.remoteStation']}" />
+				</p:panelGrid>
+         	</p:link>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-2 col-lg-offset-5 col-md-3 col-sm-3 col-sm-offset-5  ">
+		    <p:link outcome="/distribution-center-list">
+				<p:panelGrid class="text-center info-box box-primary card " columns="1" layout="grid">
+	                <i class="text-aqua fa fa-cubes fa-3x"></i>
+				    <h:outputText styleClass="text-aqua text-uppercase" value="#{adm['menu.item.distributionCenter']}" />
 				</p:panelGrid>
          	</p:link>
 		</div>

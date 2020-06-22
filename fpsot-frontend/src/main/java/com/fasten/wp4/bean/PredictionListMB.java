@@ -36,7 +36,7 @@ import com.fasten.wp4.database.client.api.DemandControllerApi;
 import com.fasten.wp4.database.client.api.DemandProjectionStudyControllerApi;
 import com.fasten.wp4.database.client.api.PartControllerApi;
 import com.fasten.wp4.database.client.api.PredictionControllerApi;
-import com.fasten.wp4.database.client.api.RemoteStationControllerApi;
+import com.fasten.wp4.database.client.api.DistributionCenterControllerApi;
 import com.fasten.wp4.database.client.invoker.ApiException;
 import com.fasten.wp4.database.client.model.Demand;
 import com.fasten.wp4.database.client.model.DemandProjected.DemandSubtypeEnum;
@@ -67,7 +67,7 @@ public class PredictionListMB implements Serializable {
 	private transient PartControllerApi partControllerApi;
 
 	@Inject
-	private transient RemoteStationControllerApi remoteStationControllerApi;
+	private transient DistributionCenterControllerApi distributionCenterControllerApi;
 
 	@Inject
 	private transient ForecastApi forecastApi;
@@ -85,7 +85,7 @@ public class PredictionListMB implements Serializable {
 
 	List<String> parts;
 
-	List<String> remoteStations;
+	List<String> distributionCenters;
 
 	LazyDataModel<Prediction> predictions;
 
@@ -105,7 +105,7 @@ public class PredictionListMB implements Serializable {
 
 		try {
 			parts= partControllerApi.retrieveAllDistinctByName();
-			remoteStations= remoteStationControllerApi.retrieveAllByName();
+			distributionCenters= distributionCenterControllerApi.retrieveAllDistributionCenterByName();
 		} catch (ApiException e) {
 			throw new BusinessException("Could not retrive list");
 		}finally{
@@ -160,8 +160,8 @@ public class PredictionListMB implements Serializable {
 	}
 
 
-	public List<String> getRemoteStations() {
-		return remoteStations;
+	public List<String> getDistributionCenters() {
+		return distributionCenters;
 	}
 
 	public void delete() {
@@ -243,57 +243,26 @@ public class PredictionListMB implements Serializable {
 			String start = null;
 			String end = null;
 			Long partId = null;
-			Long remoteStationId=null;
+			Long distributionCenterId=null;
 			SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
 			start = format.format(result.getRealDemandConsideredStart());
 			end=format.format(result.getRealDemandConsideredEnd());
 			if(has(c.getPart()) && has(c.getPart().getId())){
 				partId=c.getPart().getId();
 			}
-			if(has(c.getRemoteStation()) && has(c.getRemoteStation().getId())){
-				remoteStationId=c.getRemoteStation().getId();
+			if(has(c.getDistributionCenter()) && has(c.getDistributionCenter().getId())){
+				distributionCenterId=c.getDistributionCenter().getId();
 			}
 
-			return demandControllerApi.retrieveByPredictionParams(end, partId, remoteStationId, start);
+			return demandControllerApi.retrieveByPredictionParams(distributionCenterId,end, partId, start);
 		} catch (ApiException e) {
 			throw new BusinessException("Could not get quantity of observations for this period.");
 		}
 	}
+	
 
-	public void viewResult(Prediction prediction) {
-		DemandProjectionStudy demandProjectionStudy = null;
-		try{
-			demandProjectionStudy = demandProjectionStudyControllerApi.retrieveByStudy(prediction.getId());
-			String url = "http://150.162.6.64:3000/d/NWnEalFWk/%s?"
-					+ "orgId=%s"
-					+ "&from=%s"
-					+ "&to=%s"
-					+ "&refresh=%s"
-					+ "&var-dashboard_part_id=%s"
-					+ "&var-dashboard_remote_station_id=%s"
-					+ "&var-dashboard_study_id=%s"
-					+ "&panelId=%s"
-					+ "&var-dashboard_demand_subtype=%s"
-//					+ "&fullscreen"
-					;
-            
-			String dashboardPath = "tsk-demand-analysis";
-			String orgId = "1";
-            String from = demandProjectionStudy.getRealDemandConsideredStart().getTime()+"";
-            String to = demandProjectionStudy.getPrevisionPeriodConsideredEnd().getTime()+"";
-            String refresh = "5s";
-            String panelId = "16";
-            String var_dashboard_part_id = (prediction.getPart()!=null && prediction.getPart().getId()!=null)?prediction.getPart().getId().toString():"All";
-            String var_dashboard_remote_station_id= (prediction.getRemoteStation()!=null && prediction.getRemoteStation().getId()!=null)?prediction.getRemoteStation().getId().toString():"All";
-            String  var_dashboard_study_id= demandProjectionStudy.getStudy().getId().toString();
-            String  var_dashboard_demand_subtype= "All";
-            
-            String fullURL = String.format(url, dashboardPath, orgId, from, to, refresh, var_dashboard_part_id, var_dashboard_remote_station_id, var_dashboard_study_id, panelId,var_dashboard_demand_subtype);
-            
-			PrimeFaces.current().executeScript("window.open('"+fullURL+"', '_newtab')");
-		}catch(ApiException e) {
-			throw  new BusinessException("Could not show results");
-		}
+	public void viewResultIframe(Prediction prediction) {
+		Faces.redirect("prediction-result.xhtml?id="+prediction.getId());
 	}
 	
 	public void execute(Prediction prediction) {

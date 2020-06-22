@@ -130,7 +130,9 @@
                                     <p:ajax process="@this" update="@none" oncomplete="PF('sramsTable').filter()"/>
                                 </p:inputText>
                             </f:facet>		
-                             <h:outputText rendered="#{not empty c.capabilities.volume}" value="#{c.capabilities.volume} cm&amp;sup3;" escape="false" />
+                            <h:outputText rendered="#{not empty c.capabilities.volume}" value="#{c.capabilities.volume}" escape="false">
+					        	<f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" pattern="#0.00' cm&amp;sup3;'"/>
+					    	</h:outputText>
                         </p:column>
 
                         <p:column headerText="Lenght" sortBy="#{c.capabilities.lenght}" filterBy="#{c.capabilities.lenght}" >
@@ -139,7 +141,9 @@
                                     <p:ajax process="@this" update="@none" oncomplete="PF('sramsTable').filter()"/>
                                 </p:inputText>
                             </f:facet>		
-                             <h:outputText rendered="#{not empty c.capabilities.lenght}" value="#{c.capabilities.lenght} mm" escape="false" />
+                             <h:outputText rendered="#{not empty c.capabilities.lenght}" value="#{c.capabilities.lenght}" escape="false">
+					        	<f:convertNumber type="number" groupingUsed="true" minFractionDigits="2" pattern="#0.00' mm'"/>
+					    	</h:outputText>
                         </p:column>
                         
                         <p:column headerText="#{adm['list.colum.process.status']}" sortBy="#{c.processStatus}" filterBy="#{c.processStatus.value}" >
@@ -227,29 +231,6 @@
             <p:dataList id="selectedSRAMsList" value="#{sRAMListMB.selectedSRAMs}" var="sram"
                         type="definition">
                 ID: #{sram.id} - Sram: #{sram.code} 
-                
-                <p:dataTable var="timeByPart" value="#{sram.timesByPart}">
-			              <p:column headerText="Part">
-			                  <h:outputText value="#{timeByPart.part.name}"/>
-			              </p:column>
-			              <p:column headerText="Print time">
-			                   <h:outputText style="text-align:center" value="#{timeByPart.averagePrintTime}">
-			                    	<f:converter converterId="prettyTimeConverter" />
-								</h:outputText>
-			              </p:column>
-			              <p:column headerText="Avg Time">
-			                    <h:outputText style="text-align:center" value="#{timeByPart.averagePrintTime}">
-			                    	<f:converter converterId="prettyTimeConverter" />
-								</h:outputText>
-			              </p:column>
-			              <p:column headerText="Last Print Time">
-			                    <h:outputText style="text-align:center" value="#{timeByPart.lastPrintTime}">
-	                            	<f:converter converterId="prettyTimeConverter" />
-								</h:outputText>
-			              </p:column>
-			    </p:dataTable>
-            
-			
 			</p:dataList>
         </p:dialog>
 

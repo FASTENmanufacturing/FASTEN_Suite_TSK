@@ -84,48 +84,36 @@
                     
                     <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
                         <div class="ui-sm-12 ui-g-11">
-                            <p:outputLabel value="#{adm['form.colum.average.setup.time']} (s)" for="avgSetupTime"/>
+                            <p:outputLabel value="#{adm['form.colum.average.print.time']} (s)" for="averagePrintTime"/>
                         </div>
                         <div class="ui-sm-12 ui-g-11">
-                            <p:inputNumber id="avgSetupTime" value="#{processingPartFormMB.processingPart.avgSetupTime}" required="true"  decimalPlaces="2" decimalSeparator="#{adm['decimal.Separator']}" thousandSeparator="#{adm['thousand.Separator']}" symbol=" s" symbolPosition="s" emptyValue="zero" />
+                            <p:inputNumber id="averagePrintTime" value="#{processingPartFormMB.processingPart.averagePrintTime}" required="true"  decimalPlaces="2" decimalSeparator="#{adm['decimal.Separator']}" thousandSeparator="#{adm['thousand.Separator']}" symbol=" s" symbolPosition="s" emptyValue="zero" />
                             <span class="help-block"> 
-                                <p:message for="avgSetupTime"/>
+                                <p:message for="averagePrintTime"/>
                             </span>
                         </div>
                     </div>
                     
                     <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
                         <div class="ui-sm-12 ui-g-11">
-                            <p:outputLabel value="#{adm['form.colum.average.producing.time']} (s)" for="avgProducingTime"/>
+                            <p:outputLabel value="#{adm['form.colum.estimated.print.time']} (s)" for="estimatedPrintTime"/>
                         </div>
                         <div class="ui-sm-12 ui-g-11">
-                            <p:inputNumber id="avgProducingTime" value="#{processingPartFormMB.processingPart.avgProducingTime}" required="true"  decimalPlaces="2" decimalSeparator="#{adm['decimal.Separator']}" thousandSeparator="#{adm['thousand.Separator']}" symbol=" s" symbolPosition="s" emptyValue="zero" />
+                            <p:inputNumber id="estimatedPrintTime" value="#{processingPartFormMB.processingPart.estimatedPrintTime}" required="true"  decimalPlaces="2" decimalSeparator="#{adm['decimal.Separator']}" thousandSeparator="#{adm['thousand.Separator']}" symbol=" s" symbolPosition="s" emptyValue="zero" />
                             <span class="help-block"> 
-                                <p:message for="avgProducingTime"/>
+                                <p:message for="estimatedPrintTime"/>
                             </span>
                         </div>
                     </div>
                     
                     <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
                         <div class="ui-sm-12 ui-g-11">
-                            <p:outputLabel value="#{adm['form.colum.standard.deviation.setting.time']} (s)" for="stdSetupTime"/>
+                            <p:outputLabel value="#{adm['form.colum.last.print.time']} (s)" for="lastPrintTime"/>
                         </div>
                         <div class="ui-sm-12 ui-g-11">
-                            <p:inputNumber id="stdSetupTime" value="#{processingPartFormMB.processingPart.stdSetupTime}" required="true"  decimalPlaces="2" decimalSeparator="#{adm['decimal.Separator']}" thousandSeparator="#{adm['thousand.Separator']}" symbol=" s" symbolPosition="s" emptyValue="zero" />
+                            <p:inputNumber id="lastPrintTime" value="#{processingPartFormMB.processingPart.lastPrintTime}" required="true"  decimalPlaces="2" decimalSeparator="#{adm['decimal.Separator']}" thousandSeparator="#{adm['thousand.Separator']}" symbol=" s" symbolPosition="s" emptyValue="zero" />
                             <span class="help-block"> 
-                                <p:message for="stdSetupTime"/>
-                            </span>
-                        </div>
-                    </div>
-                    
-                     <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
-                        <div class="ui-sm-12 ui-g-11">
-                            <p:outputLabel value="#{adm['form.colum.standard.deviation.producing.time']} (s)" for="stdProducingTime"/>
-                        </div>
-                        <div class="ui-sm-12 ui-g-11">
-                            <p:inputNumber id="stdProducingTime" value="#{processingPartFormMB.processingPart.stdProducingTime}" required="true"  decimalPlaces="2" decimalSeparator="#{adm['decimal.Separator']}" thousandSeparator="#{adm['thousand.Separator']}" symbol=" s" symbolPosition="s" emptyValue="zero" />
-                            <span class="help-block"> 
-                                <p:message for="stdProducingTime"/>
+                                <p:message for="lastPrintTime"/>
                             </span>
                         </div>
                     </div>

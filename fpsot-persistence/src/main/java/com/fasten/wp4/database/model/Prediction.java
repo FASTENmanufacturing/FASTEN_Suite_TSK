@@ -42,9 +42,9 @@ public class Prediction implements Serializable {
 	@ManyToOne
 	private Part part;
 	
-	@ApiModelProperty(notes = "The RS")
+	@ApiModelProperty(notes = "The DC")
 	@ManyToOne
-	private RemoteStation remoteStation;
+	private DistributionCenter distributionCenter;
 	
 	// demand range
 	private Date initialDate;
@@ -99,12 +99,12 @@ public class Prediction implements Serializable {
 		this.part = part;
 	}
 
-	public RemoteStation getRemoteStation() {
-		return remoteStation;
+	public DistributionCenter getDistributionCenter() {
+		return distributionCenter;
 	}
 
-	public void setRemoteStation(RemoteStation remoteStation) {
-		this.remoteStation = remoteStation;
+	public void setDistributionCenter(DistributionCenter distributionCenter) {
+		this.distributionCenter = distributionCenter;
 	}
 
 	public Date getInitialDate() {
@@ -134,8 +134,8 @@ public class Prediction implements Serializable {
 	@Override
 	public String toString() {
 		return "Prediction [id=" + id + ", name=" + name + ", modelSelection=" + modelSelection + ", models=" + models
-				+ ", granularity=" + granularity + ", horizon=" + horizon + ", part=" + part + ", remoteStation="
-				+ remoteStation + ", initialDate=" + initialDate + ", endDate=" + endDate + "]";
+				+ ", granularity=" + granularity + ", horizon=" + horizon + ", part=" + part + ", distributionCenter="+ distributionCenter 
+				+ ", initialDate=" + initialDate + ", endDate=" + endDate + "]";
 	}
 
 	@Override

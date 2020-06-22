@@ -34,7 +34,10 @@ import com.fasten.wp4.infra.async.AsyncCall;
 import com.fasten.wp4.infra.async.AsyncRequestUtils;
 import com.fasten.wp4.infra.security.LogonMB;
 import com.fasten.wp4.optimizator.tactical.client.invoker.ApiCallback;
-import com.fasten.wp4.optimizator.tactical.client.model.TacticalOptimizationResult;
+import com.fasten.wp4.optimizator.tactical.client.model.TacticalOptimization.GranularityEnum;
+import com.fasten.wp4.optimizator.tactical.client.model.TacticalOptimization.StatusEnum;
+import com.fasten.wp4.optimizator.tactical.client.model.TacticalOptimization.TypeEnum;
+import com.fasten.wp4.optimizator.tactical.client.model.TacticalOptimizationResponse;
 import com.github.adminfaces.template.exception.BusinessException;
 import com.squareup.okhttp.Call;
 
@@ -142,7 +145,7 @@ public class TacticalOptimizationListMB implements Serializable {
 			} finally {}
 		}
 		selecteds.clear();
-		addDetailMessage(numTacticalOptimization + " processing part deleted successfully!");
+		addDetailMessage(numTacticalOptimization + " tactical optimization study deleted successfully!");
 	}
 	
 	public boolean hasResult() {
@@ -160,11 +163,24 @@ public class TacticalOptimizationListMB implements Serializable {
 	
 	public void execute(TacticalOptimization entity) throws ApiException {
 		try {
+			com.fasten.wp4.optimizator.tactical.client.model.TacticalOptimization tacticalOptimization = new com.fasten.wp4.optimizator.tactical.client.model.TacticalOptimization();
+			tacticalOptimization.id(entity.getId())
+			.name(entity.getName())
+			.type((entity.getType()!=null)?TypeEnum.fromValue(entity.getType().getValue()):null)
+			.status((entity.getStatus()!=null)?StatusEnum.fromValue(entity.getStatus().getValue()):null)
+			.maximumLocations(entity.getMaximumLocations())
+			.sramCapacity(entity.getSramCapacity())
+			.initialDate(entity.getInitialDate())
+			.endDate(entity.getEndDate())
+			.usePrediction(entity.isUsePrediction())
+			.horizon(entity.getHorizon())
+			.granularity((entity.getGranularity()!=null)?GranularityEnum.fromValue(entity.getGranularity().getValue()):null);
+			
 			String requestId = UUID.randomUUID().toString();
-			Call c = tacticalOptimizationApi.executeTacticalOptimizationAsync(requestId,entity.getId(),logonMB.getEmail(), new ApiCallback<TacticalOptimizationResult>() {
+			Call c = tacticalOptimizationApi.executeAsync(requestId,tacticalOptimization,logonMB.getEmail(), new ApiCallback<TacticalOptimizationResponse>() {
 				
 				@Override
-				public void onSuccess(TacticalOptimizationResult tacticalOptimizationResult, int statusCode, Map<String, List<String>> responseHeaders) {
+				public void onSuccess(TacticalOptimizationResponse tacticalOptimizationResponse, int statusCode, Map<String, List<String>> responseHeaders) {
 					asyncNotifyMB.sendPushMessage("tactical_optimization_execution");
 				}
 				

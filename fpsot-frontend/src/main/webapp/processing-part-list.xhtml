@@ -126,37 +126,35 @@
 				                <f:convertNumber type="currency" currencySymbol="#{adm['symbol.money']}" />
 				            </h:outputText>
                         </p:column>
-                        <p:column headerText="#{adm['list.colum.producing.time']}" sortBy="#{c.avgProducingTime}" filterBy="#{c.avgProducingTime}" footerText="(#{adm['list.average']})">
+                        <p:column headerText="#{adm['list.colum.average.print.time']}" sortBy="#{c.averagePrintTime}" filterBy="#{c.averagePrintTime}" footerText="(#{adm['list.average']})">
   							<f:facet name="filter">
   								<p:inputNumber decimalPlaces="2">
                                     <p:ajax process="@this" update="@none" oncomplete="PF('processingPartsTable').filter()"/>
   								</p:inputNumber>
                             </f:facet>
-                            #{c.avgProducingTime}
+                            <h:outputText style="text-align:center" value="#{c.averagePrintTime}">
+	                           	<f:converter converterId="prettyTimeConverter" />
+							</h:outputText>
                         </p:column>
-                        <p:column headerText="#{adm['list.colum.producing.time']}" sortBy="#{c.stdProducingTime}" filterBy="#{c.stdProducingTime}" footerText="(#{adm['list.st.deviation']})">
+                        <p:column headerText="#{adm['list.colum.estimated.print.time']}" sortBy="#{c.estimatedPrintTime}" filterBy="#{c.estimatedPrintTime}">
                             <f:facet name="filter">
                                 <p:inputNumber decimalPlaces="2">
                                     <p:ajax process="@this" update="@none" oncomplete="PF('processingPartsTable').filter()"/>
                                 </p:inputNumber>
                             </f:facet>
-                            #{c.stdProducingTime}
+                            <h:outputText style="text-align:center" value="#{c.estimatedPrintTime}">
+	                           	<f:converter converterId="prettyTimeConverter" />
+							</h:outputText>
                         </p:column>
-                         <p:column headerText="#{adm['list.colum.setup.time']}" sortBy="#{c.avgSetupTime}" filterBy="#{c.avgSetupTime}" footerText="(#{adm['list.average']})">
+                         <p:column headerText="#{adm['list.colum.last.print.time']}" sortBy="#{c.lastPrintTime}" filterBy="#{c.lastPrintTime}">
                             <f:facet name="filter">
                                 <p:inputNumber decimalPlaces="2">
                                     <p:ajax process="@this" update="@none" oncomplete="PF('processingPartsTable').filter()"/>
                                 </p:inputNumber>
                             </f:facet>
-                            #{c.avgSetupTime}
-                        </p:column>
-                        <p:column headerText="#{adm['list.colum.setup.time']}" sortBy="#{c.stdSetupTime}" filterBy="#{c.stdSetupTime}"  footerText="(#{adm['list.st.deviation']})">
-                            <f:facet name="filter">
-                                <p:inputNumber decimalPlaces="2">
-                                    <p:ajax process="@this" update="@none" oncomplete="PF('processingPartsTable').filter()"/>
-                                </p:inputNumber>
-                            </f:facet>		
-                            #{c.stdSetupTime}
+                            <h:outputText style="text-align:center" value="#{c.lastPrintTime}">
+	                           	<f:converter converterId="prettyTimeConverter" />
+							</h:outputText>
                         </p:column>
                         
                     </p:dataTable>

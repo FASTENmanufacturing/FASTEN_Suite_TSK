@@ -15,8 +15,6 @@ package com.fasten.wp4.optimizator.tactical.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.fasten.wp4.optimizator.tactical.client.model.InternalSupply;
-import com.fasten.wp4.optimizator.tactical.client.model.Production;
 import com.fasten.wp4.optimizator.tactical.client.model.Route;
 import com.fasten.wp4.optimizator.tactical.client.model.SRAMsAllocated;
 import com.fasten.wp4.optimizator.tactical.client.model.TacticalOptimization;
@@ -40,23 +38,47 @@ import java.io.Serializable;
 public class TacticalOptimizationResult implements Serializable {
   private static final long serialVersionUID = 1L;
 
+  @SerializedName("costBenefit")
+  private Boolean costBenefit = null;
+
   @SerializedName("id")
   private Long id = null;
 
-  @SerializedName("internalSuppliers")
-  private List<InternalSupply> internalSuppliers = null;
+  @SerializedName("objectivePercent")
+  private Double objectivePercent = null;
+
+  @SerializedName("pPercent")
+  private Double pPercent = null;
 
   @SerializedName("printers")
   private List<SRAMsAllocated> printers = null;
-
-  @SerializedName("productions")
-  private List<Production> productions = null;
 
   @SerializedName("routes")
   private List<Route> routes = null;
 
   @SerializedName("study")
   private TacticalOptimization study = null;
+
+  @SerializedName("unfeasible")
+  private Boolean unfeasible = null;
+
+  public TacticalOptimizationResult costBenefit(Boolean costBenefit) {
+    this.costBenefit = costBenefit;
+    return this;
+  }
+
+   /**
+   * Get costBenefit
+   * @return costBenefit
+  **/
+  @ApiModelProperty(value = "")
+  public Boolean isCostBenefit() {
+    return costBenefit;
+  }
+
+  public void setCostBenefit(Boolean costBenefit) {
+    this.costBenefit = costBenefit;
+  }
 
   public TacticalOptimizationResult id(Long id) {
     this.id = id;
@@ -76,30 +98,40 @@ public class TacticalOptimizationResult implements Serializable {
     this.id = id;
   }
 
-  public TacticalOptimizationResult internalSuppliers(List<InternalSupply> internalSuppliers) {
-    this.internalSuppliers = internalSuppliers;
-    return this;
-  }
-
-  public TacticalOptimizationResult addInternalSuppliersItem(InternalSupply internalSuppliersItem) {
-    if (this.internalSuppliers == null) {
-      this.internalSuppliers = new ArrayList<>();
-    }
-    this.internalSuppliers.add(internalSuppliersItem);
+  public TacticalOptimizationResult objectivePercent(Double objectivePercent) {
+    this.objectivePercent = objectivePercent;
     return this;
   }
 
    /**
-   * Get internalSuppliers
-   * @return internalSuppliers
+   * Get objectivePercent
+   * @return objectivePercent
   **/
   @ApiModelProperty(value = "")
-  public List<InternalSupply> getInternalSuppliers() {
-    return internalSuppliers;
+  public Double getObjectivePercent() {
+    return objectivePercent;
   }
 
-  public void setInternalSuppliers(List<InternalSupply> internalSuppliers) {
-    this.internalSuppliers = internalSuppliers;
+  public void setObjectivePercent(Double objectivePercent) {
+    this.objectivePercent = objectivePercent;
+  }
+
+  public TacticalOptimizationResult pPercent(Double pPercent) {
+    this.pPercent = pPercent;
+    return this;
+  }
+
+   /**
+   * Get pPercent
+   * @return pPercent
+  **/
+  @ApiModelProperty(value = "")
+  public Double getPPercent() {
+    return pPercent;
+  }
+
+  public void setPPercent(Double pPercent) {
+    this.pPercent = pPercent;
   }
 
   public TacticalOptimizationResult printers(List<SRAMsAllocated> printers) {
@@ -126,32 +158,6 @@ public class TacticalOptimizationResult implements Serializable {
 
   public void setPrinters(List<SRAMsAllocated> printers) {
     this.printers = printers;
-  }
-
-  public TacticalOptimizationResult productions(List<Production> productions) {
-    this.productions = productions;
-    return this;
-  }
-
-  public TacticalOptimizationResult addProductionsItem(Production productionsItem) {
-    if (this.productions == null) {
-      this.productions = new ArrayList<>();
-    }
-    this.productions.add(productionsItem);
-    return this;
-  }
-
-   /**
-   * Get productions
-   * @return productions
-  **/
-  @ApiModelProperty(value = "")
-  public List<Production> getProductions() {
-    return productions;
-  }
-
-  public void setProductions(List<Production> productions) {
-    this.productions = productions;
   }
 
   public TacticalOptimizationResult routes(List<Route> routes) {
@@ -198,6 +204,24 @@ public class TacticalOptimizationResult implements Serializable {
     this.study = study;
   }
 
+  public TacticalOptimizationResult unfeasible(Boolean unfeasible) {
+    this.unfeasible = unfeasible;
+    return this;
+  }
+
+   /**
+   * Get unfeasible
+   * @return unfeasible
+  **/
+  @ApiModelProperty(value = "")
+  public Boolean isUnfeasible() {
+    return unfeasible;
+  }
+
+  public void setUnfeasible(Boolean unfeasible) {
+    this.unfeasible = unfeasible;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -208,17 +232,19 @@ public class TacticalOptimizationResult implements Serializable {
       return false;
     }
     TacticalOptimizationResult tacticalOptimizationResult = (TacticalOptimizationResult) o;
-    return Objects.equals(this.id, tacticalOptimizationResult.id) &&
-        Objects.equals(this.internalSuppliers, tacticalOptimizationResult.internalSuppliers) &&
+    return Objects.equals(this.costBenefit, tacticalOptimizationResult.costBenefit) &&
+        Objects.equals(this.id, tacticalOptimizationResult.id) &&
+        Objects.equals(this.objectivePercent, tacticalOptimizationResult.objectivePercent) &&
+        Objects.equals(this.pPercent, tacticalOptimizationResult.pPercent) &&
         Objects.equals(this.printers, tacticalOptimizationResult.printers) &&
-        Objects.equals(this.productions, tacticalOptimizationResult.productions) &&
         Objects.equals(this.routes, tacticalOptimizationResult.routes) &&
-        Objects.equals(this.study, tacticalOptimizationResult.study);
+        Objects.equals(this.study, tacticalOptimizationResult.study) &&
+        Objects.equals(this.unfeasible, tacticalOptimizationResult.unfeasible);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, internalSuppliers, printers, productions, routes, study);
+    return Objects.hash(costBenefit, id, objectivePercent, pPercent, printers, routes, study, unfeasible);
   }
 
 
@@ -227,12 +253,14 @@ public class TacticalOptimizationResult implements Serializable {
     StringBuilder sb = new StringBuilder();
     sb.append("class TacticalOptimizationResult {\n");
     
+    sb.append("    costBenefit: ").append(toIndentedString(costBenefit)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    internalSuppliers: ").append(toIndentedString(internalSuppliers)).append("\n");
+    sb.append("    objectivePercent: ").append(toIndentedString(objectivePercent)).append("\n");
+    sb.append("    pPercent: ").append(toIndentedString(pPercent)).append("\n");
     sb.append("    printers: ").append(toIndentedString(printers)).append("\n");
-    sb.append("    productions: ").append(toIndentedString(productions)).append("\n");
     sb.append("    routes: ").append(toIndentedString(routes)).append("\n");
     sb.append("    study: ").append(toIndentedString(study)).append("\n");
+    sb.append("    unfeasible: ").append(toIndentedString(unfeasible)).append("\n");
     sb.append("}");
     return sb.toString();
   }

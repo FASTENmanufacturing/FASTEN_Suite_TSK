@@ -15,8 +15,8 @@ package com.fasten.wp4.database.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import com.fasten.wp4.database.client.model.DistributionCenter;
 import com.fasten.wp4.database.client.model.Part;
-import com.fasten.wp4.database.client.model.RemoteStation;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -42,6 +42,9 @@ public class Demand implements Serializable {
   @SerializedName("deliveryDate")
   private Date deliveryDate = null;
 
+  @SerializedName("distributionCenter")
+  private DistributionCenter distributionCenter = null;
+
   @SerializedName("id")
   private Long id = null;
 
@@ -53,9 +56,6 @@ public class Demand implements Serializable {
 
   @SerializedName("quantity")
   private Integer quantity = null;
-
-  @SerializedName("remoteStation")
-  private RemoteStation remoteStation = null;
 
   public Demand code(String code) {
     this.code = code;
@@ -91,6 +91,24 @@ public class Demand implements Serializable {
 
   public void setDeliveryDate(Date deliveryDate) {
     this.deliveryDate = deliveryDate;
+  }
+
+  public Demand distributionCenter(DistributionCenter distributionCenter) {
+    this.distributionCenter = distributionCenter;
+    return this;
+  }
+
+   /**
+   * The DC origin
+   * @return distributionCenter
+  **/
+  @ApiModelProperty(value = "The DC origin")
+  public DistributionCenter getDistributionCenter() {
+    return distributionCenter;
+  }
+
+  public void setDistributionCenter(DistributionCenter distributionCenter) {
+    this.distributionCenter = distributionCenter;
   }
 
   public Demand id(Long id) {
@@ -165,24 +183,6 @@ public class Demand implements Serializable {
     this.quantity = quantity;
   }
 
-  public Demand remoteStation(RemoteStation remoteStation) {
-    this.remoteStation = remoteStation;
-    return this;
-  }
-
-   /**
-   * The RS demanded
-   * @return remoteStation
-  **/
-  @ApiModelProperty(value = "The RS demanded")
-  public RemoteStation getRemoteStation() {
-    return remoteStation;
-  }
-
-  public void setRemoteStation(RemoteStation remoteStation) {
-    this.remoteStation = remoteStation;
-  }
-
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -195,16 +195,16 @@ public class Demand implements Serializable {
     Demand demand = (Demand) o;
     return Objects.equals(this.code, demand.code) &&
         Objects.equals(this.deliveryDate, demand.deliveryDate) &&
+        Objects.equals(this.distributionCenter, demand.distributionCenter) &&
         Objects.equals(this.id, demand.id) &&
         Objects.equals(this.orderDate, demand.orderDate) &&
         Objects.equals(this.part, demand.part) &&
-        Objects.equals(this.quantity, demand.quantity) &&
-        Objects.equals(this.remoteStation, demand.remoteStation);
+        Objects.equals(this.quantity, demand.quantity);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(code, deliveryDate, id, orderDate, part, quantity, remoteStation);
+    return Objects.hash(code, deliveryDate, distributionCenter, id, orderDate, part, quantity);
   }
 
 
@@ -215,11 +215,11 @@ public class Demand implements Serializable {
     
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("    deliveryDate: ").append(toIndentedString(deliveryDate)).append("\n");
+    sb.append("    distributionCenter: ").append(toIndentedString(distributionCenter)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    orderDate: ").append(toIndentedString(orderDate)).append("\n");
     sb.append("    part: ").append(toIndentedString(part)).append("\n");
     sb.append("    quantity: ").append(toIndentedString(quantity)).append("\n");
-    sb.append("    remoteStation: ").append(toIndentedString(remoteStation)).append("\n");
     sb.append("}");
     return sb.toString();
   }

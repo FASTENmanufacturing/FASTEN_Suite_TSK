@@ -35,17 +35,65 @@ import java.io.Serializable;
 public class TacticalOptimization implements Serializable {
   private static final long serialVersionUID = 1L;
 
-  @SerializedName("capitalCost")
-  private BigDecimal capitalCost = null;
-
-  @SerializedName("clustered")
-  private Boolean clustered = null;
-
-  @SerializedName("distanceWeight")
-  private BigDecimal distanceWeight = null;
-
   @SerializedName("endDate")
   private Date endDate = null;
+
+  /**
+   * Gets or Sets granularity
+   */
+  @JsonAdapter(GranularityEnum.Adapter.class)
+  public enum GranularityEnum {
+    ANNUAL("Annual"),
+    
+    MONTHLY("Monthly"),
+    
+    WEEKLY("Weekly"),
+    
+    DAILY("Daily");
+
+    private String value;
+
+    GranularityEnum(String value) {
+      this.value = value;
+    }
+
+    public String getValue() {
+      return value;
+    }
+
+    @Override
+    public String toString() {
+      return String.valueOf(value);
+    }
+
+    public static GranularityEnum fromValue(String text) {
+      for (GranularityEnum b : GranularityEnum.values()) {
+        if (String.valueOf(b.value).equals(text)) {
+          return b;
+        }
+      }
+      return null;
+    }
+
+    public static class Adapter extends TypeAdapter<GranularityEnum> {
+      @Override
+      public void write(final JsonWriter jsonWriter, final GranularityEnum enumeration) throws IOException {
+        jsonWriter.value(enumeration.getValue());
+      }
+
+      @Override
+      public GranularityEnum read(final JsonReader jsonReader) throws IOException {
+        String value = jsonReader.nextString();
+        return GranularityEnum.fromValue(String.valueOf(value));
+      }
+    }
+  }
+
+  @SerializedName("granularity")
+  private GranularityEnum granularity = null;
+
+  @SerializedName("horizon")
+  private Integer horizon = null;
 
   @SerializedName("id")
   private Long id = null;
@@ -53,26 +101,14 @@ public class TacticalOptimization implements Serializable {
   @SerializedName("initialDate")
   private Date initialDate = null;
 
-  @SerializedName("leadTimeLimit")
-  private BigDecimal leadTimeLimit = null;
-
   @SerializedName("maximumLocations")
   private Integer maximumLocations = null;
-
-  @SerializedName("maximumSrams")
-  private Integer maximumSrams = null;
 
   @SerializedName("name")
   private String name = null;
 
-  @SerializedName("productionCenterCost")
-  private BigDecimal productionCenterCost = null;
-
   @SerializedName("sramCapacity")
   private BigDecimal sramCapacity = null;
-
-  @SerializedName("sramCost")
-  private BigDecimal sramCost = null;
 
   /**
    * Gets or Sets status
@@ -124,20 +160,16 @@ public class TacticalOptimization implements Serializable {
   @SerializedName("status")
   private StatusEnum status = null;
 
-  @SerializedName("stockoutCost")
-  private BigDecimal stockoutCost = null;
-
-  @SerializedName("timeWeight")
-  private BigDecimal timeWeight = null;
-
   /**
    * Gets or Sets type
    */
   @JsonAdapter(TypeEnum.Adapter.class)
   public enum TypeEnum {
-    LEAD_TIME("Lead Time"),
+    NUMBER_OF_FACILITES("Number of facilites"),
     
-    COST_BENEFIT("Cost Benefit");
+    COST_BENEFIT("Cost Benefit"),
+    
+    ANALYSIS("Analysis");
 
     private String value;
 
@@ -183,60 +215,6 @@ public class TacticalOptimization implements Serializable {
   @SerializedName("usePrediction")
   private Boolean usePrediction = null;
 
-  public TacticalOptimization capitalCost(BigDecimal capitalCost) {
-    this.capitalCost = capitalCost;
-    return this;
-  }
-
-   /**
-   * Get capitalCost
-   * @return capitalCost
-  **/
-  @ApiModelProperty(value = "")
-  public BigDecimal getCapitalCost() {
-    return capitalCost;
-  }
-
-  public void setCapitalCost(BigDecimal capitalCost) {
-    this.capitalCost = capitalCost;
-  }
-
-  public TacticalOptimization clustered(Boolean clustered) {
-    this.clustered = clustered;
-    return this;
-  }
-
-   /**
-   * Get clustered
-   * @return clustered
-  **/
-  @ApiModelProperty(value = "")
-  public Boolean isClustered() {
-    return clustered;
-  }
-
-  public void setClustered(Boolean clustered) {
-    this.clustered = clustered;
-  }
-
-  public TacticalOptimization distanceWeight(BigDecimal distanceWeight) {
-    this.distanceWeight = distanceWeight;
-    return this;
-  }
-
-   /**
-   * Get distanceWeight
-   * @return distanceWeight
-  **/
-  @ApiModelProperty(value = "")
-  public BigDecimal getDistanceWeight() {
-    return distanceWeight;
-  }
-
-  public void setDistanceWeight(BigDecimal distanceWeight) {
-    this.distanceWeight = distanceWeight;
-  }
-
   public TacticalOptimization endDate(Date endDate) {
     this.endDate = endDate;
     return this;
@@ -253,6 +231,42 @@ public class TacticalOptimization implements Serializable {
 
   public void setEndDate(Date endDate) {
     this.endDate = endDate;
+  }
+
+  public TacticalOptimization granularity(GranularityEnum granularity) {
+    this.granularity = granularity;
+    return this;
+  }
+
+   /**
+   * Get granularity
+   * @return granularity
+  **/
+  @ApiModelProperty(value = "")
+  public GranularityEnum getGranularity() {
+    return granularity;
+  }
+
+  public void setGranularity(GranularityEnum granularity) {
+    this.granularity = granularity;
+  }
+
+  public TacticalOptimization horizon(Integer horizon) {
+    this.horizon = horizon;
+    return this;
+  }
+
+   /**
+   * Get horizon
+   * @return horizon
+  **/
+  @ApiModelProperty(value = "")
+  public Integer getHorizon() {
+    return horizon;
+  }
+
+  public void setHorizon(Integer horizon) {
+    this.horizon = horizon;
   }
 
   public TacticalOptimization id(Long id) {
@@ -291,24 +305,6 @@ public class TacticalOptimization implements Serializable {
     this.initialDate = initialDate;
   }
 
-  public TacticalOptimization leadTimeLimit(BigDecimal leadTimeLimit) {
-    this.leadTimeLimit = leadTimeLimit;
-    return this;
-  }
-
-   /**
-   * Get leadTimeLimit
-   * @return leadTimeLimit
-  **/
-  @ApiModelProperty(value = "")
-  public BigDecimal getLeadTimeLimit() {
-    return leadTimeLimit;
-  }
-
-  public void setLeadTimeLimit(BigDecimal leadTimeLimit) {
-    this.leadTimeLimit = leadTimeLimit;
-  }
-
   public TacticalOptimization maximumLocations(Integer maximumLocations) {
     this.maximumLocations = maximumLocations;
     return this;
@@ -325,24 +321,6 @@ public class TacticalOptimization implements Serializable {
 
   public void setMaximumLocations(Integer maximumLocations) {
     this.maximumLocations = maximumLocations;
-  }
-
-  public TacticalOptimization maximumSrams(Integer maximumSrams) {
-    this.maximumSrams = maximumSrams;
-    return this;
-  }
-
-   /**
-   * Get maximumSrams
-   * @return maximumSrams
-  **/
-  @ApiModelProperty(value = "")
-  public Integer getMaximumSrams() {
-    return maximumSrams;
-  }
-
-  public void setMaximumSrams(Integer maximumSrams) {
-    this.maximumSrams = maximumSrams;
   }
 
   public TacticalOptimization name(String name) {
@@ -363,24 +341,6 @@ public class TacticalOptimization implements Serializable {
     this.name = name;
   }
 
-  public TacticalOptimization productionCenterCost(BigDecimal productionCenterCost) {
-    this.productionCenterCost = productionCenterCost;
-    return this;
-  }
-
-   /**
-   * Get productionCenterCost
-   * @return productionCenterCost
-  **/
-  @ApiModelProperty(value = "")
-  public BigDecimal getProductionCenterCost() {
-    return productionCenterCost;
-  }
-
-  public void setProductionCenterCost(BigDecimal productionCenterCost) {
-    this.productionCenterCost = productionCenterCost;
-  }
-
   public TacticalOptimization sramCapacity(BigDecimal sramCapacity) {
     this.sramCapacity = sramCapacity;
     return this;
@@ -399,24 +359,6 @@ public class TacticalOptimization implements Serializable {
     this.sramCapacity = sramCapacity;
   }
 
-  public TacticalOptimization sramCost(BigDecimal sramCost) {
-    this.sramCost = sramCost;
-    return this;
-  }
-
-   /**
-   * Get sramCost
-   * @return sramCost
-  **/
-  @ApiModelProperty(value = "")
-  public BigDecimal getSramCost() {
-    return sramCost;
-  }
-
-  public void setSramCost(BigDecimal sramCost) {
-    this.sramCost = sramCost;
-  }
-
   public TacticalOptimization status(StatusEnum status) {
     this.status = status;
     return this;
@@ -433,42 +375,6 @@ public class TacticalOptimization implements Serializable {
 
   public void setStatus(StatusEnum status) {
     this.status = status;
-  }
-
-  public TacticalOptimization stockoutCost(BigDecimal stockoutCost) {
-    this.stockoutCost = stockoutCost;
-    return this;
-  }
-
-   /**
-   * Get stockoutCost
-   * @return stockoutCost
-  **/
-  @ApiModelProperty(value = "")
-  public BigDecimal getStockoutCost() {
-    return stockoutCost;
-  }
-
-  public void setStockoutCost(BigDecimal stockoutCost) {
-    this.stockoutCost = stockoutCost;
-  }
-
-  public TacticalOptimization timeWeight(BigDecimal timeWeight) {
-    this.timeWeight = timeWeight;
-    return this;
-  }
-
-   /**
-   * Get timeWeight
-   * @return timeWeight
-  **/
-  @ApiModelProperty(value = "")
-  public BigDecimal getTimeWeight() {
-    return timeWeight;
-  }
-
-  public void setTimeWeight(BigDecimal timeWeight) {
-    this.timeWeight = timeWeight;
   }
 
   public TacticalOptimization type(TypeEnum type) {
@@ -517,29 +423,22 @@ public class TacticalOptimization implements Serializable {
       return false;
     }
     TacticalOptimization tacticalOptimization = (TacticalOptimization) o;
-    return Objects.equals(this.capitalCost, tacticalOptimization.capitalCost) &&
-        Objects.equals(this.clustered, tacticalOptimization.clustered) &&
-        Objects.equals(this.distanceWeight, tacticalOptimization.distanceWeight) &&
-        Objects.equals(this.endDate, tacticalOptimization.endDate) &&
+    return Objects.equals(this.endDate, tacticalOptimization.endDate) &&
+        Objects.equals(this.granularity, tacticalOptimization.granularity) &&
+        Objects.equals(this.horizon, tacticalOptimization.horizon) &&
         Objects.equals(this.id, tacticalOptimization.id) &&
         Objects.equals(this.initialDate, tacticalOptimization.initialDate) &&
-        Objects.equals(this.leadTimeLimit, tacticalOptimization.leadTimeLimit) &&
         Objects.equals(this.maximumLocations, tacticalOptimization.maximumLocations) &&
-        Objects.equals(this.maximumSrams, tacticalOptimization.maximumSrams) &&
         Objects.equals(this.name, tacticalOptimization.name) &&
-        Objects.equals(this.productionCenterCost, tacticalOptimization.productionCenterCost) &&
         Objects.equals(this.sramCapacity, tacticalOptimization.sramCapacity) &&
-        Objects.equals(this.sramCost, tacticalOptimization.sramCost) &&
         Objects.equals(this.status, tacticalOptimization.status) &&
-        Objects.equals(this.stockoutCost, tacticalOptimization.stockoutCost) &&
-        Objects.equals(this.timeWeight, tacticalOptimization.timeWeight) &&
         Objects.equals(this.type, tacticalOptimization.type) &&
         Objects.equals(this.usePrediction, tacticalOptimization.usePrediction);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(capitalCost, clustered, distanceWeight, endDate, id, initialDate, leadTimeLimit, maximumLocations, maximumSrams, name, productionCenterCost, sramCapacity, sramCost, status, stockoutCost, timeWeight, type, usePrediction);
+    return Objects.hash(endDate, granularity, horizon, id, initialDate, maximumLocations, name, sramCapacity, status, type, usePrediction);
   }
 
 
@@ -548,22 +447,15 @@ public class TacticalOptimization implements Serializable {
     StringBuilder sb = new StringBuilder();
     sb.append("class TacticalOptimization {\n");
     
-    sb.append("    capitalCost: ").append(toIndentedString(capitalCost)).append("\n");
-    sb.append("    clustered: ").append(toIndentedString(clustered)).append("\n");
-    sb.append("    distanceWeight: ").append(toIndentedString(distanceWeight)).append("\n");
     sb.append("    endDate: ").append(toIndentedString(endDate)).append("\n");
+    sb.append("    granularity: ").append(toIndentedString(granularity)).append("\n");
+    sb.append("    horizon: ").append(toIndentedString(horizon)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    initialDate: ").append(toIndentedString(initialDate)).append("\n");
-    sb.append("    leadTimeLimit: ").append(toIndentedString(leadTimeLimit)).append("\n");
     sb.append("    maximumLocations: ").append(toIndentedString(maximumLocations)).append("\n");
-    sb.append("    maximumSrams: ").append(toIndentedString(maximumSrams)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    productionCenterCost: ").append(toIndentedString(productionCenterCost)).append("\n");
     sb.append("    sramCapacity: ").append(toIndentedString(sramCapacity)).append("\n");
-    sb.append("    sramCost: ").append(toIndentedString(sramCost)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
-    sb.append("    stockoutCost: ").append(toIndentedString(stockoutCost)).append("\n");
-    sb.append("    timeWeight: ").append(toIndentedString(timeWeight)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    usePrediction: ").append(toIndentedString(usePrediction)).append("\n");
     sb.append("}");

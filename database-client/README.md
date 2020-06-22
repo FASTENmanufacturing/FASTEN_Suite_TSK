@@ -168,6 +168,20 @@ Class | Method | HTTP request | Description
 *DemandProjectionStudyControllerApi* | [**retrieveDemandProjectionStudyFilteredAndPaged**](docs/DemandProjectionStudyControllerApi.md#retrieveDemandProjectionStudyFilteredAndPaged) | **GET** /demandProjectionStudy/filter | List paged
 *DemandProjectionStudyControllerApi* | [**retrieveDemandProjectionStudyPaged**](docs/DemandProjectionStudyControllerApi.md#retrieveDemandProjectionStudyPaged) | **GET** /demandProjectionStudy/page | List paged
 *DemandProjectionStudyControllerApi* | [**updateDemandProjectionStudy**](docs/DemandProjectionStudyControllerApi.md#updateDemandProjectionStudy) | **PUT** /demandProjectionStudy/{id} | Edit demandProjectionStudy 
+*DistributionCenterControllerApi* | [**createDistributionCenter**](docs/DistributionCenterControllerApi.md#createDistributionCenter) | **POST** /distributioncenter | Register Distribution Center
+*DistributionCenterControllerApi* | [**deleteDistributionCenter**](docs/DistributionCenterControllerApi.md#deleteDistributionCenter) | **DELETE** /distributioncenter/{id} | Delete the Distribution Center
+*DistributionCenterControllerApi* | [**retrieveAllDistributionCenter**](docs/DistributionCenterControllerApi.md#retrieveAllDistributionCenter) | **GET** /distributioncenter | List all Distribution Centers
+*DistributionCenterControllerApi* | [**retrieveAllDistributionCenterByName**](docs/DistributionCenterControllerApi.md#retrieveAllDistributionCenterByName) | **GET** /distributioncenter/names | Find distribution centers by name
+*DistributionCenterControllerApi* | [**retrieveDistributionCenter**](docs/DistributionCenterControllerApi.md#retrieveDistributionCenter) | **GET** /distributioncenter/{id} | Retrive one Distribution Center
+*DistributionCenterControllerApi* | [**retrieveDistributionCenterByCityName**](docs/DistributionCenterControllerApi.md#retrieveDistributionCenterByCityName) | **GET** /distributioncenter/city | Retrive Distribution Centers by city name
+*DistributionCenterControllerApi* | [**retrieveDistributionCenterByCode**](docs/DistributionCenterControllerApi.md#retrieveDistributionCenterByCode) | **GET** /distributioncenter/code/{code} | Retrive one Distribution Center by code
+*DistributionCenterControllerApi* | [**retrieveDistributionCenterByExcellName**](docs/DistributionCenterControllerApi.md#retrieveDistributionCenterByExcellName) | **GET** /distributioncenter/excellName | Retrive Distribution Centers by name without space and uppercased
+*DistributionCenterControllerApi* | [**retrieveDistributionCenterByName**](docs/DistributionCenterControllerApi.md#retrieveDistributionCenterByName) | **GET** /distributioncenter/name | Retrive one Distribution Center by name
+*DistributionCenterControllerApi* | [**retrieveDistributionCenterByPriority**](docs/DistributionCenterControllerApi.md#retrieveDistributionCenterByPriority) | **GET** /distributioncenter/priority/{priority} | Find distribution centers by priority
+*DistributionCenterControllerApi* | [**retrieveDistributionCenterByTacticalOptimization**](docs/DistributionCenterControllerApi.md#retrieveDistributionCenterByTacticalOptimization) | **GET** /distributioncenter/tacticalOptimization | Retrive a list of Distribution Center candidates in a Tactical Optimization Study
+*DistributionCenterControllerApi* | [**retrieveDistributionCenterFilteredAndPaged**](docs/DistributionCenterControllerApi.md#retrieveDistributionCenterFilteredAndPaged) | **GET** /distributioncenter/filter | List paged
+*DistributionCenterControllerApi* | [**retrieveDistributionCenterPaged**](docs/DistributionCenterControllerApi.md#retrieveDistributionCenterPaged) | **GET** /distributioncenter/page | List paged
+*DistributionCenterControllerApi* | [**updateDistributionCenter**](docs/DistributionCenterControllerApi.md#updateDistributionCenter) | **PUT** /distributioncenter/{id} | Update a Distribution Center
 *InternalSupplyControllerApi* | [**createInternalSupply**](docs/InternalSupplyControllerApi.md#createInternalSupply) | **POST** /internalSupply | Create a new internal supply
 *InternalSupplyControllerApi* | [**deleteInternalSupply**](docs/InternalSupplyControllerApi.md#deleteInternalSupply) | **DELETE** /internalSupply/{id} | Delete the internal supply
 *InternalSupplyControllerApi* | [**retrieveAllInternalSupply**](docs/InternalSupplyControllerApi.md#retrieveAllInternalSupply) | **GET** /internalSupply | List all internal supply
@@ -188,6 +202,7 @@ Class | Method | HTTP request | Description
 *OperationalOptimizationResultControllerApi* | [**existsByOperationalOptimization**](docs/OperationalOptimizationResultControllerApi.md#existsByOperationalOptimization) | **GET** /operationalOptimizationResult/existsByOperationalOptimization/{id} | Find boolean by study
 *OperationalOptimizationResultControllerApi* | [**retrieveAllOperationalOptimizationResult**](docs/OperationalOptimizationResultControllerApi.md#retrieveAllOperationalOptimizationResult) | **GET** /operationalOptimizationResult | List all
 *OperationalOptimizationResultControllerApi* | [**retrieveByOperationalOptimization**](docs/OperationalOptimizationResultControllerApi.md#retrieveByOperationalOptimization) | **GET** /operationalOptimizationResult/operationalOptimization/{id} | Find by study
+*OperationalOptimizationResultControllerApi* | [**retrieveByOrderID**](docs/OperationalOptimizationResultControllerApi.md#retrieveByOrderID) | **GET** /operationalOptimizationResult/orderID/{orderID} | Find by orderID
 *OperationalOptimizationResultControllerApi* | [**retrieveOperationalOptimizationResult**](docs/OperationalOptimizationResultControllerApi.md#retrieveOperationalOptimizationResult) | **GET** /operationalOptimizationResult/{id} | Find a operationalOptimizationResult
 *OperationalOptimizationResultControllerApi* | [**retrieveOperationalOptimizationResultFilteredAndPaged**](docs/OperationalOptimizationResultControllerApi.md#retrieveOperationalOptimizationResultFilteredAndPaged) | **GET** /operationalOptimizationResult/filter | List paged
 *OperationalOptimizationResultControllerApi* | [**retrieveOperationalOptimizationResultPaged**](docs/OperationalOptimizationResultControllerApi.md#retrieveOperationalOptimizationResultPaged) | **GET** /operationalOptimizationResult/page | List paged
@@ -233,15 +248,14 @@ Class | Method | HTTP request | Description
 *ProductionControllerApi* | [**updateProduction**](docs/ProductionControllerApi.md#updateProduction) | **PUT** /production/{id} | Edit the production of a supply
 *RemoteStationControllerApi* | [**createRemoteStation**](docs/RemoteStationControllerApi.md#createRemoteStation) | **POST** /remotestation | Register Remote Station
 *RemoteStationControllerApi* | [**deleteRemoteStation**](docs/RemoteStationControllerApi.md#deleteRemoteStation) | **DELETE** /remotestation/{id} | Delete the Remote Station
-*RemoteStationControllerApi* | [**retrieveAllByName**](docs/RemoteStationControllerApi.md#retrieveAllByName) | **GET** /remotestation/names | Find remote stations by name
 *RemoteStationControllerApi* | [**retrieveAllRemoteStation**](docs/RemoteStationControllerApi.md#retrieveAllRemoteStation) | **GET** /remotestation | List all Remote Stations
+*RemoteStationControllerApi* | [**retrieveAllRemoteStationByName**](docs/RemoteStationControllerApi.md#retrieveAllRemoteStationByName) | **GET** /remotestation/names | Find remote stations by name
 *RemoteStationControllerApi* | [**retrieveRemoteStation**](docs/RemoteStationControllerApi.md#retrieveRemoteStation) | **GET** /remotestation/{id} | Retrive one Remote Station
 *RemoteStationControllerApi* | [**retrieveRemoteStationByCityName**](docs/RemoteStationControllerApi.md#retrieveRemoteStationByCityName) | **GET** /remotestation/city | Retrive Remote Stations by city name
 *RemoteStationControllerApi* | [**retrieveRemoteStationByCode**](docs/RemoteStationControllerApi.md#retrieveRemoteStationByCode) | **GET** /remotestation/code/{code} | Retrive one Remote Station by code
 *RemoteStationControllerApi* | [**retrieveRemoteStationByExcellName**](docs/RemoteStationControllerApi.md#retrieveRemoteStationByExcellName) | **GET** /remotestation/excellName | Retrive Remote Stations by name without space and uppercased
 *RemoteStationControllerApi* | [**retrieveRemoteStationByName**](docs/RemoteStationControllerApi.md#retrieveRemoteStationByName) | **GET** /remotestation/name | Retrive one Remote Station by name
 *RemoteStationControllerApi* | [**retrieveRemoteStationByPriority**](docs/RemoteStationControllerApi.md#retrieveRemoteStationByPriority) | **GET** /remotestation/priority/{priority} | Find remote stations by priority
-*RemoteStationControllerApi* | [**retrieveRemoteStationByTacticalOptimization**](docs/RemoteStationControllerApi.md#retrieveRemoteStationByTacticalOptimization) | **GET** /remotestation/tacticalOptimization | Retrive a list of Remote Station candidates in a Tactical Optimization Study
 *RemoteStationControllerApi* | [**retrieveRemoteStationFilteredAndPaged**](docs/RemoteStationControllerApi.md#retrieveRemoteStationFilteredAndPaged) | **GET** /remotestation/filter | List paged
 *RemoteStationControllerApi* | [**retrieveRemoteStationPaged**](docs/RemoteStationControllerApi.md#retrieveRemoteStationPaged) | **GET** /remotestation/page | List paged
 *RemoteStationControllerApi* | [**updateRemoteStation**](docs/RemoteStationControllerApi.md#updateRemoteStation) | **PUT** /remotestation/{id} | Update a Remote Station
@@ -288,6 +302,15 @@ Class | Method | HTTP request | Description
 *TacticalOptimizationResultControllerApi* | [**retrieveTacticalOptimizationResultFilteredAndPaged**](docs/TacticalOptimizationResultControllerApi.md#retrieveTacticalOptimizationResultFilteredAndPaged) | **GET** /tacticalOptimizationResult/filter | List paged
 *TacticalOptimizationResultControllerApi* | [**retrieveTacticalOptimizationResultPaged**](docs/TacticalOptimizationResultControllerApi.md#retrieveTacticalOptimizationResultPaged) | **GET** /tacticalOptimizationResult/page | List paged
 *TacticalOptimizationResultControllerApi* | [**updateTacticalOptimizationResult**](docs/TacticalOptimizationResultControllerApi.md#updateTacticalOptimizationResult) | **PUT** /tacticalOptimizationResult/{id} | Update a tacticalOptimizationResult
+*WebHookControllerApi* | [**createWebHook**](docs/WebHookControllerApi.md#createWebHook) | **POST** /webhook | Save a webhook
+*WebHookControllerApi* | [**deleteWebHook**](docs/WebHookControllerApi.md#deleteWebHook) | **DELETE** /webhook/{id} | Delete a webhook
+*WebHookControllerApi* | [**retrieveAllWebHook**](docs/WebHookControllerApi.md#retrieveAllWebHook) | **GET** /webhook | List all
+*WebHookControllerApi* | [**retrieveWebHook**](docs/WebHookControllerApi.md#retrieveWebHook) | **GET** /webhook/{id} | Find a webhook
+*WebHookControllerApi* | [**retrieveWebHookByConsumerServiceName**](docs/WebHookControllerApi.md#retrieveWebHookByConsumerServiceName) | **GET** /webhook/consumerServiceName/{consumerServiceName} | Find WebHook by consumerServiceName equals
+*WebHookControllerApi* | [**retrieveWebHookFilteredAndPaged**](docs/WebHookControllerApi.md#retrieveWebHookFilteredAndPaged) | **GET** /webhook/filter | List paged
+*WebHookControllerApi* | [**retrieveWebHookPaged**](docs/WebHookControllerApi.md#retrieveWebHookPaged) | **GET** /webhook/page | List paged
+*WebHookControllerApi* | [**retrieveWebHooksByEvent**](docs/WebHookControllerApi.md#retrieveWebHooksByEvent) | **GET** /webhook/event/{event} | Find WebHooks by event
+*WebHookControllerApi* | [**updateWebHook**](docs/WebHookControllerApi.md#updateWebHook) | **PUT** /webhook/{id} | Update a webhook
 
 
 ## Documentation for Models
@@ -298,6 +321,7 @@ Class | Method | HTTP request | Description
  - [Demand](docs/Demand.md)
  - [DemandProjected](docs/DemandProjected.md)
  - [DemandProjectionStudy](docs/DemandProjectionStudy.md)
+ - [DistributionCenter](docs/DistributionCenter.md)
  - [ErrorProjected](docs/ErrorProjected.md)
  - [InternalSupply](docs/InternalSupply.md)
  - [OperationalOptimization](docs/OperationalOptimization.md)
@@ -307,6 +331,7 @@ Class | Method | HTTP request | Description
  - [PageOfDemand](docs/PageOfDemand.md)
  - [PageOfDemandProjected](docs/PageOfDemandProjected.md)
  - [PageOfDemandProjectionStudy](docs/PageOfDemandProjectionStudy.md)
+ - [PageOfDistributionCenter](docs/PageOfDistributionCenter.md)
  - [PageOfInternalSupply](docs/PageOfInternalSupply.md)
  - [PageOfOperationalOptimization](docs/PageOfOperationalOptimization.md)
  - [PageOfOperationalOptimizationResult](docs/PageOfOperationalOptimizationResult.md)
@@ -321,6 +346,7 @@ Class | Method | HTTP request | Description
  - [PageOfState](docs/PageOfState.md)
  - [PageOfTacticalOptimization](docs/PageOfTacticalOptimization.md)
  - [PageOfTacticalOptimizationResult](docs/PageOfTacticalOptimizationResult.md)
+ - [PageOfWebHook](docs/PageOfWebHook.md)
  - [Pageable](docs/Pageable.md)
  - [Part](docs/Part.md)
  - [Prediction](docs/Prediction.md)
@@ -336,6 +362,7 @@ Class | Method | HTTP request | Description
  - [State](docs/State.md)
  - [TacticalOptimization](docs/TacticalOptimization.md)
  - [TacticalOptimizationResult](docs/TacticalOptimizationResult.md)
+ - [WebHook](docs/WebHook.md)
 
 
 ## Documentation for Authorization

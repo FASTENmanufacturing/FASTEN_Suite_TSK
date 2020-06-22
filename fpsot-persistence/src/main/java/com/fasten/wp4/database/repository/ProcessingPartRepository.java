@@ -12,7 +12,7 @@ import com.fasten.wp4.database.model.Demand;
 import com.fasten.wp4.database.model.ProcessingPart;
 
 @Repository
-public interface ProcessingPartRepository extends JpaRepository<ProcessingPart, Long>, JpaLazyDataModel<ProcessingPart>{
+public interface ProcessingPartRepository extends JpaRepository<ProcessingPart, Long>, JpaLazyDataModel<ProcessingPart>, CustomizedProcessingPartRepository{
 	
 	@Query("SELECT processingPart FROM ProcessingPart processingPart order by processingPart.SRAM.code asc, processingPart.part.id asc")
 	List<ProcessingPart> retrieveAllOrderBySramCode();
@@ -31,7 +31,7 @@ public interface ProcessingPartRepository extends JpaRepository<ProcessingPart, 
 			+ " where d.orderDate >= (select t.initialDate from TacticalOptimization t where t.id=:tacticalOptimizationId) and "
 			+ " d.orderDate <= (select t.endDate from TacticalOptimization t where t.id=:tacticalOptimizationId) "
 			+ " and processingPart.SRAM.id=:sramId")
-	Double retrieveMinProcessingPartByTacticalOptimization(@Param("tacticalOptimizationId") Long tacticalOptimizationId, @Param("sramId") Long sramId);
+	Double retrieveLongerTimeProcessingPartByTacticalOptimization(@Param("tacticalOptimizationId") Long tacticalOptimizationId, @Param("sramId") Long sramId);
 
 }
 

@@ -22,21 +22,21 @@ import javax.inject.Named;
 
 import org.apache.commons.lang3.StringUtils;
 import org.omnifaces.util.Faces;
+import org.ors.geocode.client.api.GeocodeApi;
+import org.ors.geocode.client.model.AddressResponse;
 import org.ors.matrix.client.api.MatrixApi;
 import org.ors.matrix.client.model.JSONMatrixResponse;
 import org.ors.matrix.client.model.MatrixRequest;
 import org.ors.matrix.client.model.MatrixRequest.MetricsEnum;
 import org.ors.matrix.client.model.MatrixRequest.UnitsEnum;
-import org.ors.geocode.client.api.GeocodeApi;
-import org.ors.geocode.client.model.AddressResponse;
 import org.primefaces.PrimeFaces;
 
 import com.fasten.wp4.database.client.api.DeliveryControllerApi;
-import com.fasten.wp4.database.client.api.RemoteStationControllerApi;
+import com.fasten.wp4.database.client.api.DistributionCenterControllerApi;
 import com.fasten.wp4.database.client.api.TacticalOptimizationControllerApi;
 import com.fasten.wp4.database.client.invoker.ApiException;
 import com.fasten.wp4.database.client.model.Delivery;
-import com.fasten.wp4.database.client.model.RemoteStation;
+import com.fasten.wp4.database.client.model.DistributionCenter;
 import com.fasten.wp4.database.client.model.TacticalOptimization;
 import com.fasten.wp4.infra.client.OpenRouteServiceGeocodeClient;
 import com.github.adminfaces.template.exception.BusinessException;
@@ -53,7 +53,7 @@ public class TacticalOptimizationValidateFormMB implements Serializable {
 	private transient TacticalOptimizationControllerApi tacticalOptimizationControllerApi;
 
 	@Inject
-	private transient RemoteStationControllerApi remoteStationControllerApi;
+	private transient DistributionCenterControllerApi distributionCenterControllerApi;
 	
 	@Inject
 	private transient DeliveryControllerApi deliveryControllerApi;
@@ -74,7 +74,7 @@ public class TacticalOptimizationValidateFormMB implements Serializable {
 			try {
 				tacticalOptimization = tacticalOptimizationControllerApi.retrieveTacticalOptimization(id);
 				cont=0;
-				getRemoteStationByTacticalOptimization();
+				getDistributionCenterByTacticalOptimization();
 				calculateTotalCandidates();
 				calculateTotalCandidatesWithCoordinates();
 				calculateTotalCandidatesWithoutCoordinates();
@@ -121,11 +121,11 @@ public class TacticalOptimizationValidateFormMB implements Serializable {
 		}
 	}
 
-	private List<RemoteStation> tacticalOptimizationLocations;
+	private List<DistributionCenter> tacticalOptimizationLocations;
 
-	public void getRemoteStationByTacticalOptimization() {
+	public void getDistributionCenterByTacticalOptimization() {
 		try {
-			tacticalOptimizationLocations = remoteStationControllerApi.retrieveRemoteStationByTacticalOptimization(tacticalOptimization.getId());
+			tacticalOptimizationLocations = distributionCenterControllerApi.retrieveDistributionCenterByTacticalOptimization(tacticalOptimization.getId());
 		} catch (ApiException e) {
 			throw new BusinessException("Could not retrive tactical optimization locations");
 		}finally {
@@ -135,7 +135,7 @@ public class TacticalOptimizationValidateFormMB implements Serializable {
 	private Long candidates;
 	private Long candidatesWithoutCoordinates;
 	private Long candidatesWithCoordinates;
-	private Integer progressGeolocateRemoteStations;
+	private Integer progressGeolocateDistributionCenters;
 	private String geolocateStatus;
 
 	public void calculateTotalCandidates() {
@@ -150,36 +150,36 @@ public class TacticalOptimizationValidateFormMB implements Serializable {
 		candidatesWithCoordinates = tacticalOptimizationLocations.stream().filter(t -> t.getAddress().getLatitude()!=null && t.getAddress().getLongitude()!=null).count();
 	}
 
-	public void calculateProgressGeolocateRemoteStations() {
+	public void calculateProgressGeolocateDistributionCenters() {
 		double result = ((double)(candidatesWithCoordinates)/(double)(candidates))*100;
-		progressGeolocateRemoteStations = (int) result;
+		progressGeolocateDistributionCenters = (int) result;
 	}
 
 	public void calculateGeolocateStatus() {
-		if(has(progressGeolocateRemoteStations) && progressGeolocateRemoteStations>=100) {
+		if(has(progressGeolocateDistributionCenters) && progressGeolocateDistributionCenters>=100) {
 			geolocateStatus = "success";
-		}else if(has(progressGeolocateRemoteStations) && progressGeolocateRemoteStations<100){
+		}else if(has(progressGeolocateDistributionCenters) && progressGeolocateDistributionCenters<100){
 			geolocateStatus = "fail";
 		}
 	}
 
-	public Integer getProgressGeolocateRemoteStations() {
+	public Integer getProgressGeolocateDistributionCenters() {
 		if(has(geolocateStatus) && geolocateStatus.contentEquals("proceeding")) {
 			processGeolocate();
 			calculateTotalCandidatesWithCoordinates();
 			calculateTotalCandidatesWithoutCoordinates();
 		}
-		calculateProgressGeolocateRemoteStations();
-		return progressGeolocateRemoteStations;
+		calculateProgressGeolocateDistributionCenters();
+		return progressGeolocateDistributionCenters;
 	}
 
 	private int qpm = 5; //100 geolocate by min default interval 3000milis
-	private Collection<List<RemoteStation>> requestGroups;
-	private Iterator<List<RemoteStation>> requestGroupsIterator;
+	private Collection<List<DistributionCenter>> requestGroups;
+	private Iterator<List<DistributionCenter>> requestGroupsIterator;
 
-	public Collection<List<RemoteStation>> groupRemoteStationsWithoutCoordinateToRequest(){
+	public Collection<List<DistributionCenter>> groupDistributionCentersWithoutCoordinateToRequest(){
 		AtomicInteger counter = new AtomicInteger();
-		Collection<List<RemoteStation>> requestGroup = tacticalOptimizationLocations.stream()
+		Collection<List<DistributionCenter>> requestGroup = tacticalOptimizationLocations.stream()
 				.filter(t -> t.getAddress().getLatitude()==null || t.getAddress().getLongitude()==null)
 				.collect(Collectors.groupingBy(it -> counter.getAndIncrement() / qpm))
 				.values();
@@ -189,8 +189,8 @@ public class TacticalOptimizationValidateFormMB implements Serializable {
 	public void processGeolocate() {
 
 		if(requestGroupsIterator.hasNext()) {
-			List<RemoteStation> requestGroup = requestGroupsIterator.next();
-			for (RemoteStation r : requestGroup) {
+			List<DistributionCenter> requestGroup = requestGroupsIterator.next();
+			for (DistributionCenter r : requestGroup) {
 
 				String apiKey = OpenRouteServiceGeocodeClient.ORS_API_KEY;
 				String text = r.getAddress().getCity().getName()+", "+r.getAddress().getCity().getState().getName()+", Brazil";
@@ -215,7 +215,7 @@ public class TacticalOptimizationValidateFormMB implements Serializable {
 					throw new BusinessException("Could not retrive Geolocation (lon, lat) for "+ r.getAddress().getCity());
 				}
 				try {
-					remoteStationControllerApi.updateRemoteStation(r.getId(), r);
+					distributionCenterControllerApi.updateDistributionCenter(r.getId(), r);
 				} catch (ApiException e) {
 					throw new BusinessException("Could not save Geolocation (lon, lat) for "+ r.getAddress().getCity());
 				}	
@@ -229,12 +229,12 @@ public class TacticalOptimizationValidateFormMB implements Serializable {
 
 	public void onClickGeolocate() {
 		geolocateStatus="proceeding";
-		requestGroups=groupRemoteStationsWithoutCoordinateToRequest();
+		requestGroups=groupDistributionCentersWithoutCoordinateToRequest();
 		requestGroupsIterator=requestGroups.iterator();
 	}
 
-	public void setProgressGeolocateRemoteStations(Integer progressGeolocateRemoteStations) {
-		this.progressGeolocateRemoteStations = progressGeolocateRemoteStations;
+	public void setProgressGeolocateDistributionCenters(Integer progressGeolocateDistributionCenters) {
+		this.progressGeolocateDistributionCenters = progressGeolocateDistributionCenters;
 	}
 
 	public String getGeolocateStatus() {
@@ -269,11 +269,11 @@ public class TacticalOptimizationValidateFormMB implements Serializable {
 		this.candidatesWithCoordinates = candidatesWithCoordinates;
 	}
 
-	public List<RemoteStation> getTacticalOptimizationLocations() {
+	public List<DistributionCenter> getTacticalOptimizationLocations() {
 		return tacticalOptimizationLocations;
 	}
 
-	public void setTacticalOptimizationLocations(List<RemoteStation> tacticalOptimizationLocations) {
+	public void setTacticalOptimizationLocations(List<DistributionCenter> tacticalOptimizationLocations) {
 		this.tacticalOptimizationLocations = tacticalOptimizationLocations;
 	}
 	
@@ -293,7 +293,7 @@ public class TacticalOptimizationValidateFormMB implements Serializable {
 	private Long matrix;
 	private Long matrixWithout;
 	private Long matrixWith;
-	private Integer progressMatrixRemoteStations;
+	private Integer progressMatrixDistributionCenters;
 	private String matrixStatus;
 
 	public void calculateTotalMatrix() {
@@ -308,20 +308,20 @@ public class TacticalOptimizationValidateFormMB implements Serializable {
 		matrixWith = deliveries.stream().filter(d -> d.getDistance()!=null && d.getTime()!=null).count();
 	}
 
-	public void calculateProgressMatrixRemoteStations() {
+	public void calculateProgressMatrixDistributionCenters() {
 		double result = ((double)(matrixWith)/(double)(matrix))*100;
-		progressMatrixRemoteStations = (int) result;
+		progressMatrixDistributionCenters = (int) result;
 	}
 
 	public void calculateMatrixStatus() {
-		if(has(progressMatrixRemoteStations) && progressMatrixRemoteStations>=100) {
+		if(has(progressMatrixDistributionCenters) && progressMatrixDistributionCenters>=100) {
 			matrixStatus = "success";
-		}else if(has(progressMatrixRemoteStations) && progressMatrixRemoteStations<100){
+		}else if(has(progressMatrixDistributionCenters) && progressMatrixDistributionCenters<100){
 			matrixStatus = "fail";
 		}
 	}
 
-	public Integer getProgressMatrixRemoteStations() {
+	public Integer getProgressMatrixDistributionCenters() {
 		if(has(matrixStatus) && matrixStatus.contentEquals("proceeding")) {
 			processMatrix();
 			calculateTotalMatrixWithDelivery();
@@ -329,8 +329,8 @@ public class TacticalOptimizationValidateFormMB implements Serializable {
 			//only execute one time because ask all matrix at once
 			completeProgressBarMatrix();
 		}
-		calculateProgressMatrixRemoteStations();
-		return progressMatrixRemoteStations;
+		calculateProgressMatrixDistributionCenters();
+		return progressMatrixDistributionCenters;
 	}
 
 //	//	<f:event listener="#{tacticalOptimizationValidateFormMB.logJs}" type="postValidate"/>
@@ -343,7 +343,7 @@ public class TacticalOptimizationValidateFormMB implements Serializable {
 	}
 
 
-	private Delivery retrieveOrCreateBy(RemoteStation origin, RemoteStation destination) throws Exception {
+	private Delivery retrieveOrCreateBy(DistributionCenter origin, DistributionCenter destination) throws Exception {
 		Delivery delivery = null; 
 		try {
 			delivery = deliveries.stream().filter(d-> ( d.getOrigin().getId().equals(origin.getId()) && d.getDestination().getId().equals(destination.getId()))).findFirst().get();
@@ -374,9 +374,9 @@ public class TacticalOptimizationValidateFormMB implements Serializable {
 			//convert response to List<Delivery> deliveries
 			for (int i = 0; i < distances.size(); i++) {
 				List<Double> coluna = distances.get(i);
-				RemoteStation origin = tacticalOptimizationLocations.get(i);
+				DistributionCenter origin = tacticalOptimizationLocations.get(i);
 				for(int j=0; j<coluna.size();j++) {
-					RemoteStation destination = tacticalOptimizationLocations.get(j);
+					DistributionCenter destination = tacticalOptimizationLocations.get(j);
 					Delivery delivery = retrieveOrCreateBy(origin, destination);
 					delivery.setDistance(coluna.get(j).intValue());
 					delivery.setTime(durations.get(i).get(j).intValue());
@@ -434,8 +434,8 @@ public class TacticalOptimizationValidateFormMB implements Serializable {
 		this.matrixStatus = matrixStatus;
 	}
 
-	public void setProgressMatrixRemoteStations(Integer progressMatrixRemoteStations) {
-		this.progressMatrixRemoteStations = progressMatrixRemoteStations;
+	public void setProgressMatrixDistributionCenters(Integer progressMatrixDistributionCenters) {
+		this.progressMatrixDistributionCenters = progressMatrixDistributionCenters;
 	}
 	
 	public void validate() throws IOException {

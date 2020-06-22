@@ -1,7 +1,6 @@
 package com.fasten.wp4.database.model;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,52 +16,45 @@ import io.swagger.annotations.ApiModelProperty;
 
 @Entity
 @ApiModel(description = "Result route output")
-public class Route implements Serializable{
+public class Route implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@ApiModelProperty(notes = "The remote station producing the part")
-	@ManyToOne
-	private RemoteStation remoteStationOrigin;
+	private String remoteStation;
 
-	@ApiModelProperty(notes = "The remote station receiving the part")
-	@ManyToOne
-	private RemoteStation remoteStationDestination;
+	@ApiModelProperty(notes = "The distribution center receiving the part")
+	private String distributionCenter;
 
 	@ApiModelProperty(notes = "The part")
-	@ManyToOne
-	private Part part;
+	private String part;
 
+	@ApiModelProperty(notes = "The quantitiy of travels")
+	private Integer timesTraveled;
+
+	@ApiModelProperty(notes = "Time of a travel")
+	private Double timeOfTravel;
+
+	@ApiModelProperty(notes = "Time of all travel")
+	private Double totalTravelTime;
+	
 	@ApiModelProperty(notes = "The quantitiy of parts")
-	private Integer quantity;
+	private Integer quantityOfParts;
 
-	@ApiModelProperty(notes = "The total cost")
-	private BigDecimal cost;
+	@ApiModelProperty(notes = "Time to produce one part")
+	private Double totalProcessingTime;
 
-	@ApiModelProperty(notes = "The lead time (in hours) to a remote station produce and deliver the spare part")
-	private Double leadTime;
+	@ApiModelProperty(notes = "Time to produce all parts")
+	private Double processingTime;
 
 	@ManyToOne
 	@JoinColumn(name = "tactical_optimization_result_id", referencedColumnName = "id")
 	@JsonIgnore
 	private TacticalOptimizationResult tacticalOptimizationResult;
-	
-	public Route() {
-	}
 
-	public Route(Long id, RemoteStation remoteStationOrigin, RemoteStation remoteStationDestination, Part part,
-			Integer quantity, BigDecimal cost, Double leadTime, TacticalOptimizationResult tacticalOptimizationResult) {
-		super();
-		this.id = id;
-		this.remoteStationOrigin = remoteStationOrigin;
-		this.remoteStationDestination = remoteStationDestination;
-		this.part = part;
-		this.quantity = quantity;
-		this.cost = cost;
-		this.leadTime = leadTime;
-		this.tacticalOptimizationResult = tacticalOptimizationResult;
+	public Route() {
 	}
 
 	public Long getId() {
@@ -73,52 +65,76 @@ public class Route implements Serializable{
 		this.id = id;
 	}
 
-	public RemoteStation getRemoteStationOrigin() {
-		return remoteStationOrigin;
+	public String getRemoteStation() {
+		return remoteStation;
 	}
 
-	public void setRemoteStationOrigin(RemoteStation remoteStationOrigin) {
-		this.remoteStationOrigin = remoteStationOrigin;
+	public void setRemoteStation(String remoteStation) {
+		this.remoteStation = remoteStation;
 	}
 
-	public RemoteStation getRemoteStationDestination() {
-		return remoteStationDestination;
+	public String getDistributionCenter() {
+		return distributionCenter;
 	}
 
-	public void setRemoteStationDestination(RemoteStation remoteStationDestination) {
-		this.remoteStationDestination = remoteStationDestination;
+	public void setDistributionCenter(String distributionCenter) {
+		this.distributionCenter = distributionCenter;
 	}
 
-	public Part getPart() {
+	public String getPart() {
 		return part;
 	}
 
-	public void setPart(Part part) {
+	public void setPart(String part) {
 		this.part = part;
 	}
-
-	public Integer getQuantity() {
-		return quantity;
+	
+	public Integer getTimesTraveled() {
+		return timesTraveled;
 	}
 
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
+	public void setTimesTraveled(Integer timesTraveled) {
+		this.timesTraveled = timesTraveled;
 	}
 
-	public BigDecimal getCost() {
-		return cost;
+	public Double getTimeOfTravel() {
+		return timeOfTravel;
 	}
 
-	public void setCost(BigDecimal cost) {
-		this.cost = cost;
+	public void setTimeOfTravel(Double timeOfTravel) {
+		this.timeOfTravel = timeOfTravel;
 	}
 
-	public Double getLeadTime() {
-		return leadTime;
+	public Double getTotalTravelTime() {
+		return totalTravelTime;
 	}
 
-	public void setLeadTime(Double leadTime) {
-		this.leadTime = leadTime;
+	public void setTotalTravelTime(Double totalTravelTime) {
+		this.totalTravelTime = totalTravelTime;
+	}
+
+	public Integer getQuantityOfParts() {
+		return quantityOfParts;
+	}
+
+	public void setQuantityOfParts(Integer quantityOfParts) {
+		this.quantityOfParts = quantityOfParts;
+	}
+
+	public Double getTotalProcessingTime() {
+		return totalProcessingTime;
+	}
+
+	public void setTotalProcessingTime(Double totalProcessingTime) {
+		this.totalProcessingTime = totalProcessingTime;
+	}
+
+	public Double getProcessingTime() {
+		return processingTime;
+	}
+
+	public void setProcessingTime(Double processingTime) {
+		this.processingTime = processingTime;
 	}
 
 	public TacticalOptimizationResult getTacticalOptimizationResult() {
@@ -131,9 +147,11 @@ public class Route implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Route [id=" + id + ", remoteStationOrigin=" + remoteStationOrigin + ", remoteStationDestination="
-				+ remoteStationDestination + ", part=" + part + ", quantity=" + quantity + ", cost=" + cost
-				+ ", leadTime=" + leadTime + ", tacticalOptimizationResult=" + tacticalOptimizationResult + "]";
+		return "Route [id=" + id + ", remoteStation=" + remoteStation + ", distributionCenter=" + distributionCenter
+				+ ", part=" + part + ", timesTraveled=" + timesTraveled + ", timeOfTravel=" + timeOfTravel
+				+ ", totalTravelTime=" + totalTravelTime + ", quantityOfParts=" + quantityOfParts
+				+ ", totalProcessingTime=" + totalProcessingTime + ", processingTime=" + processingTime
+				+ ", tacticalOptimizationResult=" + tacticalOptimizationResult + "]";
 	}
 
 	@Override
@@ -160,5 +178,5 @@ public class Route implements Serializable{
 			return false;
 		return true;
 	}
-	
+
 }

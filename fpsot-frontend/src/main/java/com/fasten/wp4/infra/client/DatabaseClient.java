@@ -13,13 +13,12 @@ import com.fasten.wp4.database.client.api.DeliveryControllerApi;
 import com.fasten.wp4.database.client.api.DemandControllerApi;
 import com.fasten.wp4.database.client.api.DemandProjectedControllerApi;
 import com.fasten.wp4.database.client.api.DemandProjectionStudyControllerApi;
-import com.fasten.wp4.database.client.api.InternalSupplyControllerApi;
+import com.fasten.wp4.database.client.api.DistributionCenterControllerApi;
 import com.fasten.wp4.database.client.api.OperationalOptimizationControllerApi;
 import com.fasten.wp4.database.client.api.OperationalOptimizationResultControllerApi;
 import com.fasten.wp4.database.client.api.PartControllerApi;
 import com.fasten.wp4.database.client.api.PredictionControllerApi;
 import com.fasten.wp4.database.client.api.ProcessingPartControllerApi;
-import com.fasten.wp4.database.client.api.ProductionControllerApi;
 import com.fasten.wp4.database.client.api.RemoteStationControllerApi;
 import com.fasten.wp4.database.client.api.RouteControllerApi;
 import com.fasten.wp4.database.client.api.SramControllerApi;
@@ -42,6 +41,7 @@ public class DatabaseClient implements Serializable {
 	private AllocatedSramControllerApi allocatedSramControllerApi;
 	private ProcessingPartControllerApi processingPartControllerApi;
 	private RemoteStationControllerApi remoteStationControllerApi;
+	private DistributionCenterControllerApi distributionCenterControllerApi;
 	
 	//Input form
 	private TacticalOptimizationControllerApi tacticalOptimizationControllerApi;
@@ -55,10 +55,8 @@ public class DatabaseClient implements Serializable {
 	private DemandProjectionStudyControllerApi demandProjectionStudyControllerApi;
 	
 	//Output
-	private InternalSupplyControllerApi internalSupplyControllerApi;
 	private SramControllerApi sramControllerApi;
 	private RouteControllerApi routeControllerApi;
-	private ProductionControllerApi productionControllerApi;
 	
 	private OperationalOptimizationResultControllerApi operationalOptimizationResultControllerApi;
 	private TacticalOptimizationResultControllerApi tacticalOptimizationResultControllerApi;
@@ -109,6 +107,13 @@ public class DatabaseClient implements Serializable {
 		remoteStationControllerApi.getApiClient().setConnectTimeout(0);
 		remoteStationControllerApi.getApiClient().setReadTimeout(0);
 		remoteStationControllerApi.getApiClient().setBasePath(DATABASE_OAS_URL);
+
+		distributionCenterControllerApi = new DistributionCenterControllerApi();
+		distributionCenterControllerApi.getApiClient().setLenientOnJson(true);
+		distributionCenterControllerApi.getApiClient().setDebugging(debug);
+		distributionCenterControllerApi.getApiClient().setConnectTimeout(0);
+		distributionCenterControllerApi.getApiClient().setReadTimeout(0);
+		distributionCenterControllerApi.getApiClient().setBasePath(DATABASE_OAS_URL);
 		
 		//Grafana
 		demandProjectedControllerApi = new DemandProjectedControllerApi();
@@ -126,10 +131,8 @@ public class DatabaseClient implements Serializable {
 		demandProjectionStudyControllerApi.getApiClient().setBasePath(DATABASE_OAS_URL);
 		
 		//Output
-		internalSupplyControllerApi = new InternalSupplyControllerApi();
 		allocatedSramControllerApi = new AllocatedSramControllerApi();
 		routeControllerApi = new RouteControllerApi();
-		productionControllerApi = new ProductionControllerApi();
 		
 		operationalOptimizationResultControllerApi = new OperationalOptimizationResultControllerApi();
 		operationalOptimizationResultControllerApi.getApiClient().setLenientOnJson(true);
@@ -193,10 +196,6 @@ public class DatabaseClient implements Serializable {
 	}
 
 
-	@Produces
-	public InternalSupplyControllerApi getInternalSupplyControllerApi() {
-		return internalSupplyControllerApi;
-	}
 
 	@Produces
 	public PartControllerApi getPartControllerApi() {
@@ -224,13 +223,13 @@ public class DatabaseClient implements Serializable {
 	}
 
 	@Produces
-	public RouteControllerApi getRouteControllerApi() {
-		return routeControllerApi;
+	public DistributionCenterControllerApi getDistributionCenterControllerApi() {
+		return distributionCenterControllerApi;
 	}
 
 	@Produces
-	public ProductionControllerApi getProductionControllerApi() {
-		return productionControllerApi;
+	public RouteControllerApi getRouteControllerApi() {
+		return routeControllerApi;
 	}
 
 	@Produces

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
+<listEntry value="/fpsot-oas/src/main/java/com/fasten/wp4/FpsotOAS.java"/>
+</listAttribute>
+<listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
+<listEntry value="1"/>
+</listAttribute>
+<mapAttribute key="org.eclipse.debug.core.environmentVariables">
+<mapEntry key="DATABASE_OAS_URL" value="http://200.131.17.17:11007"/>
+<mapEntry key="EMAIL_OAS_URL" value="http://200.131.17.17:11001"/>
+<mapEntry key="FASTEN_GATEWAY_URL" value="http://ec2-3-88-109-165.compute-1.amazonaws.com:5000/api/v1"/>
+<mapEntry key="OPTIMIZATOR_OPERATIONAL_URL" value="http://200.131.17.17:11002"/>
+<mapEntry key="OPTIMIZATOR_TACTICAL_URL" value="http://200.131.17.17:11004"/>
+<mapEntry key="PPA_URL" value="http://200.131.17.17:11009"/>
+<mapEntry key="PROBABILITY_DISTRIBUTION_URL" value="http://200.131.17.17:11005"/>
+</mapAttribute>
+<listAttribute key="org.eclipse.debug.ui.favoriteGroups">
+<listEntry value="org.eclipse.debug.ui.launchGroup.run"/>
+</listAttribute>
+<booleanAttribute key="org.eclipse.jdt.launching.ATTR_EXCLUDE_TEST_CODE" value="true"/>
+<booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
+<stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.eclipse.m2e.launchconfig.classpathProvider"/>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="com.fasten.wp4.FpsotOAS"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="fpsot-oas"/>
+<stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.m2e.launchconfig.sourcepathProvider"/>
+</launchConfiguration>

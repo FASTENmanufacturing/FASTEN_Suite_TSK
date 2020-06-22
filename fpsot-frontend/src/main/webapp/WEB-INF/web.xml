@@ -106,6 +106,10 @@
 	<listener>
 	    <listener-class>org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap</listener-class>
 	</listener>
+	<!-- LOG -->
+	<listener>
+	  <listener-class>uk.org.lidalia.sysoutslf4j.context.SysOutOverSLF4JServletContextListener</listener-class>
+	</listener>
 	<servlet>
 	    <servlet-name>Resteasy</servlet-name>
 	    <servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>

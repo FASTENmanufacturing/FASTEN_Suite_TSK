@@ -34,22 +34,6 @@ public class TacticalOptimizationResultControllerApiTest {
 
     
     /**
-     * Save a tacticalOptimizationResult
-     *
-     * Also returns the url to created data in header location 
-     *
-     * @throws ApiException
-     *          if the Api call fails
-     */
-    @Test
-    public void createTacticalOptimizationResultTest() throws ApiException {
-        TacticalOptimizationResult tacticalOptimizationResult = null;
-        Object response = api.createTacticalOptimizationResult(tacticalOptimizationResult);
-
-        // TODO: test validations
-    }
-    
-    /**
      * Save a results list
      *
      * 
@@ -123,7 +107,7 @@ public class TacticalOptimizationResultControllerApiTest {
     @Test
     public void retrieveByTacticalOptimizationTest() throws ApiException {
         Long id = null;
-        TacticalOptimizationResult response = api.retrieveByTacticalOptimization(id);
+        List<TacticalOptimizationResult> response = api.retrieveByTacticalOptimization(id);
 
         // TODO: test validations
     }

@@ -30,7 +30,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.fasten.wp4.database.exception.NotFoundException;
 import com.fasten.wp4.database.model.Delivery;
-import com.fasten.wp4.database.model.RemoteStation;
+import com.fasten.wp4.database.model.DistributionCenter;
 import com.fasten.wp4.database.repository.DeliveryRepository;
 import com.fasten.wp4.database.swagger.ApiPageable;
 import com.fasten.wp4.database.util.ConversorUtil;
@@ -91,7 +91,7 @@ public class DeliveryController {
 	
 	@GetMapping(value="/delivery/route", params = {"origin","destination"})
 	@ApiOperation(nickname="retrieveDeliveryByRoute", value = "Find one delivery by Route", notes = "Also returns a link to retrieve all delivery with rel - all")
-	public Resource<Delivery> retrieveByRoute(@RequestParam(name = "origin") RemoteStation origin, @RequestParam(name = "destination")RemoteStation destination) {
+	public Resource<Delivery> retrieveByRoute(@RequestParam(name = "origin") DistributionCenter origin, @RequestParam(name = "destination")DistributionCenter destination) {
 		Optional<Delivery> retrivedObject = repository.findByOriginAndDestination(origin,destination);
 		if (!retrivedObject.isPresent())
 			throw new NotFoundException();

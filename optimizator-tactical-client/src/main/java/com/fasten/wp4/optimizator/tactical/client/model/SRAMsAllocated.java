@@ -15,7 +15,6 @@ package com.fasten.wp4.optimizator.tactical.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.fasten.wp4.optimizator.tactical.client.model.RemoteStation;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -41,7 +40,7 @@ public class SRAMsAllocated implements Serializable {
   private Integer numberOfSRAMs = null;
 
   @SerializedName("remoteStation")
-  private RemoteStation remoteStation = null;
+  private String remoteStation = null;
 
   public SRAMsAllocated id(Long id) {
     this.id = id;
@@ -79,7 +78,7 @@ public class SRAMsAllocated implements Serializable {
     this.numberOfSRAMs = numberOfSRAMs;
   }
 
-  public SRAMsAllocated remoteStation(RemoteStation remoteStation) {
+  public SRAMsAllocated remoteStation(String remoteStation) {
     this.remoteStation = remoteStation;
     return this;
   }
@@ -89,11 +88,11 @@ public class SRAMsAllocated implements Serializable {
    * @return remoteStation
   **/
   @ApiModelProperty(value = "The remote station producing")
-  public RemoteStation getRemoteStation() {
+  public String getRemoteStation() {
     return remoteStation;
   }
 
-  public void setRemoteStation(RemoteStation remoteStation) {
+  public void setRemoteStation(String remoteStation) {
     this.remoteStation = remoteStation;
   }
 

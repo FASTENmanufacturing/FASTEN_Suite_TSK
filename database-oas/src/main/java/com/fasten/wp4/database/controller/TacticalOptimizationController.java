@@ -27,6 +27,7 @@ import com.fasten.wp4.database.exception.NotFoundException;
 import com.fasten.wp4.database.model.TacticalOptimization;
 import com.fasten.wp4.database.model.TacticalOptimizationStatus;
 import com.fasten.wp4.database.repository.TacticalOptimizationRepository;
+import com.fasten.wp4.database.repository.TacticalOptimizationResultRepository;
 import com.fasten.wp4.database.swagger.ApiPageable;
 import com.fasten.wp4.database.util.ConversorUtil;
 
@@ -38,6 +39,9 @@ public class TacticalOptimizationController {
 
 	@Autowired
 	private TacticalOptimizationRepository repository;
+
+	@Autowired
+	private TacticalOptimizationResultRepository resultRepository;
 
 	@GetMapping(value="/tacticalOptimization", params = {"!page","!size", "!sort"})
 	@ApiOperation(nickname="retrieveAllTacticalOptimization", value = "List all configured optimizations")
@@ -78,6 +82,12 @@ public class TacticalOptimizationController {
 	@DeleteMapping("/tacticalOptimization/{id:[\\d]+}")
 	@ApiOperation(nickname="deleteTacticalOptimization", value = "Delete the tacticalOptimization's configurations")
 	public void delete(@PathVariable long id) {
+		
+		TacticalOptimization o = new TacticalOptimization();
+		o.setId(id);
+		if(resultRepository.existsByStudy(o)) {
+			resultRepository.deleteByStudy(o);
+		}
 		repository.deleteById(id);
 	}
 

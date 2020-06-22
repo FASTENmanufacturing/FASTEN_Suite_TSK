@@ -12,7 +12,7 @@ import com.fasten.wp4.database.model.Part;
 import com.fasten.wp4.database.model.PartPriority;
 
 @Repository
-public interface PartRepository extends JpaRepository<Part, Long>, JpaLazyDataModel<Part>{
+public interface PartRepository extends JpaRepository<Part, Long>, JpaLazyDataModel<Part>, CustomizedPartRepository{
 
 	Optional<Part> findByCode(String code);
 	

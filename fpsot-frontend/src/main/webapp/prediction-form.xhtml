@@ -120,17 +120,17 @@
 	           </div>
 	           <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
 	               <div class="ui-sm-12 ui-g-11">
-	                   <p:outputLabel value="Remote Station" for="remoteStation"/>
+	                   <p:outputLabel value="Distribution Center" for="distributionCenter"/>
 	               </div>
 	               <div class="ui-sm-12 ui-g-11">
-	                   <p:selectOneMenu dynamic="true" filter="true" filterMatchMode="contains" id="remoteStation" value="#{predictionFormMB.prediction.remoteStation}">
+	                   <p:selectOneMenu dynamic="true" filter="true" filterMatchMode="contains" id="distributionCenter" value="#{predictionFormMB.prediction.distributionCenter}">
 	                   		<p:ajax update="pastObservations" process="@this" global="false" partialSubmit="true" listener="#{predictionFormMB.updatePastObservations}" />
 	                   		<f:converter converterId="entityApiConverter"/>
 		                    <f:selectItem itemLabel="All" itemValue="#{null}" noSelectionOption="true" />
-		                    <f:selectItems value="#{predictionFormMB.remoteStations}" var="remoteStation" itemLabel="#{remoteStation.name}" itemValue="#{remoteStation}" />
+		                    <f:selectItems value="#{predictionFormMB.distributionCenters}" var="distributionCenter" itemLabel="#{distributionCenter.name}" itemValue="#{distributionCenter}" />
 	                	</p:selectOneMenu>
 	                   <span class="help-block"> 
-	                       <p:message for="remoteStation"/>
+	                       <p:message for="distributionCenter"/>
 	                   </span>
 	               </div>
 	           </div>

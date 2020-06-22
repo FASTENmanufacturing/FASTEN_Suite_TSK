@@ -15,8 +15,6 @@ package com.fasten.wp4.optimizator.tactical.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.fasten.wp4.optimizator.tactical.client.model.Part;
-import com.fasten.wp4.optimizator.tactical.client.model.RemoteStation;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -39,6 +37,9 @@ public class Route implements Serializable {
   @SerializedName("cost")
   private BigDecimal cost = null;
 
+  @SerializedName("distributionCenter")
+  private String distributionCenter = null;
+
   @SerializedName("id")
   private Long id = null;
 
@@ -46,33 +47,45 @@ public class Route implements Serializable {
   private Double leadTime = null;
 
   @SerializedName("part")
-  private Part part = null;
+  private String part = null;
 
-  @SerializedName("quantity")
-  private Integer quantity = null;
+  @SerializedName("processingTime")
+  private Double processingTime = null;
 
-  @SerializedName("remoteStationDestination")
-  private RemoteStation remoteStationDestination = null;
+  @SerializedName("quantityOfParts")
+  private Integer quantityOfParts = null;
 
-  @SerializedName("remoteStationOrigin")
-  private RemoteStation remoteStationOrigin = null;
+  @SerializedName("remoteStation")
+  private String remoteStation = null;
 
-  public Route cost(BigDecimal cost) {
-    this.cost = cost;
+  @SerializedName("timeOfTravel")
+  private Double timeOfTravel = null;
+
+  @SerializedName("timesTraveled")
+  private Integer timesTraveled = null;
+
+  @SerializedName("totalProcessingTime")
+  private Double totalProcessingTime = null;
+
+  @SerializedName("totalTravelTime")
+  private Double totalTravelTime = null;
+
+  public Route distributionCenter(String distributionCenter) {
+    this.distributionCenter = distributionCenter;
     return this;
   }
 
    /**
-   * The total cost
-   * @return cost
+   * The distribution center receiving the part
+   * @return distributionCenter
   **/
-  @ApiModelProperty(value = "The total cost")
-  public BigDecimal getCost() {
-    return cost;
+  @ApiModelProperty(value = "The distribution center receiving the part")
+  public String getDistributionCenter() {
+    return distributionCenter;
   }
 
-  public void setCost(BigDecimal cost) {
-    this.cost = cost;
+  public void setDistributionCenter(String distributionCenter) {
+    this.distributionCenter = distributionCenter;
   }
 
   public Route id(Long id) {
@@ -93,25 +106,7 @@ public class Route implements Serializable {
     this.id = id;
   }
 
-  public Route leadTime(Double leadTime) {
-    this.leadTime = leadTime;
-    return this;
-  }
-
-   /**
-   * The lead time (in hours) to a remote station produce and deliver the spare part
-   * @return leadTime
-  **/
-  @ApiModelProperty(value = "The lead time (in hours) to a remote station produce and deliver the spare part")
-  public Double getLeadTime() {
-    return leadTime;
-  }
-
-  public void setLeadTime(Double leadTime) {
-    this.leadTime = leadTime;
-  }
-
-  public Route part(Part part) {
+  public Route part(String part) {
     this.part = part;
     return this;
   }
@@ -121,66 +116,138 @@ public class Route implements Serializable {
    * @return part
   **/
   @ApiModelProperty(value = "The part")
-  public Part getPart() {
+  public String getPart() {
     return part;
   }
 
-  public void setPart(Part part) {
+  public void setPart(String part) {
     this.part = part;
   }
 
-  public Route quantity(Integer quantity) {
-    this.quantity = quantity;
+  public Route processingTime(Double processingTime) {
+    this.processingTime = processingTime;
+    return this;
+  }
+
+   /**
+   * Time to produce all parts
+   * @return processingTime
+  **/
+  @ApiModelProperty(value = "Time to produce all parts")
+  public Double getProcessingTime() {
+    return processingTime;
+  }
+
+  public void setProcessingTime(Double processingTime) {
+    this.processingTime = processingTime;
+  }
+
+  public Route quantityOfParts(Integer quantityOfParts) {
+    this.quantityOfParts = quantityOfParts;
     return this;
   }
 
    /**
    * The quantitiy of parts
-   * @return quantity
+   * @return quantityOfParts
   **/
   @ApiModelProperty(value = "The quantitiy of parts")
-  public Integer getQuantity() {
-    return quantity;
+  public Integer getQuantityOfParts() {
+    return quantityOfParts;
   }
 
-  public void setQuantity(Integer quantity) {
-    this.quantity = quantity;
+  public void setQuantityOfParts(Integer quantityOfParts) {
+    this.quantityOfParts = quantityOfParts;
   }
 
-  public Route remoteStationDestination(RemoteStation remoteStationDestination) {
-    this.remoteStationDestination = remoteStationDestination;
-    return this;
-  }
-
-   /**
-   * The remote station receiving the part
-   * @return remoteStationDestination
-  **/
-  @ApiModelProperty(value = "The remote station receiving the part")
-  public RemoteStation getRemoteStationDestination() {
-    return remoteStationDestination;
-  }
-
-  public void setRemoteStationDestination(RemoteStation remoteStationDestination) {
-    this.remoteStationDestination = remoteStationDestination;
-  }
-
-  public Route remoteStationOrigin(RemoteStation remoteStationOrigin) {
-    this.remoteStationOrigin = remoteStationOrigin;
+  public Route remoteStation(String remoteStation) {
+    this.remoteStation = remoteStation;
     return this;
   }
 
    /**
    * The remote station producing the part
-   * @return remoteStationOrigin
+   * @return remoteStation
   **/
   @ApiModelProperty(value = "The remote station producing the part")
-  public RemoteStation getRemoteStationOrigin() {
-    return remoteStationOrigin;
+  public String getRemoteStation() {
+    return remoteStation;
   }
 
-  public void setRemoteStationOrigin(RemoteStation remoteStationOrigin) {
-    this.remoteStationOrigin = remoteStationOrigin;
+  public void setRemoteStation(String remoteStation) {
+    this.remoteStation = remoteStation;
+  }
+
+  public Route timeOfTravel(Double timeOfTravel) {
+    this.timeOfTravel = timeOfTravel;
+    return this;
+  }
+
+   /**
+   * Time of a travel
+   * @return timeOfTravel
+  **/
+  @ApiModelProperty(value = "Time of a travel")
+  public Double getTimeOfTravel() {
+    return timeOfTravel;
+  }
+
+  public void setTimeOfTravel(Double timeOfTravel) {
+    this.timeOfTravel = timeOfTravel;
+  }
+
+  public Route timesTraveled(Integer timesTraveled) {
+    this.timesTraveled = timesTraveled;
+    return this;
+  }
+
+   /**
+   * The quantitiy of travels
+   * @return timesTraveled
+  **/
+  @ApiModelProperty(value = "The quantitiy of travels")
+  public Integer getTimesTraveled() {
+    return timesTraveled;
+  }
+
+  public void setTimesTraveled(Integer timesTraveled) {
+    this.timesTraveled = timesTraveled;
+  }
+
+  public Route totalProcessingTime(Double totalProcessingTime) {
+    this.totalProcessingTime = totalProcessingTime;
+    return this;
+  }
+
+   /**
+   * Time to produce one part
+   * @return totalProcessingTime
+  **/
+  @ApiModelProperty(value = "Time to produce one part")
+  public Double getTotalProcessingTime() {
+    return totalProcessingTime;
+  }
+
+  public void setTotalProcessingTime(Double totalProcessingTime) {
+    this.totalProcessingTime = totalProcessingTime;
+  }
+
+  public Route totalTravelTime(Double totalTravelTime) {
+    this.totalTravelTime = totalTravelTime;
+    return this;
+  }
+
+   /**
+   * Time of all travel
+   * @return totalTravelTime
+  **/
+  @ApiModelProperty(value = "Time of all travel")
+  public Double getTotalTravelTime() {
+    return totalTravelTime;
+  }
+
+  public void setTotalTravelTime(Double totalTravelTime) {
+    this.totalTravelTime = totalTravelTime;
   }
 
 
@@ -193,18 +260,21 @@ public class Route implements Serializable {
       return false;
     }
     Route route = (Route) o;
-    return Objects.equals(this.cost, route.cost) &&
+    return Objects.equals(this.distributionCenter, route.distributionCenter) &&
         Objects.equals(this.id, route.id) &&
-        Objects.equals(this.leadTime, route.leadTime) &&
         Objects.equals(this.part, route.part) &&
-        Objects.equals(this.quantity, route.quantity) &&
-        Objects.equals(this.remoteStationDestination, route.remoteStationDestination) &&
-        Objects.equals(this.remoteStationOrigin, route.remoteStationOrigin);
+        Objects.equals(this.processingTime, route.processingTime) &&
+        Objects.equals(this.quantityOfParts, route.quantityOfParts) &&
+        Objects.equals(this.remoteStation, route.remoteStation) &&
+        Objects.equals(this.timeOfTravel, route.timeOfTravel) &&
+        Objects.equals(this.timesTraveled, route.timesTraveled) &&
+        Objects.equals(this.totalProcessingTime, route.totalProcessingTime) &&
+        Objects.equals(this.totalTravelTime, route.totalTravelTime);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(cost, id, leadTime, part, quantity, remoteStationDestination, remoteStationOrigin);
+    return Objects.hash(distributionCenter, id, part, processingTime, quantityOfParts, remoteStation, timeOfTravel, timesTraveled, totalProcessingTime, totalTravelTime);
   }
 
 
@@ -213,13 +283,16 @@ public class Route implements Serializable {
     StringBuilder sb = new StringBuilder();
     sb.append("class Route {\n");
     
-    sb.append("    cost: ").append(toIndentedString(cost)).append("\n");
+    sb.append("    distributionCenter: ").append(toIndentedString(distributionCenter)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    leadTime: ").append(toIndentedString(leadTime)).append("\n");
     sb.append("    part: ").append(toIndentedString(part)).append("\n");
-    sb.append("    quantity: ").append(toIndentedString(quantity)).append("\n");
-    sb.append("    remoteStationDestination: ").append(toIndentedString(remoteStationDestination)).append("\n");
-    sb.append("    remoteStationOrigin: ").append(toIndentedString(remoteStationOrigin)).append("\n");
+    sb.append("    processingTime: ").append(toIndentedString(processingTime)).append("\n");
+    sb.append("    quantityOfParts: ").append(toIndentedString(quantityOfParts)).append("\n");
+    sb.append("    remoteStation: ").append(toIndentedString(remoteStation)).append("\n");
+    sb.append("    timeOfTravel: ").append(toIndentedString(timeOfTravel)).append("\n");
+    sb.append("    timesTraveled: ").append(toIndentedString(timesTraveled)).append("\n");
+    sb.append("    totalProcessingTime: ").append(toIndentedString(totalProcessingTime)).append("\n");
+    sb.append("    totalTravelTime: ").append(toIndentedString(totalTravelTime)).append("\n");
     sb.append("}");
     return sb.toString();
   }

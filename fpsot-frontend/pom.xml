@@ -204,7 +204,13 @@
             <version>3.1.4.Final</version>
         </dependency>  
         
-        
+        <!-- LOG -->
+		<dependency>
+	        <groupId>uk.org.lidalia</groupId>
+	        <artifactId>sysout-over-slf4j</artifactId>
+	        <version>1.0.2</version>
+		</dependency>
+		
 		<!-- Swagger REST Client generated -->
 		<!-- https://www.baeldung.com/spring-boot-rest-client-swagger-codegen -->
 		<dependency>

@@ -93,15 +93,15 @@
                             
                         </p:column>
 
-						<p:column headerText="#{adm['list.colum.remote.station']}" filterBy="#{c.remoteStation.name}" sortBy="#{c.remoteStation.name}" >
+						<p:column headerText="#{adm['list.colum.distribution.center']}" filterBy="#{c.distributionCenter.name}" sortBy="#{c.distributionCenter.name}" >
                             <f:facet name="filter">
 						        <p:selectOneMenu onchange="PF('demandsTable').filter()" filter="true" filterMatchMode="contains" autoWidth="false">
 				                    <f:selectItem itemLabel="#{adm['combo.box.select.one']}" itemValue="#{null}" noSelectionOption="true" />
-				                    <f:selectItems value="#{demandListMB.remoteStations}" />
+				                    <f:selectItems value="#{demandListMB.distributionCenters}" />
 				                </p:selectOneMenu>
                             </f:facet>
-                             <p:link value="#{c.remoteStation.name}" outcome="remote-station-form.xhtml" >
-                                <f:param name="id" value="#{c.remoteStation.id}"/>
+                             <p:link value="#{c.distributionCenter.name}" outcome="distribution-center-form.xhtml" >
+                                <f:param name="id" value="#{c.distributionCenter.id}"/>
                             </p:link>
                             
                         </p:column> 
@@ -174,7 +174,7 @@
                   width="400" responsive="true" styleClass="box-success">
             <p:dataList id="selectedDemandsList" value="#{demandListMB.selectedDemands}" var="demand"
                         type="definition">
-                ID: #{demand.id} - #{adm['demand']}: #{demand.remoteStation.name} 
+                ID: #{demand.id} - #{adm['demand']}: #{demand.distributionCenter.name} 
             </p:dataList>
         </p:dialog>
 

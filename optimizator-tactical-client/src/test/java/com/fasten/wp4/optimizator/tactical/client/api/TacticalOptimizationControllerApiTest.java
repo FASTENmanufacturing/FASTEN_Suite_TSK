@@ -14,7 +14,8 @@
 package com.fasten.wp4.optimizator.tactical.client.api;
 
 import com.fasten.wp4.optimizator.tactical.client.invoker.ApiException;
-import com.fasten.wp4.optimizator.tactical.client.model.TacticalOptimizationResult;
+import com.fasten.wp4.optimizator.tactical.client.model.TacticalOptimization;
+import com.fasten.wp4.optimizator.tactical.client.model.TacticalOptimizationResponse;
 import org.junit.Test;
 import org.junit.Ignore;
 
@@ -33,7 +34,7 @@ public class TacticalOptimizationControllerApiTest {
 
     
     /**
-     * Execute a tactical optimization
+     * execute tactical optimization for best cost-benefit
      *
      * 
      *
@@ -41,10 +42,11 @@ public class TacticalOptimizationControllerApiTest {
      *          if the Api call fails
      */
     @Test
-    public void executeTacticalOptimizationTest() throws ApiException {
+    public void executeTest() throws ApiException {
         String requestId = null;
-        Long tacticalOptimizationId = null;
-        TacticalOptimizationResult response = api.executeTacticalOptimization(requestId, tacticalOptimizationId,"filipe.marinho.brito@gmail.com");
+        TacticalOptimization tacticalOptimization = null;
+        String usermail = null;
+        TacticalOptimizationResponse response = api.execute(requestId, tacticalOptimization, usermail);
 
         // TODO: test validations
     }

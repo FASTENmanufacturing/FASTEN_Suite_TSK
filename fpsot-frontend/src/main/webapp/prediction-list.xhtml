@@ -49,8 +49,9 @@
                                       icon="fa fa-play"/>
                         <p:commandButton value="Results" styleClass="bg-purple disabled color-palette"
                         			  disabled="#{!predictionListMB.hasResult()}"
-                        			  action="#{predictionListMB.viewResult(predictionListMB.selecteds.get(0))}"
-                                      icon="fa fa-area-chart"/>
+                        			  action="#{predictionListMB.viewResultIframe(predictionListMB.selecteds.get(0))}"
+	                                  icon="fa fa-area-chart">
+                        </p:commandButton>
                     </div>
 
                     <p:splitButton value="New" action="prediction-form?faces-redirect=true"
@@ -72,10 +73,11 @@
                         			  action="#{predictionListMB.execute(predictionListMB.selecteds.get(0))}"
                         			  update="@form"
                                       icon="fa fa-play"/>
-                        <p:menuitem value="Results" styleClass="bg-purple disabled color-palette"
+                        	<p:menuitem value="Results" styleClass="bg-purple disabled color-palette"
                         			  disabled="#{!predictionListMB.hasResult()}"
-                        			  action="#{predictionListMB.viewResult(predictionListMB.selecteds.get(0))}"
-                                      icon="fa fa-area-chart"/>
+                        			  action="#{predictionListMB.viewResultIframe(predictionListMB.selecteds.get(0))}"
+                                      icon="fa fa-area-chart">
+                            </p:menuitem>
                     </p:splitButton>
 
                     <p:separator/>
@@ -124,16 +126,16 @@
                             </f:facet>
                             #{c.name}
                         </p:column>
-                        <p:column headerText="Remote Station" filterBy="#{c.remoteStation.name}" sortBy="#{c.remoteStation.name}" >
+                        <p:column headerText="Distribution Center" filterBy="#{c.distributionCenter.name}" sortBy="#{c.distributionCenter.name}" >
                             <f:facet name="filter">
 						        <p:selectOneMenu dynamic="true" filter="true" filterMatchMode="contains" onchange="PF('predictionsTable').filter()">
 				                    <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
-				                    <f:selectItems value="#{predictionListMB.remoteStations}" />
+				                    <f:selectItems value="#{predictionListMB.distributionCenters}" />
 				                </p:selectOneMenu>
                             </f:facet>
-                            <h:outputText value="All" rendered="#{empty c.remoteStation}"/>
-                            <p:link value="#{c.remoteStation.name}" outcome="remote-station-form.xhtml" >
-                                <f:param name="id" value="#{c.remoteStation.id}"/>
+                            <h:outputText value="All" rendered="#{empty c.distributionCenter}"/>
+                            <p:link value="#{c.distributionCenter.name}" outcome="remote-station-form.xhtml" >
+                                <f:param name="id" value="#{c.distributionCenter.id}"/>
                             </p:link>
 
                         </p:column>
@@ -247,7 +249,7 @@
         <p:dialog header="Selected" widgetVar="selecteds" height="250"
                   width="400" responsive="true" styleClass="box-success">
             <p:dataList id="selectedsList" value="#{predictionListMB.selecteds}" var="prediction" type="definition">
-                ID: #{prediction.id} - Part: #{prediction.part.name} - Remote Station: #{prediction.remoteStation.name}
+                ID: #{prediction.id} - Part: #{prediction.part.name} - Distribution Center: #{prediction.distributionCenter.name}
             </p:dataList>
         </p:dialog>
 

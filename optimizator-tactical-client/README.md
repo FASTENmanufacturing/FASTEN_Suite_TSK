@@ -85,12 +85,14 @@ public class TacticalOptimizationControllerApiExample {
     public static void main(String[] args) {
         
         TacticalOptimizationControllerApi apiInstance = new TacticalOptimizationControllerApi();
-        TacticalOptimization tacticalOptimization = new TacticalOptimization(); // TacticalOptimization | tacticalOptimization
+        String requestId = "requestId_example"; // String | requestId
+        Long tacticalOptimizationId = 789L; // Long | tacticalOptimizationId
+        String usermail = "usermail_example"; // String | usermail
         try {
-            TacticalOptimizationResult result = apiInstance.executeTacticalOptimization(tacticalOptimization);
+            TacticalOptimizationResponse result = apiInstance.executeCostBenefit(requestId, tacticalOptimizationId, usermail);
             System.out.println(result);
         } catch (ApiException e) {
-            System.err.println("Exception when calling TacticalOptimizationControllerApi#executeTacticalOptimization");
+            System.err.println("Exception when calling TacticalOptimizationControllerApi#executeCostBenefit");
             e.printStackTrace();
         }
     }
@@ -100,25 +102,26 @@ public class TacticalOptimizationControllerApiExample {
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://localhost:8082*
+All URIs are relative to *http://localhost:5050*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*TacticalOptimizationControllerApi* | [**executeTacticalOptimization**](docs/TacticalOptimizationControllerApi.md#executeTacticalOptimization) | **POST** /execute | Execute a tactical optimization
+*TacticalOptimizationControllerApi* | [**executeCostBenefit**](docs/TacticalOptimizationControllerApi.md#executeCostBenefit) | **GET** /execute/costbenefit | execute tactical optimization for best cost-benefit
+*TacticalOptimizationControllerApi* | [**executeP**](docs/TacticalOptimizationControllerApi.md#executeP) | **GET** /execute/p | execute tactical optimization for p
 
 
 ## Documentation for Models
 
- - [City](docs/City.md)
+ - [Constraint](docs/Constraint.md)
+ - [CplexResult](docs/CplexResult.md)
  - [InternalSupply](docs/InternalSupply.md)
- - [Part](docs/Part.md)
  - [Production](docs/Production.md)
- - [RemoteStation](docs/RemoteStation.md)
  - [Route](docs/Route.md)
  - [SRAMsAllocated](docs/SRAMsAllocated.md)
- - [State](docs/State.md)
  - [TacticalOptimization](docs/TacticalOptimization.md)
+ - [TacticalOptimizationResponse](docs/TacticalOptimizationResponse.md)
  - [TacticalOptimizationResult](docs/TacticalOptimizationResult.md)
+ - [Variable](docs/Variable.md)
 
 
 ## Documentation for Authorization

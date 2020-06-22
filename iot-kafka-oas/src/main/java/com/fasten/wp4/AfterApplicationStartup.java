@@ -25,6 +25,8 @@ import com.fasten.wp4.iot.kafka.repository.ProducerRepository;
 import com.fasten.wp4.iot.kafka.repository.TopicRepository;
 import com.fasten.wp4.iot.kafka.task.ScheduledFireEvent;
 
+import uk.org.lidalia.sysoutslf4j.context.SysOutOverSLF4J;
+
 @Component
 public class AfterApplicationStartup {
 	
@@ -47,6 +49,8 @@ public class AfterApplicationStartup {
 	
 	@EventListener(ApplicationReadyEvent.class)
 	public void doAfterStartup() {
+		
+		SysOutOverSLF4J.sendSystemOutAndErrToSLF4J();
 		
 		listnerRepository.deleteAll();
 		producerRepository.deleteAll();

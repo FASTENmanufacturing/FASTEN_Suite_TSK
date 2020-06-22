@@ -123,6 +123,13 @@
 	      <artifactId>lombok</artifactId>
 	      <scope>provided</scope>
 	    </dependency>
+	    
+	    <!-- Dialect including types for array jsonb etc -->
+		<dependency>
+		    <groupId>com.vladmihalcea</groupId>
+		    <artifactId>hibernate-types-52</artifactId>
+		    <version>2.9.11</version>
+		</dependency>
 	</dependencies>
 
 	<build>

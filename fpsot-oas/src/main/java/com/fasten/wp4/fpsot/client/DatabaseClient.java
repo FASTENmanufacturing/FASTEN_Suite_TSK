@@ -12,13 +12,11 @@ import com.fasten.wp4.database.client.api.DeliveryControllerApi;
 import com.fasten.wp4.database.client.api.DemandControllerApi;
 import com.fasten.wp4.database.client.api.DemandProjectedControllerApi;
 import com.fasten.wp4.database.client.api.DemandProjectionStudyControllerApi;
-import com.fasten.wp4.database.client.api.InternalSupplyControllerApi;
 import com.fasten.wp4.database.client.api.OperationalOptimizationControllerApi;
 import com.fasten.wp4.database.client.api.OperationalOptimizationResultControllerApi;
 import com.fasten.wp4.database.client.api.PartControllerApi;
 import com.fasten.wp4.database.client.api.PredictionControllerApi;
 import com.fasten.wp4.database.client.api.ProcessingPartControllerApi;
-import com.fasten.wp4.database.client.api.ProductionControllerApi;
 import com.fasten.wp4.database.client.api.RemoteStationControllerApi;
 import com.fasten.wp4.database.client.api.RouteControllerApi;
 import com.fasten.wp4.database.client.api.SramControllerApi;
@@ -112,17 +110,6 @@ public class DatabaseClient {
 	}
 
 	@Bean
-	public InternalSupplyControllerApi internalSupplyControllerApi() {
-		InternalSupplyControllerApi api = new InternalSupplyControllerApi();
-		api.getApiClient().setLenientOnJson(lenient);
-		api.getApiClient().setDebugging(debugging);
-		api.getApiClient().setConnectTimeout(Math.toIntExact(connectTimeout.toMillis()));
-		api.getApiClient().setReadTimeout(Math.toIntExact(readTimeout.toMillis()));
-		api.getApiClient().setBasePath(url);
-		return api;
-	}
-
-	@Bean
 	public OperationalOptimizationControllerApi operationalOptimizationControllerApi() {
 		OperationalOptimizationControllerApi api = new OperationalOptimizationControllerApi();
 		api.getApiClient().setLenientOnJson(lenient);
@@ -169,17 +156,6 @@ public class DatabaseClient {
 	@Bean
 	public ProcessingPartControllerApi processingPartControllerApi() {
 		ProcessingPartControllerApi api = new ProcessingPartControllerApi();
-		api.getApiClient().setLenientOnJson(lenient);
-		api.getApiClient().setDebugging(debugging);
-		api.getApiClient().setConnectTimeout(Math.toIntExact(connectTimeout.toMillis()));
-		api.getApiClient().setReadTimeout(Math.toIntExact(readTimeout.toMillis()));
-		api.getApiClient().setBasePath(url);
-		return api;
-	}
-
-	@Bean
-	public ProductionControllerApi productionControllerApi() {
-		ProductionControllerApi api = new ProductionControllerApi();
 		api.getApiClient().setLenientOnJson(lenient);
 		api.getApiClient().setDebugging(debugging);
 		api.getApiClient().setConnectTimeout(Math.toIntExact(connectTimeout.toMillis()));

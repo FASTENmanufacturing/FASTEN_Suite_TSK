@@ -15,8 +15,6 @@ package com.fasten.wp4.optimizator.tactical.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.fasten.wp4.optimizator.tactical.client.model.Part;
-import com.fasten.wp4.optimizator.tactical.client.model.RemoteStation;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -35,17 +33,35 @@ import java.io.Serializable;
 public class InternalSupply implements Serializable {
   private static final long serialVersionUID = 1L;
 
+  @SerializedName("distributionCenter")
+  private String distributionCenter = null;
+
   @SerializedName("id")
   private Long id = null;
 
   @SerializedName("part")
-  private Part part = null;
+  private String part = null;
 
-  @SerializedName("remoteStationDestination")
-  private RemoteStation remoteStationDestination = null;
+  @SerializedName("remoteStation")
+  private String remoteStation = null;
 
-  @SerializedName("remoteStationOrigin")
-  private RemoteStation remoteStationOrigin = null;
+  public InternalSupply distributionCenter(String distributionCenter) {
+    this.distributionCenter = distributionCenter;
+    return this;
+  }
+
+   /**
+   * The distribution center receiving the part
+   * @return distributionCenter
+  **/
+  @ApiModelProperty(value = "The distribution center receiving the part")
+  public String getDistributionCenter() {
+    return distributionCenter;
+  }
+
+  public void setDistributionCenter(String distributionCenter) {
+    this.distributionCenter = distributionCenter;
+  }
 
   public InternalSupply id(Long id) {
     this.id = id;
@@ -65,7 +81,7 @@ public class InternalSupply implements Serializable {
     this.id = id;
   }
 
-  public InternalSupply part(Part part) {
+  public InternalSupply part(String part) {
     this.part = part;
     return this;
   }
@@ -75,48 +91,30 @@ public class InternalSupply implements Serializable {
    * @return part
   **/
   @ApiModelProperty(value = "The part")
-  public Part getPart() {
+  public String getPart() {
     return part;
   }
 
-  public void setPart(Part part) {
+  public void setPart(String part) {
     this.part = part;
   }
 
-  public InternalSupply remoteStationDestination(RemoteStation remoteStationDestination) {
-    this.remoteStationDestination = remoteStationDestination;
-    return this;
-  }
-
-   /**
-   * The remote station receiving the part
-   * @return remoteStationDestination
-  **/
-  @ApiModelProperty(value = "The remote station receiving the part")
-  public RemoteStation getRemoteStationDestination() {
-    return remoteStationDestination;
-  }
-
-  public void setRemoteStationDestination(RemoteStation remoteStationDestination) {
-    this.remoteStationDestination = remoteStationDestination;
-  }
-
-  public InternalSupply remoteStationOrigin(RemoteStation remoteStationOrigin) {
-    this.remoteStationOrigin = remoteStationOrigin;
+  public InternalSupply remoteStation(String remoteStation) {
+    this.remoteStation = remoteStation;
     return this;
   }
 
    /**
    * The remote station producing the part
-   * @return remoteStationOrigin
+   * @return remoteStation
   **/
   @ApiModelProperty(value = "The remote station producing the part")
-  public RemoteStation getRemoteStationOrigin() {
-    return remoteStationOrigin;
+  public String getRemoteStation() {
+    return remoteStation;
   }
 
-  public void setRemoteStationOrigin(RemoteStation remoteStationOrigin) {
-    this.remoteStationOrigin = remoteStationOrigin;
+  public void setRemoteStation(String remoteStation) {
+    this.remoteStation = remoteStation;
   }
 
 
@@ -129,15 +127,15 @@ public class InternalSupply implements Serializable {
       return false;
     }
     InternalSupply internalSupply = (InternalSupply) o;
-    return Objects.equals(this.id, internalSupply.id) &&
+    return Objects.equals(this.distributionCenter, internalSupply.distributionCenter) &&
+        Objects.equals(this.id, internalSupply.id) &&
         Objects.equals(this.part, internalSupply.part) &&
-        Objects.equals(this.remoteStationDestination, internalSupply.remoteStationDestination) &&
-        Objects.equals(this.remoteStationOrigin, internalSupply.remoteStationOrigin);
+        Objects.equals(this.remoteStation, internalSupply.remoteStation);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, part, remoteStationDestination, remoteStationOrigin);
+    return Objects.hash(distributionCenter, id, part, remoteStation);
   }
 
 
@@ -146,10 +144,10 @@ public class InternalSupply implements Serializable {
     StringBuilder sb = new StringBuilder();
     sb.append("class InternalSupply {\n");
     
+    sb.append("    distributionCenter: ").append(toIndentedString(distributionCenter)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    part: ").append(toIndentedString(part)).append("\n");
-    sb.append("    remoteStationDestination: ").append(toIndentedString(remoteStationDestination)).append("\n");
-    sb.append("    remoteStationOrigin: ").append(toIndentedString(remoteStationOrigin)).append("\n");
+    sb.append("    remoteStation: ").append(toIndentedString(remoteStation)).append("\n");
     sb.append("}");
     return sb.toString();
   }

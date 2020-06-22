@@ -35,17 +35,17 @@ public class Delivery implements Serializable{
 	private Integer time;
 
 	@ManyToOne
-	private RemoteStation origin;
+	private DistributionCenter origin;
 
 	@ManyToOne
-	private RemoteStation destination;
+	private DistributionCenter destination;
 
 	public Delivery() {
 		super();
 	}
 
 	public Delivery(Long id, String originCep, String destinationCep, Integer distance, BigDecimal cost, Integer time,
-			RemoteStation origin, RemoteStation destination) {
+			DistributionCenter origin, DistributionCenter destination) {
 		super();
 		this.id = id;
 		this.originCep = originCep;
@@ -105,19 +105,19 @@ public class Delivery implements Serializable{
 		this.time = time;
 	}
 
-	public RemoteStation getOrigin() {
+	public DistributionCenter getOrigin() {
 		return origin;
 	}
 
-	public void setOrigin(RemoteStation origin) {
+	public void setOrigin(DistributionCenter origin) {
 		this.origin = origin;
 	}
 
-	public RemoteStation getDestination() {
+	public DistributionCenter getDestination() {
 		return destination;
 	}
 
-	public void setDestination(RemoteStation destination) {
+	public void setDestination(DistributionCenter destination) {
 		this.destination = destination;
 	}
 

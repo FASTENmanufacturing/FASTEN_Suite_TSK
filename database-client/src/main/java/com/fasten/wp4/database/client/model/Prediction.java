@@ -15,8 +15,8 @@ package com.fasten.wp4.database.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import com.fasten.wp4.database.client.model.DistributionCenter;
 import com.fasten.wp4.database.client.model.Part;
-import com.fasten.wp4.database.client.model.RemoteStation;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -37,6 +37,9 @@ import java.io.Serializable;
 
 public class Prediction implements Serializable {
   private static final long serialVersionUID = 1L;
+
+  @SerializedName("distributionCenter")
+  private DistributionCenter distributionCenter = null;
 
   @SerializedName("endDate")
   private Date endDate = null;
@@ -222,8 +225,23 @@ public class Prediction implements Serializable {
   @SerializedName("part")
   private Part part = null;
 
-  @SerializedName("remoteStation")
-  private RemoteStation remoteStation = null;
+  public Prediction distributionCenter(DistributionCenter distributionCenter) {
+    this.distributionCenter = distributionCenter;
+    return this;
+  }
+
+   /**
+   * The DC
+   * @return distributionCenter
+  **/
+  @ApiModelProperty(value = "The DC")
+  public DistributionCenter getDistributionCenter() {
+    return distributionCenter;
+  }
+
+  public void setDistributionCenter(DistributionCenter distributionCenter) {
+    this.distributionCenter = distributionCenter;
+  }
 
   public Prediction endDate(Date endDate) {
     this.endDate = endDate;
@@ -395,24 +413,6 @@ public class Prediction implements Serializable {
     this.part = part;
   }
 
-  public Prediction remoteStation(RemoteStation remoteStation) {
-    this.remoteStation = remoteStation;
-    return this;
-  }
-
-   /**
-   * The RS
-   * @return remoteStation
-  **/
-  @ApiModelProperty(value = "The RS")
-  public RemoteStation getRemoteStation() {
-    return remoteStation;
-  }
-
-  public void setRemoteStation(RemoteStation remoteStation) {
-    this.remoteStation = remoteStation;
-  }
-
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -423,7 +423,8 @@ public class Prediction implements Serializable {
       return false;
     }
     Prediction prediction = (Prediction) o;
-    return Objects.equals(this.endDate, prediction.endDate) &&
+    return Objects.equals(this.distributionCenter, prediction.distributionCenter) &&
+        Objects.equals(this.endDate, prediction.endDate) &&
         Objects.equals(this.granularity, prediction.granularity) &&
         Objects.equals(this.horizon, prediction.horizon) &&
         Objects.equals(this.id, prediction.id) &&
@@ -431,13 +432,12 @@ public class Prediction implements Serializable {
         Objects.equals(this.modelSelection, prediction.modelSelection) &&
         Objects.equals(this.models, prediction.models) &&
         Objects.equals(this.name, prediction.name) &&
-        Objects.equals(this.part, prediction.part) &&
-        Objects.equals(this.remoteStation, prediction.remoteStation);
+        Objects.equals(this.part, prediction.part);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(endDate, granularity, horizon, id, initialDate, modelSelection, models, name, part, remoteStation);
+    return Objects.hash(distributionCenter, endDate, granularity, horizon, id, initialDate, modelSelection, models, name, part);
   }
 
 
@@ -446,6 +446,7 @@ public class Prediction implements Serializable {
     StringBuilder sb = new StringBuilder();
     sb.append("class Prediction {\n");
     
+    sb.append("    distributionCenter: ").append(toIndentedString(distributionCenter)).append("\n");
     sb.append("    endDate: ").append(toIndentedString(endDate)).append("\n");
     sb.append("    granularity: ").append(toIndentedString(granularity)).append("\n");
     sb.append("    horizon: ").append(toIndentedString(horizon)).append("\n");
@@ -455,7 +456,6 @@ public class Prediction implements Serializable {
     sb.append("    models: ").append(toIndentedString(models)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    part: ").append(toIndentedString(part)).append("\n");
-    sb.append("    remoteStation: ").append(toIndentedString(remoteStation)).append("\n");
     sb.append("}");
     return sb.toString();
   }

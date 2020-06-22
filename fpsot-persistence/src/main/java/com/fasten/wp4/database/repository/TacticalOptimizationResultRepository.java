@@ -1,5 +1,7 @@
 package com.fasten.wp4.database.repository;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,6 +18,8 @@ public interface TacticalOptimizationResultRepository extends JpaRepository<Tact
 	
 	boolean existsByStudy(TacticalOptimization study);
 
-	TacticalOptimizationResult findByStudy(TacticalOptimization study);
+	List<TacticalOptimizationResult> findByStudy(TacticalOptimization study);
+
+	TacticalOptimizationResult findByStudyId(Long studyId);
 
 }

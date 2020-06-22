@@ -24,8 +24,7 @@ public class SRAMsAllocated implements Serializable{
 	private Long id;
 
 	@ApiModelProperty(notes = "The remote station producing")
-	@ManyToOne
-	private RemoteStation remoteStation;
+	private String remoteStation;
 
 	@ApiModelProperty(notes = "SRAMs allocated into a Remote Station")
 	@Column(name="number_of_SRAMs")
@@ -40,7 +39,7 @@ public class SRAMsAllocated implements Serializable{
 	public SRAMsAllocated() {
 	}
 
-	public SRAMsAllocated(Long id, RemoteStation remoteStation, Integer numberOfSRAMs,
+	public SRAMsAllocated(Long id, String remoteStation, Integer numberOfSRAMs,
 			TacticalOptimizationResult tacticalOptimizationResult) {
 		super();
 		this.id = id;
@@ -57,11 +56,11 @@ public class SRAMsAllocated implements Serializable{
 		this.id = id;
 	}
 
-	public RemoteStation getRemoteStation() {
+	public String getRemoteStation() {
 		return remoteStation;
 	}
 
-	public void setRemoteStation(RemoteStation remoteStation) {
+	public void setRemoteStation(String remoteStation) {
 		this.remoteStation = remoteStation;
 	}
 

@@ -66,21 +66,6 @@ public class RemoteStationControllerApiTest {
     }
     
     /**
-     * Find remote stations by name
-     *
-     * 
-     *
-     * @throws ApiException
-     *          if the Api call fails
-     */
-    @Test
-    public void retrieveAllByNameTest() throws ApiException {
-        List<String> response = api.retrieveAllByName();
-
-        // TODO: test validations
-    }
-    
-    /**
      * List all Remote Stations
      *
      * 
@@ -91,6 +76,21 @@ public class RemoteStationControllerApiTest {
     @Test
     public void retrieveAllRemoteStationTest() throws ApiException {
         List<RemoteStation> response = api.retrieveAllRemoteStation();
+
+        // TODO: test validations
+    }
+    
+    /**
+     * Find remote stations by name
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void retrieveAllRemoteStationByNameTest() throws ApiException {
+        List<String> response = api.retrieveAllRemoteStationByName();
 
         // TODO: test validations
     }
@@ -187,22 +187,6 @@ public class RemoteStationControllerApiTest {
     public void retrieveRemoteStationByPriorityTest() throws ApiException {
         String priority = null;
         List<RemoteStation> response = api.retrieveRemoteStationByPriority(priority);
-
-        // TODO: test validations
-    }
-    
-    /**
-     * Retrive a list of Remote Station candidates in a Tactical Optimization Study
-     *
-     * 
-     *
-     * @throws ApiException
-     *          if the Api call fails
-     */
-    @Test
-    public void retrieveRemoteStationByTacticalOptimizationTest() throws ApiException {
-        Long id = null;
-        List<RemoteStation> response = api.retrieveRemoteStationByTacticalOptimization(id);
 
         // TODO: test validations
     }

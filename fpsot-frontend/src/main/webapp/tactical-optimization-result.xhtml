@@ -69,7 +69,47 @@
 
 <ui:define name="body">
 
-<h:form>
+<h:form id="results-form">
+	<p:panel rendered="#{not empty tacticalOptimizationResultMB.tacticalOptimizationResults}" header="Solutions" styleClass="box-primary card">
+		<h:outputText value="Percentual balance:" />
+		<p:dataTable id="tacticalOptimizationResultsTable" var="result" value="#{tacticalOptimizationResultMB.tacticalOptimizationResults}" rows="60"
+                 paginator="false"
+                 rowsPerPageTemplate="10, 20, 40, 100">
+            <p:column width="60">
+	             <p:commandButton update="results-form" action="#{tacticalOptimizationResultMB.updateMap}" icon="fa fa-search" title="View">
+	                <f:setPropertyActionListener value="#{result}" target="#{tacticalOptimizationResultMB.tacticalOptimizationResult}" />
+	            </p:commandButton>
+	        </p:column>
+			<p:column rendered="false" headerText="Id">
+				<h:outputText value="#{result.id}" />
+			</p:column>
+			<p:column styleClass="align-center" headerText="Number of Remote Stations">
+				<h:panelGroup styleClass="pull-left" id="asterisk" rendered="#{result.isCostBenefit()}"><i class="fa fa-fw fa-asterisk"></i></h:panelGroup>
+				<p:tooltip id="toolTipFade" for="asterisk" value="Best cost-benefit" position="top"/>
+				<h:outputText value="#{result.PPercent}" >
+					<f:convertNumber pattern="#0.00 '%'" />
+				</h:outputText>
+			</p:column>
+			<p:column  styleClass="align-center" headerText="Lead time">
+				<h:outputText value="#{result.objectivePercent}" >
+					<f:convertNumber pattern="#0.00 '%'" />
+				</h:outputText>
+			</p:column>
+			<p:column styleClass="align-center" headerText="Total remote stations">
+				<h:outputText value="#{tacticalOptimizationResultMB.getTotalRemoteStation(result)}" />
+			</p:column>
+			<p:column styleClass="align-center" headerText="Maximum lead time">
+				<h:outputText value="#{tacticalOptimizationResultMB.getMaxLeadTime(result)}" >
+					<f:converter converterId="prettyTimeConverter" />
+				</h:outputText>
+			</p:column>
+			<p:column styleClass="align-center" headerText="Max printers in a Remote Station">
+				<h:outputText value="#{tacticalOptimizationResultMB.getMaxPrintersByRemote(result)}" />
+			</p:column>
+		</p:dataTable>
+	</p:panel>
+	<p:spacer height="15px"/>
+	
 	<p:panel header="Map" styleClass="box-primary card">
 		<div class="ui-g ui-fluid">
 	      	<div class="ui-sm-12 ui-g-12 ui-g-nopad">  
@@ -103,13 +143,9 @@
 						<p:outputLabel for="maxLeadTime" value="Maximum lead time" />
 					</div>
 					<div class="ui-sm-8 ui-g-8 ">
-						
 							<h:outputText id="maxLeadTime" value="#{tacticalOptimizationResultMB.maxLeadTime}" style="width: 100%" >
-								<f:converter converterId="prettyHourConverter" />
-							</h:outputText> <p:spacer width="5"/> <b>or</b> <p:spacer width="5"/>
-							<h:outputText value="#{tacticalOptimizationResultMB.maxLeadTime}" style="width: 100%">
-								<f:convertNumber maxFractionDigits="3"/>
-							</h:outputText> h
+								<f:converter converterId="prettyTimeConverter" />
+							</h:outputText>
 					</div>
 				</div>
 				<div class="ui-sm-12 ui-g-6 ">
@@ -121,12 +157,38 @@
 					</div>
 				</div>
 				<div class="ui-sm-12 ui-g-6 ">
+					<div class="ui-sm-12 ui-g-4 ">
+						<p:outputLabel value="Demand range:" />
+					</div>
+					<div class="ui-sm-12 ui-g-8 ">
+						<h:outputText style="text-align:center" value="#{tacticalOptimizationResultMB.tacticalOptimization.initialDate}">
+							<f:convertDateTime pattern="#{adm['admin.dateFormat']}" />
+						</h:outputText>
+						<p:spacer width="5px"/> <span>-</span> <p:spacer width="5px"/>
+						<h:outputText style="text-align:center" value="#{tacticalOptimizationResultMB.tacticalOptimization.endDate}">
+							<f:convertDateTime pattern="#{adm['admin.dateFormat']}" />
+						</h:outputText>
+						<p:spacer width="5px"/> <h:outputText value="(#{tacticalOptimizationResultMB.horizon} days)" /> <p:spacer width="5px"/>
+					</div>
+				</div>
+				<div class="ui-sm-12 ui-g-6 ">
 					<div class="ui-sm-12 ui-g-6 ">
-						<p:outputLabel for="expensiveRoute" value="Expensive demand delivery" />
+						<p:outputLabel for="sramCapacity" value="Sram capacity" />
 					</div>
 					<div class="ui-sm-12 ui-g-6 ">
-						<h:outputText id="expensiveRoute" value="#{tacticalOptimizationResultMB.expensiveRoute}" style="width: 100%" >
-							<f:convertNumber currencySymbol="#{adm['symbol.money']} " type="currency" />
+						<h:outputText id="sramCapacity" value="#{tacticalOptimizationResultMB.sramCapacity}" style="width: 100%" >
+								<f:converter converterId="prettyTimeConverter" />
+						</h:outputText>
+						<span>/day</span>
+					</div>
+				</div>
+				<div class="ui-sm-12 ui-g-6 ">
+					<div class="ui-sm-12 ui-g-4 ">
+						<p:outputLabel for="totalProcessingTime" value="Total processing time" />
+					</div>
+					<div class="ui-sm-12 ui-g-8 ">
+						<h:outputText id="totalProcessingTime" value="#{tacticalOptimizationResultMB.totalProcessingTime}" style="width: 100%" >
+								<f:converter converterId="prettyTimeConverter" />
 						</h:outputText>
 					</div>
 				</div>
@@ -138,84 +200,62 @@
 					<p:column rendered="false" headerText="Id">
 						<h:outputText value="#{printer.id}" />
 					</p:column>
-					<p:column headerText="Remote">
-						<h:outputText value="#{printer.remoteStation.name}" />
+					<p:column headerText="Remote Station">
+						<h:outputText value="#{printer.remoteStation}" />
 					</p:column>
-					<p:column headerText="Nº of Printers">
+					<p:column styleClass="align-center" headerText="Nº of Printers">
 						<h:outputText value="#{printer.numberOfSRAMs}" />
 					</p:column>
 				</p:dataTable>
         </p:tab>
         <p:tab title="Routes">
 		<h:outputText value="Post calculated routes, costs and lead time using the demands:" />
-		<p:dataTable var="route" value="#{tacticalOptimizationResultMB.tacticalOptimizationResult.routes}" rows="200"
+		<p:dataTable var="route" value="#{tacticalOptimizationResultMB.routesSorted}" rows="500"
                  paginator="true"
                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                 rowsPerPageTemplate="200,300,500">
+                 rowsPerPageTemplate="100,500,1000">
 			<p:column rendered="false" headerText="Id">
 				<h:outputText value="#{route.id}" />
 			</p:column>
-			<p:column headerText="From Remote">
-				<h:outputText value="#{route.remoteStationOrigin.name}" />
+			<p:column styleClass="align-center" headerText="From Remote">
+				<h:outputText value="#{route.remoteStation}" />
 			</p:column>
-			<p:column headerText="To Remote">
-				<h:outputText value="#{route.remoteStationDestination.name}" />
+			<p:column styleClass="align-center" headerText="To Distribution Center">
+				<h:outputText value="#{route.distributionCenter}" />
 			</p:column>
-			<p:column headerText="Part">
-				<h:outputText value="#{route.part.name}" />
+			<p:column styleClass="align-right" headerText="Part">
+				<h:outputText value="#{route.part}" />
 			</p:column>
-			<p:column headerText="Qty">
-				<h:outputText value="#{route.quantity}" />
+			<p:column styleClass="align-right" headerText="Quantitiy of parts">
+				<h:outputText value="#{route.quantityOfParts}" />
 			</p:column>
-			<p:column headerText="Cost">
-					<h:outputText value="#{route.cost}">
-								<f:convertNumber type="currency" currencySymbol="$" />
-					</h:outputText>
+			<p:column styleClass="align-center"  headerText="Processing time">
+				<h:outputText value="#{route.processingTime}">
+				  	<f:converter converterId="prettyTimeConverter" />
+				</h:outputText>
 			</p:column>
-			<p:column headerText="Lead time">
-				<h:outputText value="#{route.leadTime}">
-				  	<f:converter converterId="prettyHourConverter" />
+			<p:column styleClass="align-center"  headerText="Total processing time">
+				<h:outputText value="#{route.totalProcessingTime}">
+				  	<f:converter converterId="prettyTimeConverter" />
+				</h:outputText>
+			</p:column>
+			<p:column styleClass="align-right" headerText="Times Traveled">
+				<h:outputText value="#{route.timesTraveled}" />
+			</p:column>
+			<p:column styleClass="align-center"  headerText="Time of travel">
+				<h:outputText value="#{route.timeOfTravel}">
+				  	<f:converter converterId="prettyTimeConverter" />
+				</h:outputText>
+			</p:column>
+			<p:column styleClass="align-center"  headerText="Total travel time">
+				<h:outputText value="#{route.totalTravelTime}">
+				  	<f:converter converterId="prettyTimeConverter" />
 				</h:outputText>
 			</p:column>
 		</p:dataTable>
 	</p:tab>
-	<p:tab title="Internal supply">
-		<h:outputText value="Final internal supply scheme for the optimized supply chain:" />
-		<p:dataTable var="internalSupply" value="#{tacticalOptimizationResultMB.tacticalOptimizationResult.internalSuppliers}" rows="200"
-                 paginator="true"
-                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                 rowsPerPageTemplate="200,300,500">
-            <h:outputText value="The supplied demand is achieved internally by:" />
-			<p:column rendered="false" headerText="Id">
-				<h:outputText value="#{internalSupply.id}" />
-			</p:column>
-			<p:column headerText="From Remote">
-				<h:outputText value="#{internalSupply.remoteStationOrigin.name}" />
-			</p:column>
-			<p:column headerText="To Remote">
-				<h:outputText value="#{internalSupply.remoteStationDestination.name}" />
-			</p:column>
-			<p:column headerText="Supplied part">
-				<h:outputText value="#{internalSupply.part.name}" />
-			</p:column>
-		</p:dataTable>
-	</p:tab>
-	<p:tab title="Production">
-		<h:outputText value="Final production scheme for the optimized supply chain:" />
-		<p:dataTable var="production" value="#{tacticalOptimizationResultMB.tacticalOptimizationResult.productions}">
-			<p:column rendered="false" headerText="Id">
-				<h:outputText value="#{production.id}" />
-			</p:column>
-			<p:column headerText="Remote">
-				<h:outputText value="#{production.remoteStation.name}" />
-			</p:column>
-			<p:column headerText="Part">
-				<h:outputText value="#{production.part.name}" />
-			</p:column>
-		</p:dataTable>
-	</p:tab>
 </p:accordionPanel>
-	
+
 </p:panel>
 <p:spacer height="15px"/>
 <h:panelGroup id="footer" layout="block">

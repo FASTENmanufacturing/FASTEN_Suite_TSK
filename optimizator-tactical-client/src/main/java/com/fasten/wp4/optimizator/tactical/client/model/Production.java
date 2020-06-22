@@ -15,8 +15,6 @@ package com.fasten.wp4.optimizator.tactical.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.fasten.wp4.optimizator.tactical.client.model.Part;
-import com.fasten.wp4.optimizator.tactical.client.model.RemoteStation;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -39,10 +37,10 @@ public class Production implements Serializable {
   private Long id = null;
 
   @SerializedName("part")
-  private Part part = null;
+  private String part = null;
 
   @SerializedName("remoteStation")
-  private RemoteStation remoteStation = null;
+  private String remoteStation = null;
 
   public Production id(Long id) {
     this.id = id;
@@ -62,7 +60,7 @@ public class Production implements Serializable {
     this.id = id;
   }
 
-  public Production part(Part part) {
+  public Production part(String part) {
     this.part = part;
     return this;
   }
@@ -72,15 +70,15 @@ public class Production implements Serializable {
    * @return part
   **/
   @ApiModelProperty(value = "The part")
-  public Part getPart() {
+  public String getPart() {
     return part;
   }
 
-  public void setPart(Part part) {
+  public void setPart(String part) {
     this.part = part;
   }
 
-  public Production remoteStation(RemoteStation remoteStation) {
+  public Production remoteStation(String remoteStation) {
     this.remoteStation = remoteStation;
     return this;
   }
@@ -90,11 +88,11 @@ public class Production implements Serializable {
    * @return remoteStation
   **/
   @ApiModelProperty(value = "The remote station producing the part")
-  public RemoteStation getRemoteStation() {
+  public String getRemoteStation() {
     return remoteStation;
   }
 
-  public void setRemoteStation(RemoteStation remoteStation) {
+  public void setRemoteStation(String remoteStation) {
     this.remoteStation = remoteStation;
   }
 

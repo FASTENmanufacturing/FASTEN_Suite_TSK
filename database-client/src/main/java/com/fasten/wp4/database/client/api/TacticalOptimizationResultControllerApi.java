@@ -56,128 +56,6 @@ public class TacticalOptimizationResultControllerApi {
     }
 
     /**
-     * Build call for createTacticalOptimizationResult
-     * @param tacticalOptimizationResult tacticalOptimizationResult (required)
-     * @param progressListener Progress listener
-     * @param progressRequestListener Progress request listener
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     */
-    public com.squareup.okhttp.Call createTacticalOptimizationResultCall(TacticalOptimizationResult tacticalOptimizationResult, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = tacticalOptimizationResult;
-
-        // create path and map variables
-        String localVarPath = "/tacticalOptimizationResult";
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
-
-        final String[] localVarContentTypes = {
-            "application/json"
-        };
-        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
-        }
-
-        String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call createTacticalOptimizationResultValidateBeforeCall(TacticalOptimizationResult tacticalOptimizationResult, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        // verify the required parameter 'tacticalOptimizationResult' is set
-        if (tacticalOptimizationResult == null) {
-            throw new ApiException("Missing the required parameter 'tacticalOptimizationResult' when calling createTacticalOptimizationResult(Async)");
-        }
-        
-
-        com.squareup.okhttp.Call call = createTacticalOptimizationResultCall(tacticalOptimizationResult, progressListener, progressRequestListener);
-        return call;
-
-    }
-
-    /**
-     * Save a tacticalOptimizationResult
-     * Also returns the url to created data in header location 
-     * @param tacticalOptimizationResult tacticalOptimizationResult (required)
-     * @return Object
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public Object createTacticalOptimizationResult(TacticalOptimizationResult tacticalOptimizationResult) throws ApiException {
-        ApiResponse<Object> resp = createTacticalOptimizationResultWithHttpInfo(tacticalOptimizationResult);
-        return resp.getData();
-    }
-
-    /**
-     * Save a tacticalOptimizationResult
-     * Also returns the url to created data in header location 
-     * @param tacticalOptimizationResult tacticalOptimizationResult (required)
-     * @return ApiResponse&lt;Object&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public ApiResponse<Object> createTacticalOptimizationResultWithHttpInfo(TacticalOptimizationResult tacticalOptimizationResult) throws ApiException {
-        com.squareup.okhttp.Call call = createTacticalOptimizationResultValidateBeforeCall(tacticalOptimizationResult, null, null);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
-        return apiClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * Save a tacticalOptimizationResult (asynchronously)
-     * Also returns the url to created data in header location 
-     * @param tacticalOptimizationResult tacticalOptimizationResult (required)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call createTacticalOptimizationResultAsync(TacticalOptimizationResult tacticalOptimizationResult, final ApiCallback<Object> callback) throws ApiException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = createTacticalOptimizationResultValidateBeforeCall(tacticalOptimizationResult, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
-    }
-    /**
      * Build call for createTacticalOptimizationResults
      * @param tacticalOptimizationResults tacticalOptimizationResults (required)
      * @param progressListener Progress listener
@@ -666,7 +544,7 @@ public class TacticalOptimizationResultControllerApi {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/tacticalOptimizationResult/tacticalOptimization/{id}"
+        String localVarPath = "/tacticalOptimizationResults/tacticalOptimization/{id}"
             .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -722,11 +600,11 @@ public class TacticalOptimizationResultControllerApi {
      * Find by study
      * 
      * @param id id (required)
-     * @return TacticalOptimizationResult
+     * @return List&lt;TacticalOptimizationResult&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public TacticalOptimizationResult retrieveByTacticalOptimization(Long id) throws ApiException {
-        ApiResponse<TacticalOptimizationResult> resp = retrieveByTacticalOptimizationWithHttpInfo(id);
+    public List<TacticalOptimizationResult> retrieveByTacticalOptimization(Long id) throws ApiException {
+        ApiResponse<List<TacticalOptimizationResult>> resp = retrieveByTacticalOptimizationWithHttpInfo(id);
         return resp.getData();
     }
 
@@ -734,12 +612,12 @@ public class TacticalOptimizationResultControllerApi {
      * Find by study
      * 
      * @param id id (required)
-     * @return ApiResponse&lt;TacticalOptimizationResult&gt;
+     * @return ApiResponse&lt;List&lt;TacticalOptimizationResult&gt;&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<TacticalOptimizationResult> retrieveByTacticalOptimizationWithHttpInfo(Long id) throws ApiException {
+    public ApiResponse<List<TacticalOptimizationResult>> retrieveByTacticalOptimizationWithHttpInfo(Long id) throws ApiException {
         com.squareup.okhttp.Call call = retrieveByTacticalOptimizationValidateBeforeCall(id, null, null);
-        Type localVarReturnType = new TypeToken<TacticalOptimizationResult>(){}.getType();
+        Type localVarReturnType = new TypeToken<List<TacticalOptimizationResult>>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -751,7 +629,7 @@ public class TacticalOptimizationResultControllerApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call retrieveByTacticalOptimizationAsync(Long id, final ApiCallback<TacticalOptimizationResult> callback) throws ApiException {
+    public com.squareup.okhttp.Call retrieveByTacticalOptimizationAsync(Long id, final ApiCallback<List<TacticalOptimizationResult>> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -773,6 +651,129 @@ public class TacticalOptimizationResultControllerApi {
         }
 
         com.squareup.okhttp.Call call = retrieveByTacticalOptimizationValidateBeforeCall(id, progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<List<TacticalOptimizationResult>>(){}.getType();
+        apiClient.executeAsync(call, localVarReturnType, callback);
+        return call;
+    }
+    /**
+     * Build call for retrieveOneByTacticalOptimization
+     * @param id id (required)
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call retrieveOneByTacticalOptimizationCall(Long id, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/tacticalOptimizationResult/tacticalOptimization/{id}"
+            .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        if(progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+                @Override
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
+                }
+            });
+        }
+
+        String[] localVarAuthNames = new String[] {  };
+        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private com.squareup.okhttp.Call retrieveOneByTacticalOptimizationValidateBeforeCall(Long id, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        
+        // verify the required parameter 'id' is set
+        if (id == null) {
+            throw new ApiException("Missing the required parameter 'id' when calling retrieveOneByTacticalOptimization(Async)");
+        }
+        
+
+        com.squareup.okhttp.Call call = retrieveOneByTacticalOptimizationCall(id, progressListener, progressRequestListener);
+        return call;
+
+    }
+
+    /**
+     * Find by study
+     * 
+     * @param id id (required)
+     * @return TacticalOptimizationResult
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public TacticalOptimizationResult retrieveOneByTacticalOptimization(Long id) throws ApiException {
+        ApiResponse<TacticalOptimizationResult> resp = retrieveOneByTacticalOptimizationWithHttpInfo(id);
+        return resp.getData();
+    }
+
+    /**
+     * Find by study
+     * 
+     * @param id id (required)
+     * @return ApiResponse&lt;TacticalOptimizationResult&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<TacticalOptimizationResult> retrieveOneByTacticalOptimizationWithHttpInfo(Long id) throws ApiException {
+        com.squareup.okhttp.Call call = retrieveOneByTacticalOptimizationValidateBeforeCall(id, null, null);
+        Type localVarReturnType = new TypeToken<TacticalOptimizationResult>(){}.getType();
+        return apiClient.execute(call, localVarReturnType);
+    }
+
+    /**
+     * Find by study (asynchronously)
+     * 
+     * @param id id (required)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call retrieveOneByTacticalOptimizationAsync(Long id, final ApiCallback<TacticalOptimizationResult> callback) throws ApiException {
+
+        ProgressResponseBody.ProgressListener progressListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+        if (callback != null) {
+            progressListener = new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+                @Override
+                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                    callback.onUploadProgress(bytesWritten, contentLength, done);
+                }
+            };
+        }
+
+        com.squareup.okhttp.Call call = retrieveOneByTacticalOptimizationValidateBeforeCall(id, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<TacticalOptimizationResult>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;

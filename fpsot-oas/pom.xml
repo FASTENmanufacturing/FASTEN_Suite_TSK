@@ -85,6 +85,13 @@
 			<scope>test</scope>
 		</dependency>
 		
+		<!-- LOG -->
+		<dependency>
+	        <groupId>uk.org.lidalia</groupId>
+	        <artifactId>sysout-over-slf4j</artifactId>
+	        <version>1.0.2</version>
+		</dependency>
+		
 		<!-- CLIENTS-->
 		<dependency>
 			<groupId>com.fasten.wp4</groupId>

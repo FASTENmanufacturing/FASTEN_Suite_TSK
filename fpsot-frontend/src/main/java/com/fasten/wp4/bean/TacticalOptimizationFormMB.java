@@ -53,9 +53,12 @@ public class TacticalOptimizationFormMB implements Serializable {
 			} catch (ApiException e) {
 				throw new BusinessException("Could not retrive tactical optimization study");
 			}
+//        	if(tacticalOptimization.getLeadTimeLimit()!=null || tacticalOptimization.getSramCapacity().compareTo(new BigDecimal(8*3600))!=0) {
+//        		setUseAdvancedOptions(true);
+//        		toogleUseAdvancedOptions();
+//        	}
 		} else {
-			tacticalOptimization = new TacticalOptimization();
-			tacticalOptimization.setStatus(TacticalOptimization.StatusEnum.INVALID);
+			clear();
 		}
 		calculateTotalCandidates();
 	}
@@ -118,6 +121,8 @@ public class TacticalOptimizationFormMB implements Serializable {
 
 	public void clear() {
 		tacticalOptimization = new TacticalOptimization();
+		tacticalOptimization.setSramCapacity(new BigDecimal(8*3600));
+		tacticalOptimization.setStatus(TacticalOptimization.StatusEnum.INVALID);
 		id = null;
 		candidates=null;
 	}
@@ -168,32 +173,29 @@ public class TacticalOptimizationFormMB implements Serializable {
 		}
 	}
 	
-	public void onSlideEnd(SlideEndEvent slideEndEvent) {
-		this.tacticalOptimization.setDistanceWeight(new BigDecimal(100d).subtract(new BigDecimal(slideEndEvent.getValue())));
-	}
 	
 	public void selectOneType() {
 		if(has(tacticalOptimization.getType()) && tacticalOptimization.getType().equals(TacticalOptimization.TypeEnum.COST_BENEFIT)) {
-			tacticalOptimization.leadTimeLimit(null);
+			tacticalOptimization.setMaximumLocations(null);
 		}
 	}
 	
 	//wrapper para o boolean do client que possui erro de geração: Boolean com get "is..." 
-	public boolean isClustered() {
-		return (tacticalOptimization.isClustered()!=null)?tacticalOptimization.isClustered():false;
-	}
-
-	public void setClustered(boolean clustered) {
-		tacticalOptimization.setClustered(clustered);
-	}
-
-	public void toogleCluster() {
-		if(!tacticalOptimization.isClustered()) {
-			tacticalOptimization.setMaximumLocations(null);
-			tacticalOptimization.setDistanceWeight(null);
-			tacticalOptimization.setTimeWeight(null);
-		}
-	}
+//	Boolean useAdvancedOptions;
+//	public boolean isUseAdvancedOptions() {
+//		return (useAdvancedOptions!=null)?useAdvancedOptions:false;
+//	}
+//
+//	public void setUseAdvancedOptions(boolean useAdvancedOptions) {
+//		this.useAdvancedOptions=useAdvancedOptions;
+//	}
+//
+//	public void toogleUseAdvancedOptions() {
+//		if(!useAdvancedOptions) {
+//			//tacticalOptimization.setLeadTimeLimit(null);
+//			tacticalOptimization.setSramCapacity(new BigDecimal(8*3600));//8h/day
+//		}
+//	}
 
 	public void toogleUsePrediction() {
 		if(!tacticalOptimization.isUsePrediction()) {
@@ -220,13 +222,4 @@ public class TacticalOptimizationFormMB implements Serializable {
 		this.candidates = candidates;
 	}
 	
-	private Integer slider;
-
-	public Integer getSlider() {
-		return slider;
-	}
-
-	public void setSlider(Integer slider) {
-		this.slider = slider;
-	}
 }

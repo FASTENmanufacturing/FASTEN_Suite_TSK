@@ -138,6 +138,13 @@
 		  	<scope>compile</scope>
 		</dependency>
 		
+		<!-- LOG -->
+		<dependency>
+	        <groupId>uk.org.lidalia</groupId>
+	        <artifactId>sysout-over-slf4j</artifactId>
+	        <version>1.0.2</version>
+		</dependency>
+		
 	</dependencies>
 
 	<build>

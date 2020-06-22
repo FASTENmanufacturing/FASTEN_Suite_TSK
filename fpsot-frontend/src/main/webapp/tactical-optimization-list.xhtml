@@ -3,6 +3,7 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:adm="http://github.com/adminfaces"
+                 xmlns:o="http://omnifaces.org/ui"
                 template="#{layoutMB.template}">
 
     <ui:define name="metadata">
@@ -98,7 +99,7 @@
                         <p:ajax event="toggleSelect" update="@(.ui-button, .ui-confirm-dialog)"/>
 
                         <f:facet name="header">
-                            Find Processing part by id: <p:inputNumber id="inptId" decimalPlaces="0" value="#{tacticalOptimizationListMB.id}"/>
+                            Find by id: <p:inputNumber id="inptId" decimalPlaces="0" value="#{tacticalOptimizationListMB.id}"/>
                             <p:spacer height="5"/>
                             <p:commandButton value="Find" styleClass="btn-flat bg-black btn-states" partialSubmit="true">
                          		<p:ajax process="@this" update="@none" oncomplete="PF('itemsTable').filter()"/>
@@ -129,52 +130,33 @@
                             </f:facet>
                              #{c.name}
                         </p:column>
-                        <p:column headerText="Type" filterBy="#{c.type}" sortBy="#{c.type}" >
+                        <p:column headerText="Type" width="140" filterBy="#{c.type}" sortBy="#{c.type}" >
                             <f:facet name="filter">
 						        <p:selectOneMenu onchange="PF('itemsTable').filter()">
 				                    <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
-				                    <f:selectItem itemLabel="Lead Time" itemValue="LeadTime" />
+				                    <f:selectItem itemLabel="Number Of Facilites" itemValue="NumberOfFacilites" />
 			                		<f:selectItem itemLabel="Cost Benefit" itemValue="CostBenefit" />
 				                </p:selectOneMenu>
                             </f:facet>
-                            <h:panelGroup style="text-align:center" rendered="#{c.type eq 'LEAD_TIME'}" layout="block" >
-							    <span class="label bg-light-blue disabled color-palette">#{c.type.value}</span>
+                            <h:panelGroup style="text-align:center" rendered="#{c.type eq 'NUMBER_OF_FACILITES'}" layout="block" >
+							    <div><span class="label bg-light-blue disabled color-palette">#{c.type.value}</span></div>
                              </h:panelGroup>
                              <h:panelGroup  style="text-align:center" rendered="#{c.type eq 'COST_BENEFIT'}" layout="block" >
 							    <span class="label bg-navy disabled color-palette">#{c.type.value}</span>
                              </h:panelGroup>
+                             <h:panelGroup  style="text-align:center" rendered="#{c.type eq 'ANALYSIS'}" layout="block" >
+							    <span class="label bg-purple disabled color-palette">#{c.type.value}</span>
+                             </h:panelGroup>
                         </p:column>
-                        <p:column headerText="Status" filterBy="#{c.status}" sortBy="#{c.status}" >
-                            <f:facet name="filter">
-						        <p:selectOneMenu onchange="PF('itemsTable').filter()">
-				                    <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
-				                    <f:selectItem itemLabel="Valid" itemValue="Valid" />
-			                		<f:selectItem itemLabel="Invalid" itemValue="Invalid" />
-				                </p:selectOneMenu>
+                        <p:column headerText="Facilities" styleClass="align-center" sortBy="#{c.maximumLocations}" filterBy="#{c.maximumLocations}" >
+  							<f:facet name="filter">
+  								<p:inputNumber decimalPlaces="0">
+                                    <p:ajax process="@this" update="@none" oncomplete="PF('predictionsTable').filter()"/>
+  								</p:inputNumber>
                             </f:facet>
-                            <h:panelGroup style="text-align:center" rendered="#{c.status eq 'VALID'}" layout="block" >
-							    <span class="label label label-success">#{c.status.value}</span>
-                             </h:panelGroup>
-                             <h:panelGroup  style="text-align:center" rendered="#{c.status eq 'INVALID'}" layout="block" >
-							    <span class="label label-danger">#{c.status.value}</span>
-                             </h:panelGroup>
+                            #{c.maximumLocations}
                         </p:column>
-                        <p:column headerText="Clustered" filterBy="#{c.clustered}" sortBy="#{c.clustered}"  >
-                        	<f:facet name="filter">
-						        <p:selectOneMenu onchange="PF('itemsTable').filter()">
-				                    <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
-				                    <f:selectItem itemLabel="Yes" itemValue="#{true}" />
-			                		<f:selectItem itemLabel="No" itemValue="#{false}" />
-				                </p:selectOneMenu>
-                            </f:facet>
-                            <h:panelGroup  style="text-align:center" rendered="#{c.isClustered()}" layout="block" >
-							    <span class="label label-success">Yes</span>
-                             </h:panelGroup>
-                             <h:panelGroup  style="text-align:center" rendered="#{!c.isClustered()}" layout="block" >
-							    <span class="label label-danger">No</span>
-                             </h:panelGroup>
-                        </p:column>
-                        <p:column headerText="Use prediction" filterBy="#{c.usePrediction}" sortBy="#{c.usePrediction}"  >
+                        <p:column headerText="Forecasted" filterBy="#{c.usePrediction}" sortBy="#{c.usePrediction}"  >
                         	<f:facet name="filter">
 						        <p:selectOneMenu onchange="PF('itemsTable').filter()">
 				                    <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
@@ -188,6 +170,35 @@
                              <h:panelGroup  style="text-align:center" rendered="#{!c.isUsePrediction()}" layout="block" >
 							    <span class="label label-danger">No</span>
                              </h:panelGroup>
+                        </p:column>
+                        <p:column headerText="Granularity" filterBy="#{c.granularity}" sortBy="#{c.granularity}" >
+                            <f:facet name="filter">
+                            	<ui:remove>
+				                <o:importConstants type="com.fasten.wp4.database.client.model.Prediction.GranularityEnum" />
+					                <p:selectOneMenu onchange="PF('predictionsTable').filter()">
+				                        <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+				                        <f:selectItems value="#{GranularityEnum}" var="granularity" itemLabel="#{granularity.value}" itemValue="#{granularity.value}" />
+				                    </p:selectOneMenu>
+			                    </ui:remove>
+			                    <p:selectOneMenu onchange="PF('predictionsTable').filter()">
+				                    <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
+				                    <f:selectItem itemLabel="Annual" itemValue="Annual"/>
+			                        <f:selectItem itemLabel="Monthly" itemValue="Monthly"/>
+			                        <f:selectItem itemLabel="Weekly" itemValue="Weekly"/>
+			                        <f:selectItem itemLabel="Daily" itemValue="Daily"/>
+				                </p:selectOneMenu>
+                            </f:facet>
+                            <h:panelGroup style="text-align:center" layout="block" >
+							    <span class="label bg-light-blue disabled color-palette">#{c.granularity.value}</span>
+                             </h:panelGroup>
+                        </p:column>
+                        <p:column headerText="Horizon" styleClass="align-center" sortBy="#{c.horizon}" filterBy="#{c.horizon}" >
+  							<f:facet name="filter">
+  								<p:inputNumber decimalPlaces="0">
+                                    <p:ajax process="@this" update="@none" oncomplete="PF('predictionsTable').filter()"/>
+  								</p:inputNumber>
+                            </f:facet>
+                            #{c.horizon}
                         </p:column>
                         <p:column headerText="From" sortBy="#{c.initialDate}" >
                             <h:panelGroup  style="text-align:center" layout="block" >
@@ -216,7 +227,7 @@
 
 
 
-        <p:dialog header="Selected processing parts" widgetVar="selecteds" height="250"
+        <p:dialog header="Selected tactical optimizations" widgetVar="selecteds" height="250"
                   width="400" responsive="true" styleClass="box-success">
             <p:dataList id="selectedsList" value="#{tacticalOptimizationListMB.selecteds}" var="selected"
                         type="definition">

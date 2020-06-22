@@ -114,6 +114,12 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- LOG -->
+		<dependency>
+	        <groupId>uk.org.lidalia</groupId>
+	        <artifactId>sysout-over-slf4j</artifactId>
+	        <version>1.0.2</version>
+		</dependency>
 	</dependencies>
 
 	<!-- https://www.baeldung.com/executable-jar-with-maven https://docs.spring.io/spring-boot/docs/current/maven-plugin/usage.html 

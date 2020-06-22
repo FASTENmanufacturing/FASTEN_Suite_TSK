@@ -1,6 +1,5 @@
 package com.fasten.wp4.database.controller;
 
-import java.net.URI;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -20,13 +19,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.fasten.wp4.database.exception.NotFoundException;
 import com.fasten.wp4.database.model.TacticalOptimization;
 import com.fasten.wp4.database.model.TacticalOptimizationResult;
+import com.fasten.wp4.database.repository.DistributionCenterRepository;
 import com.fasten.wp4.database.repository.PartRepository;
-import com.fasten.wp4.database.repository.RemoteStationRepository;
 import com.fasten.wp4.database.repository.TacticalOptimizationResultRepository;
 import com.fasten.wp4.database.swagger.ApiPageable;
 import com.fasten.wp4.database.util.ConversorUtil;
@@ -41,7 +39,7 @@ public class TacticalOptimizationResultController {
 	private TacticalOptimizationResultRepository repository;
 	
 	@Autowired
-	private RemoteStationRepository remoteStationRepository;
+	private DistributionCenterRepository distributionCenterRepository;
 
 	@Autowired
 	private PartRepository partRepository;
@@ -82,12 +80,19 @@ public class TacticalOptimizationResultController {
 		return retrivedObject.get();
 	}
 	
-	@GetMapping("/tacticalOptimizationResult/tacticalOptimization/{id:[\\d]+}")
+	@GetMapping("/tacticalOptimizationResults/tacticalOptimization/{id:[\\d]+}")
 	@ApiOperation(nickname="retrieveByTacticalOptimization", value = "Find by study")
-	public TacticalOptimizationResult retrieveByStudy(@PathVariable long id) {
+	public List<TacticalOptimizationResult> retrieveByStudy(@PathVariable long id) {
 		TacticalOptimization o = new TacticalOptimization();
 		o.setId(id);
-		TacticalOptimizationResult retrivedObject = repository.findByStudy(o);
+		List<TacticalOptimizationResult> retrivedObject = repository.findByStudy(o);
+		return retrivedObject;
+	}
+
+	@GetMapping("/tacticalOptimizationResult/tacticalOptimization/{id:[\\d]+}")
+	@ApiOperation(nickname="retrieveOneByTacticalOptimization", value = "Find by study")
+	public TacticalOptimizationResult retrieveOneByStudy(@PathVariable long id) {
+		TacticalOptimizationResult retrivedObject = repository.findByStudyId(id);
 		return retrivedObject;
 	}
 	
@@ -105,40 +110,6 @@ public class TacticalOptimizationResultController {
 		repository.deleteById(id);
 	}
 
-	@PostMapping("/tacticalOptimizationResult")
-	@ApiOperation(nickname="createTacticalOptimizationResult", value = "Save a tacticalOptimizationResult", notes = "Also returns the url to created data in header location ")
-	public ResponseEntity<Object> create(@RequestBody TacticalOptimizationResult tacticalOptimizationResult) {
-		
-		tacticalOptimizationResult.getInternalSuppliers().forEach(item-> {
-			item.setRemoteStationOrigin(remoteStationRepository.findByExcellName(item.getRemoteStationOrigin().getName()).orElse(null));
-			item.setRemoteStationDestination(remoteStationRepository.findByExcellName(item.getRemoteStationDestination().getName()).orElse(null));
-			item.setPart(partRepository.findByExcellName(item.getPart().getName()).orElse(null));
-			item.setTacticalOptimizationResult(tacticalOptimizationResult);
-		});
-		
-		tacticalOptimizationResult.getPrinters().forEach(item-> {
-			item.setRemoteStation(remoteStationRepository.findByExcellName(item.getRemoteStation().getName()).orElse(null));
-			item.setTacticalOptimizationResult(tacticalOptimizationResult);
-		});
-		
-		tacticalOptimizationResult.getProductions().forEach(item-> {
-			item.setRemoteStation(remoteStationRepository.findByExcellName(item.getRemoteStation().getName()).orElse(null));
-			item.setPart(partRepository.findByExcellName(item.getPart().getName()).orElse(null));
-			item.setTacticalOptimizationResult(tacticalOptimizationResult);
-		});
-		
-		tacticalOptimizationResult.getRoutes().forEach(item-> {
-			item.setRemoteStationOrigin(remoteStationRepository.findByExcellName(item.getRemoteStationOrigin().getName()).orElse(null));
-			item.setRemoteStationDestination(remoteStationRepository.findByExcellName(item.getRemoteStationDestination().getName()).orElse(null));
-			item.setPart(partRepository.findByExcellName(item.getPart().getName()).orElse(null));
-			item.setTacticalOptimizationResult(tacticalOptimizationResult);
-		});
-		repository.deleteByStudy(tacticalOptimizationResult.getStudy());
-		TacticalOptimizationResult savedObject = repository.save(tacticalOptimizationResult);
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedObject.getId()).toUri();
-		return ResponseEntity.created(location).build();
-	}
-	
 	@PutMapping("/tacticalOptimizationResult/{id}")
 	@ApiOperation(nickname="updateTacticalOptimizationResult", value = "Update a tacticalOptimizationResult")
 	public ResponseEntity<Object> updateTacticalOptimizationResult(@RequestBody TacticalOptimizationResult object, @PathVariable long id) {

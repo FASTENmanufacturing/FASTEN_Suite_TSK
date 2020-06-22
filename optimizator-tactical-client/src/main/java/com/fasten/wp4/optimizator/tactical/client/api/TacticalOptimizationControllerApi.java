@@ -27,7 +27,8 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
-import com.fasten.wp4.optimizator.tactical.client.model.TacticalOptimizationResult;
+import com.fasten.wp4.optimizator.tactical.client.model.TacticalOptimization;
+import com.fasten.wp4.optimizator.tactical.client.model.TacticalOptimizationResponse;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -55,17 +56,17 @@ public class TacticalOptimizationControllerApi {
     }
 
     /**
-     * Build call for executeTacticalOptimization
+     * Build call for execute
      * @param requestId requestId (required)
-     * @param tacticalOptimizationId tacticalOptimizationId (required)
+     * @param tacticalOptimization tacticalOptimization (required)
      * @param usermail usermail (optional)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call executeTacticalOptimizationCall(String requestId, Long tacticalOptimizationId, String usermail, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
+    public com.squareup.okhttp.Call executeCall(String requestId, TacticalOptimization tacticalOptimization, String usermail, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = tacticalOptimization;
 
         // create path and map variables
         String localVarPath = "/execute";
@@ -74,8 +75,6 @@ public class TacticalOptimizationControllerApi {
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
         if (requestId != null)
         localVarQueryParams.addAll(apiClient.parameterToPair("requestId", requestId));
-        if (tacticalOptimizationId != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("tacticalOptimizationId", tacticalOptimizationId));
         if (usermail != null)
         localVarQueryParams.addAll(apiClient.parameterToPair("usermail", usermail));
 
@@ -108,68 +107,68 @@ public class TacticalOptimizationControllerApi {
         }
 
         String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call executeTacticalOptimizationValidateBeforeCall(String requestId, Long tacticalOptimizationId, String usermail, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call executeValidateBeforeCall(String requestId, TacticalOptimization tacticalOptimization, String usermail, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'requestId' is set
         if (requestId == null) {
-            throw new ApiException("Missing the required parameter 'requestId' when calling executeTacticalOptimization(Async)");
+            throw new ApiException("Missing the required parameter 'requestId' when calling execute(Async)");
         }
         
-        // verify the required parameter 'tacticalOptimizationId' is set
-        if (tacticalOptimizationId == null) {
-            throw new ApiException("Missing the required parameter 'tacticalOptimizationId' when calling executeTacticalOptimization(Async)");
+        // verify the required parameter 'tacticalOptimization' is set
+        if (tacticalOptimization == null) {
+            throw new ApiException("Missing the required parameter 'tacticalOptimization' when calling execute(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = executeTacticalOptimizationCall(requestId, tacticalOptimizationId, usermail, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = executeCall(requestId, tacticalOptimization, usermail, progressListener, progressRequestListener);
         return call;
 
     }
 
     /**
-     * Execute a tactical optimization
+     * execute tactical optimization for best cost-benefit
      * 
      * @param requestId requestId (required)
-     * @param tacticalOptimizationId tacticalOptimizationId (required)
+     * @param tacticalOptimization tacticalOptimization (required)
      * @param usermail usermail (optional)
-     * @return TacticalOptimizationResult
+     * @return TacticalOptimizationResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public TacticalOptimizationResult executeTacticalOptimization(String requestId, Long tacticalOptimizationId, String usermail) throws ApiException {
-        ApiResponse<TacticalOptimizationResult> resp = executeTacticalOptimizationWithHttpInfo(requestId, tacticalOptimizationId, usermail);
+    public TacticalOptimizationResponse execute(String requestId, TacticalOptimization tacticalOptimization, String usermail) throws ApiException {
+        ApiResponse<TacticalOptimizationResponse> resp = executeWithHttpInfo(requestId, tacticalOptimization, usermail);
         return resp.getData();
     }
 
     /**
-     * Execute a tactical optimization
+     * execute tactical optimization for best cost-benefit
      * 
      * @param requestId requestId (required)
-     * @param tacticalOptimizationId tacticalOptimizationId (required)
+     * @param tacticalOptimization tacticalOptimization (required)
      * @param usermail usermail (optional)
-     * @return ApiResponse&lt;TacticalOptimizationResult&gt;
+     * @return ApiResponse&lt;TacticalOptimizationResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<TacticalOptimizationResult> executeTacticalOptimizationWithHttpInfo(String requestId, Long tacticalOptimizationId, String usermail) throws ApiException {
-        com.squareup.okhttp.Call call = executeTacticalOptimizationValidateBeforeCall(requestId, tacticalOptimizationId, usermail, null, null);
-        Type localVarReturnType = new TypeToken<TacticalOptimizationResult>(){}.getType();
+    public ApiResponse<TacticalOptimizationResponse> executeWithHttpInfo(String requestId, TacticalOptimization tacticalOptimization, String usermail) throws ApiException {
+        com.squareup.okhttp.Call call = executeValidateBeforeCall(requestId, tacticalOptimization, usermail, null, null);
+        Type localVarReturnType = new TypeToken<TacticalOptimizationResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
     /**
-     * Execute a tactical optimization (asynchronously)
+     * execute tactical optimization for best cost-benefit (asynchronously)
      * 
      * @param requestId requestId (required)
-     * @param tacticalOptimizationId tacticalOptimizationId (required)
+     * @param tacticalOptimization tacticalOptimization (required)
      * @param usermail usermail (optional)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call executeTacticalOptimizationAsync(String requestId, Long tacticalOptimizationId, String usermail, final ApiCallback<TacticalOptimizationResult> callback) throws ApiException {
+    public com.squareup.okhttp.Call executeAsync(String requestId, TacticalOptimization tacticalOptimization, String usermail, final ApiCallback<TacticalOptimizationResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -190,8 +189,8 @@ public class TacticalOptimizationControllerApi {
             };
         }
 
-        com.squareup.okhttp.Call call = executeTacticalOptimizationValidateBeforeCall(requestId, tacticalOptimizationId, usermail, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<TacticalOptimizationResult>(){}.getType();
+        com.squareup.okhttp.Call call = executeValidateBeforeCall(requestId, tacticalOptimization, usermail, progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<TacticalOptimizationResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }

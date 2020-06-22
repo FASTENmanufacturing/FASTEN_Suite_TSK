@@ -22,9 +22,9 @@ public class Demand implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
-	@ApiModelProperty(notes = "The RS demanded")
+	@ApiModelProperty(notes = "The DC origin")
 	@ManyToOne
-	private RemoteStation remoteStation;
+	private DistributionCenter distributionCenter;
 
 	@Temporal(TemporalType.DATE)
 	@ApiModelProperty(notes = "Date ordered")
@@ -47,16 +47,16 @@ public class Demand implements Serializable{
 		super();
 	}
 
-	public Demand(Long id, RemoteStation remoteStation, Date orderDate, Date deliveryDate, Part part, Integer quantity,
-			String code) {
+	public Demand(Long id, Date orderDate, Date deliveryDate, Part part, Integer quantity,
+			String code, DistributionCenter distributionCenter) {
 		super();
 		this.id = id;
-		this.remoteStation = remoteStation;
 		this.orderDate = orderDate;
 		this.deliveryDate = deliveryDate;
 		this.part = part;
 		this.quantity = quantity;
 		this.code = code;
+		this.distributionCenter= distributionCenter;
 	}
 
 
@@ -66,14 +66,6 @@ public class Demand implements Serializable{
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public RemoteStation getRemoteStation() {
-		return remoteStation;
-	}
-
-	public void setRemoteStation(RemoteStation remoteStation) {
-		this.remoteStation = remoteStation;
 	}
 
 	public Date getOrderDate() {
@@ -114,6 +106,14 @@ public class Demand implements Serializable{
 
 	public void setCode(String code) {
 		this.code = code;
+	}
+
+	public DistributionCenter getDistributionCenter() {
+		return distributionCenter;
+	}
+
+	public void setDistributionCenter(DistributionCenter distributionCenter) {
+		this.distributionCenter = distributionCenter;
 	}
 	
 }

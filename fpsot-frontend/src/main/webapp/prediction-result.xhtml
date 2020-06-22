@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui" xmlns:adm="http://github.com/adminfaces"
+                xmlns:of="http://omnifaces.org/functions"
+                xmlns:o="http://omnifaces.org/ui"
+                template="#{layoutMB.template}">
+
+    <ui:define name="metadata">
+    	 <f:metadata>
+    	    <f:viewParam name="id" value="#{predictionResultMB.id}" converter="javax.faces.Long"/>
+            <f:viewAction action="#{predictionResultMB.init()}"/>
+        </f:metadata>
+    </ui:define>
+    <ui:define name="title">
+    	<p:graphicImage value="#{resource[ 'images:prediction-form-icon.png' ]}" style="width: 50px;"/>
+		<p:spacer width="5"/> 
+        Prediction study result
+    </ui:define>
+    <ui:define name="description">for study: <h:outputText value="#{predictionResultMB.prediction.name}"></h:outputText></ui:define>
+    
+    <ui:define name="body">
+        <adm:breadcrumb title="#{predictionResultMB.breadcum}" link="prediction-form.xhtml?id=#{predictionResultMB.id}" />
+        <h:form id="form">
+			
+			<p:accordionPanel multiple="true" activeIndex="-1" >
+			<p:tab title="Detailed info">
+				<div class="ui-g ui-fluid">
+            	<div class="ui-sm-12 ui-g-6 ">
+					<div class="ui-sm-12 ui-g-4 ">
+						<p:outputLabel value="Name" />
+					</div>
+					<div class="ui-sm-12 ui-g-8 ">
+						<h:outputText value="#{predictionResultMB.prediction.name}" style="width: 100%" />
+					</div>
+				</div>
+            	<div class="ui-sm-12 ui-g-6 ">
+					<div class="ui-sm-4 ui-g-4 ">
+						<p:outputLabel value="Distribution Center" />
+					</div>
+					<div class="ui-sm-8 ui-g-8 ">
+						<h:outputText value="All" rendered="#{empty predictionResultMB.prediction.distributionCenter}"/>
+						<h:outputText value="#{predictionResultMB.prediction.distributionCenter.name}" rendered="#{not empty predictionResultMB.prediction.distributionCenter}"/>
+					</div>
+				</div>
+				<div class="ui-sm-12 ui-g-6 ">
+					<div class="ui-sm-12 ui-g-4 ">
+						<p:outputLabel value="Part" />
+					</div>
+					<div class="ui-sm-12 ui-g-8 ">
+						<h:outputText value="All" rendered="#{empty predictionResultMB.prediction.part.name}"/>
+						<h:outputText value="#{predictionResultMB.prediction.part.name}" rendered="#{not empty predictionResultMB.prediction.part}"/>
+					</div>
+				</div>
+				<div class="ui-sm-12 ui-g-6 ">
+					<div class="ui-sm-12 ui-g-4 ">
+						<p:outputLabel value="Granularity" />
+					</div>
+					<div class="ui-sm-12 ui-g-8 ">
+						<h:outputText value="#{predictionResultMB.prediction.granularity.value}" />
+					</div>
+				</div>
+				<div class="ui-sm-12 ui-g-6 ">
+					<div class="ui-sm-12 ui-g-4 ">
+						<p:outputLabel value="Horizon" />
+					</div>
+					<div class="ui-sm-12 ui-g-8 ">
+						<h:outputText value="#{predictionResultMB.prediction.horizon}" />
+					</div>
+				</div>
+				<div class="ui-sm-12 ui-g-6 ">
+					<div class="ui-sm-12 ui-g-4 ">
+						<p:outputLabel value="Model(s)" />
+					</div>
+					<div class="ui-sm-12 ui-g-8 ">
+						<ui:repeat var="model"  value="#{predictionResultMB.prediction.models}" varStatus="loop">
+                           <h:panelGroup layout="block" >
+							#{model.value}#{not loop.last ? ', ' : ''}
+                            </h:panelGroup>
+						</ui:repeat>
+					    <h:panelGroup rendered="#{predictionResultMB.prediction.models.size()==0}" layout="block" >
+						    <h:outputText value="#{predictionResultMB.getAutomaticChosen(predictionResultMB.prediction)}" />
+                        </h:panelGroup>
+					</div>
+				</div>
+				<div class="ui-sm-12 ui-g-6 ">
+					<div class="ui-sm-12 ui-g-4 ">
+						<p:outputLabel value="From" />
+					</div>
+					<div class="ui-sm-12 ui-g-8 ">
+						<h:outputText style="text-align:center" value="#{predictionResultMB.getRealDemandConsideredStart(predictionResultMB.prediction)}">
+							<f:convertDateTime pattern="#{adm['admin.dateFormat']}" />
+						</h:outputText>
+					</div>
+				</div>
+				<div class="ui-sm-12 ui-g-6 ">
+					<div class="ui-sm-12 ui-g-4 ">
+						<p:outputLabel value="To" />
+					</div>
+					<div class="ui-sm-12 ui-g-8 ">
+						<h:outputText style="text-align:center" value="#{predictionResultMB.getRealDemandConsideredEnd(predictionResultMB.prediction)}">
+							<f:convertDateTime pattern="#{adm['admin.dateFormat']}" />
+						</h:outputText>
+					</div>
+				</div>
+				<div class="ui-sm-12 ui-g-6 ">
+					<div class="ui-sm-12 ui-g-4 ">
+						<p:outputLabel value="MASE (Test)" />
+					</div>
+					<div class="ui-sm-12 ui-g-8 ">
+						<ui:repeat var="error"  value="#{predictionResultMB.getMase(predictionResultMB.prediction)}" varStatus="loop">
+                           <h:panelGroup layout="block" >
+							#{error.errorSubtype} =  #{error.value}#{not loop.last ? ', ' : ''}
+                            </h:panelGroup>
+						</ui:repeat>
+					</div>
+				</div>
+				<div class="ui-sm-12 ui-g-6 ">
+					<div class="ui-sm-12 ui-g-4 ">
+						<p:outputLabel value="Number of orders" />
+					</div>
+					<div class="ui-sm-12 ui-g-8 ">
+						<h:outputText value="#{predictionResultMB.getPastObservations(predictionResultMB.prediction)}" />
+					</div>
+				</div>
+			</div>
+			</p:tab>
+			</p:accordionPanel>        
+			
+			<p:spacer height="5px"/>
+			
+			<p:panel styleClass="card">
+				<iframe id="iframeCenter" src="#{predictionResultMB.url}" width="100%" height="500" frameborder="0">
+				 	<p>Your browser does not support iframes.</p>
+	            </iframe>
+			</p:panel>
+			
+            <p:spacer height="15px"/>
+	        <h:panelGroup id="footer" layout="block">
+                <div id="main-buttons" class="hidden-sm hidden-xs">
+				      <p:commandButton value="Open dashboard" styleClass="bg-purple disabled color-palette"
+	                        			  action="#{predictionResultMB.viewResult(predictionResultMB.prediction)}"
+	                                      icon="fa fa-area-chart"/>
+                	<p:spacer height="5px"/>
+				    <p:commandButton value="#{adm['back']}" immediate="true"
+		                            action="prediction-list?faces-redirect=true"
+		                            process="@this"
+	                            icon="fa fa-reply"/>
+	            </div>
+           </h:panelGroup>
+	       <p:splitButton value="Open dashboard" styleClass="hidden-md hidden-lg bg-purple disabled color-palette"
+	                        			  action="#{predictionResultMB.viewResult(predictionResultMB.prediction)}"
+	                                      icon="fa fa-area-chart" >
+                <p:menuitem value="#{adm['back']}" action="prediction-list?faces-redirect=true"
+                            process="@this" immediate="true"
+                            icon="fa fa-reply"/>
+	        </p:splitButton>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

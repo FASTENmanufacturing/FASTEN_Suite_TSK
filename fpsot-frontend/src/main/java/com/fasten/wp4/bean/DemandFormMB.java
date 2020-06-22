@@ -24,11 +24,11 @@ import org.omnifaces.util.Faces;
 
 import com.fasten.wp4.database.client.api.DemandControllerApi;
 import com.fasten.wp4.database.client.api.PartControllerApi;
-import com.fasten.wp4.database.client.api.RemoteStationControllerApi;
+import com.fasten.wp4.database.client.api.DistributionCenterControllerApi;
 import com.fasten.wp4.database.client.invoker.ApiException;
 import com.fasten.wp4.database.client.model.Demand;
 import com.fasten.wp4.database.client.model.Part;
-import com.fasten.wp4.database.client.model.RemoteStation;
+import com.fasten.wp4.database.client.model.DistributionCenter;
 import com.github.adminfaces.template.exception.BusinessException;
 
 @Named
@@ -41,7 +41,7 @@ public class DemandFormMB implements Serializable {
     
     List<Part> parts;
 
-	List<RemoteStation> remoteStations;
+	List<DistributionCenter> distributionCenters;
 
     @Inject
 	private transient DemandControllerApi demandControllerApi;
@@ -50,7 +50,7 @@ public class DemandFormMB implements Serializable {
 	private transient PartControllerApi partControllerApi;
 
 	@Inject
-	private transient RemoteStationControllerApi remoteStationControllerApi;
+	private transient DistributionCenterControllerApi distributionCenterControllerApi;
 
     public void init() {
         if(Faces.isAjaxRequest()){
@@ -64,7 +64,7 @@ public class DemandFormMB implements Serializable {
 			}
             
             populateSelectPart();
-    		populateSelectRemoteStation();
+    		populateSelectDistributionCenter();
     		
         } else {
             demand = new Demand();
@@ -153,9 +153,9 @@ public class DemandFormMB implements Serializable {
 		}
 	}
 
-	public void populateSelectRemoteStation() {
+	public void populateSelectDistributionCenter() {
 		try {
-			remoteStations= remoteStationControllerApi.retrieveAllRemoteStation();
+			distributionCenters= distributionCenterControllerApi.retrieveAllDistributionCenter();
 		} catch (ApiException e) {
 			throw new BusinessException("Could not retrive list");
 		}finally{
@@ -176,18 +176,18 @@ public class DemandFormMB implements Serializable {
 		this.parts = parts;
 	}
 
-	public List<RemoteStation> getRemoteStations() {
-		if(remoteStations==null) {
-			remoteStations=new ArrayList<RemoteStation>();
-			return remoteStations;
-		}else if(remoteStations.isEmpty()) {
-			populateSelectRemoteStation();
+	public List<DistributionCenter> getDistributionCenters() {
+		if(distributionCenters==null) {
+			distributionCenters=new ArrayList<DistributionCenter>();
+			return distributionCenters;
+		}else if(distributionCenters.isEmpty()) {
+			populateSelectDistributionCenter();
 		}
-		return remoteStations;
+		return distributionCenters;
 	}
 
-	public void setRemoteStations(List<RemoteStation> remoteStations) {
-		this.remoteStations = remoteStations;
+	public void setDistributionCenters(List<DistributionCenter> distributionCenters) {
+		this.distributionCenters = distributionCenters;
 	}
 	
 }

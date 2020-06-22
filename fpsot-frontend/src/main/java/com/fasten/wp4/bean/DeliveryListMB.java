@@ -24,8 +24,7 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortMeta;
 
 import com.fasten.wp4.database.client.api.DeliveryControllerApi;
-import com.fasten.wp4.database.client.api.PartControllerApi;
-import com.fasten.wp4.database.client.api.RemoteStationControllerApi;
+import com.fasten.wp4.database.client.api.DistributionCenterControllerApi;
 import com.fasten.wp4.database.client.invoker.ApiException;
 import com.fasten.wp4.database.client.model.Delivery;
 import com.fasten.wp4.database.client.model.PageOfDelivery;
@@ -39,7 +38,7 @@ public class DeliveryListMB implements Serializable {
 	private transient DeliveryControllerApi deliveryControllerApi;
 
 	@Inject
-	private transient RemoteStationControllerApi remoteStationControllerApi;
+	private transient DistributionCenterControllerApi distributionCenterControllerApi;
 
 	Long id;
 	
@@ -50,7 +49,7 @@ public class DeliveryListMB implements Serializable {
 
 	List<Delivery> selectedDeliverys;
 	
-	List<String> remoteStations; 
+	List<String> distributionCenters; 
 
 	public void init() {
 		if(Faces.isAjaxRequest()){
@@ -59,7 +58,7 @@ public class DeliveryListMB implements Serializable {
 		selectedDeliverys = new ArrayList<Delivery>();
 		
 		try {
-			remoteStations= remoteStationControllerApi.retrieveAllByName();
+			distributionCenters= distributionCenterControllerApi.retrieveAllDistributionCenterByName();
 		} catch (ApiException e) {
 			throw new BusinessException("Could not retrive list");
 		}finally{
@@ -163,8 +162,8 @@ public class DeliveryListMB implements Serializable {
 		this.id = id;
 	}
 
-	public List<String> getRemoteStations() {
-		return remoteStations;
+	public List<String> getDistributionCenters() {
+		return distributionCenters;
 	}
  
 	

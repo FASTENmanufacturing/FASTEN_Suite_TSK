@@ -35,7 +35,8 @@ public class CustomSystemEventListener implements SystemEventListener {
 	    			  "OPTIMIZATOR_TACTICAL_URL:"	+	OptimizatorTacticalClient.OPTIMIZATOR_TACTICAL_URL		+ "\n" + 
 	    			  "ORS_API_KEY:"				+	OpenRouteServiceGeocodeClient.ORS_API_KEY				+ "\n" + 
 	    			  "PPA_URL:"					+	PredictionClient.PPA_URL								+ "\n" +  
-	    			  "PROBABILITY_DISTRIBUTION_URL:"+	ProbabilityDistributionClient.PROBABILITY_DISTRIBUTION_URL+ "\n"  
+	    			  "PROBABILITY_DISTRIBUTION_URL:"+	ProbabilityDistributionClient.PROBABILITY_DISTRIBUTION_URL+ "\n" +
+	    			  "GRAFANA_URL:"+	System.getenv("GRAFANA_URL") + "\n"  
 	    			  );
 	      }
 	   }

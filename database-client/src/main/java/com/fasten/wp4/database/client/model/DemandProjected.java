@@ -15,8 +15,8 @@ package com.fasten.wp4.database.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
+import com.fasten.wp4.database.client.model.DistributionCenter;
 import com.fasten.wp4.database.client.model.Part;
-import com.fasten.wp4.database.client.model.RemoteStation;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
@@ -153,6 +153,9 @@ public class DemandProjected implements Serializable {
   @SerializedName("demandType")
   private DemandTypeEnum demandType = null;
 
+  @SerializedName("distributionCenter")
+  private DistributionCenter distributionCenter = null;
+
   @SerializedName("id")
   private Long id = null;
 
@@ -164,9 +167,6 @@ public class DemandProjected implements Serializable {
 
   @SerializedName("quantity")
   private Integer quantity = null;
-
-  @SerializedName("remoteStation")
-  private RemoteStation remoteStation = null;
 
   public DemandProjected demandSubtype(DemandSubtypeEnum demandSubtype) {
     this.demandSubtype = demandSubtype;
@@ -202,6 +202,24 @@ public class DemandProjected implements Serializable {
 
   public void setDemandType(DemandTypeEnum demandType) {
     this.demandType = demandType;
+  }
+
+  public DemandProjected distributionCenter(DistributionCenter distributionCenter) {
+    this.distributionCenter = distributionCenter;
+    return this;
+  }
+
+   /**
+   * Get distributionCenter
+   * @return distributionCenter
+  **/
+  @ApiModelProperty(value = "")
+  public DistributionCenter getDistributionCenter() {
+    return distributionCenter;
+  }
+
+  public void setDistributionCenter(DistributionCenter distributionCenter) {
+    this.distributionCenter = distributionCenter;
   }
 
   public DemandProjected id(Long id) {
@@ -276,24 +294,6 @@ public class DemandProjected implements Serializable {
     this.quantity = quantity;
   }
 
-  public DemandProjected remoteStation(RemoteStation remoteStation) {
-    this.remoteStation = remoteStation;
-    return this;
-  }
-
-   /**
-   * Get remoteStation
-   * @return remoteStation
-  **/
-  @ApiModelProperty(value = "")
-  public RemoteStation getRemoteStation() {
-    return remoteStation;
-  }
-
-  public void setRemoteStation(RemoteStation remoteStation) {
-    this.remoteStation = remoteStation;
-  }
-
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -306,16 +306,16 @@ public class DemandProjected implements Serializable {
     DemandProjected demandProjected = (DemandProjected) o;
     return Objects.equals(this.demandSubtype, demandProjected.demandSubtype) &&
         Objects.equals(this.demandType, demandProjected.demandType) &&
+        Objects.equals(this.distributionCenter, demandProjected.distributionCenter) &&
         Objects.equals(this.id, demandProjected.id) &&
         Objects.equals(this.part, demandProjected.part) &&
         Objects.equals(this.projectedOrderDate, demandProjected.projectedOrderDate) &&
-        Objects.equals(this.quantity, demandProjected.quantity) &&
-        Objects.equals(this.remoteStation, demandProjected.remoteStation);
+        Objects.equals(this.quantity, demandProjected.quantity);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(demandSubtype, demandType, id, part, projectedOrderDate, quantity, remoteStation);
+    return Objects.hash(demandSubtype, demandType, distributionCenter, id, part, projectedOrderDate, quantity);
   }
 
 
@@ -326,11 +326,11 @@ public class DemandProjected implements Serializable {
     
     sb.append("    demandSubtype: ").append(toIndentedString(demandSubtype)).append("\n");
     sb.append("    demandType: ").append(toIndentedString(demandType)).append("\n");
+    sb.append("    distributionCenter: ").append(toIndentedString(distributionCenter)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    part: ").append(toIndentedString(part)).append("\n");
     sb.append("    projectedOrderDate: ").append(toIndentedString(projectedOrderDate)).append("\n");
     sb.append("    quantity: ").append(toIndentedString(quantity)).append("\n");
-    sb.append("    remoteStation: ").append(toIndentedString(remoteStation)).append("\n");
     sb.append("}");
     return sb.toString();
   }

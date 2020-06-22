@@ -186,27 +186,27 @@ public class EmulatedImportDataService{
 
 	private List<RemoteStation> filterRemoteStationsFromDemand(List<Demand> demands) {
 		List<RemoteStation> remotesStations = new ArrayList<>();
-		for (Demand demandKafka : demands) {
-			RemoteStation remoteStationKafka = demandKafka.getRemoteStation();
-			if(!remotesStations.contains(remoteStationKafka)) {
-				remotesStations.add(remoteStationKafka);
-			}
-		}
+//		for (Demand demandKafka : demands) {
+//			RemoteStation remoteStationKafka = demandKafka.getRemoteStation();
+//			if(!remotesStations.contains(remoteStationKafka)) {
+//				remotesStations.add(remoteStationKafka);
+//			}
+//		}
 		return remotesStations;
 	} 
 
 	private List<RemoteStation> filterRemoteStationsFromDelivery(List<Delivery> deliveriesKafka) {
 		List<RemoteStation> remotesStations = new ArrayList<>();
-		for (Delivery deliveryKafka : deliveriesKafka) {
-			RemoteStation remoteStationOriginKafka = deliveryKafka.getOrigin();
-			RemoteStation remoteStationDestinationKafka = deliveryKafka.getDestination();
-			if(!remotesStations.contains(remoteStationOriginKafka)) {
-				remotesStations.add(remoteStationOriginKafka);
-			}
-			if(!remotesStations.contains(remoteStationDestinationKafka)) {
-				remotesStations.add(remoteStationDestinationKafka);
-			}
-		}
+//		for (Delivery deliveryKafka : deliveriesKafka) {
+//			RemoteStation remoteStationOriginKafka = deliveryKafka.getOrigin();
+//			RemoteStation remoteStationDestinationKafka = deliveryKafka.getDestination();
+//			if(!remotesStations.contains(remoteStationOriginKafka)) {
+//				remotesStations.add(remoteStationOriginKafka);
+//			}
+//			if(!remotesStations.contains(remoteStationDestinationKafka)) {
+//				remotesStations.add(remoteStationDestinationKafka);
+//			}
+//		}
 		return remotesStations;
 	}
 
@@ -258,17 +258,17 @@ public class EmulatedImportDataService{
 
 	private Demand saveOrUpdate(Demand demand) throws ApiException, URISyntaxException {
 
-		demand.setRemoteStation(saveOrUpdate(demand.getRemoteStation()));
-		demand.setPart(saveOrUpdate(demand.getPart()));
-
-		try{
-			demand.setId(demandControllerApi.retrieveDemandByCode(demand.getCode()).getId());
-			demandControllerApi.updateDemandWithHttpInfo(demand.getId(), demand);
-		}catch(ApiException e) {
-			if(e.getCode()==404) {
-				demand.setId(getIdFromLocationHeader(demandControllerApi.createDemandWithHttpInfo(demand)));
-			}
-		}
+//		demand.setRemoteStation(saveOrUpdate(demand.getRemoteStation()));
+//		demand.setPart(saveOrUpdate(demand.getPart()));
+//
+//		try{
+//			demand.setId(demandControllerApi.retrieveDemandByCode(demand.getCode()).getId());
+//			demandControllerApi.updateDemandWithHttpInfo(demand.getId(), demand);
+//		}catch(ApiException e) {
+//			if(e.getCode()==404) {
+//				demand.setId(getIdFromLocationHeader(demandControllerApi.createDemandWithHttpInfo(demand)));
+//			}
+//		}
 		return demand;
 	}
 
@@ -290,17 +290,17 @@ public class EmulatedImportDataService{
 
 	private Delivery saveOrUpdate(Delivery delivery) throws ApiException, URISyntaxException {
 
-		delivery.setOrigin(saveOrUpdate(delivery.getOrigin()));
-		delivery.setDestination(saveOrUpdate(delivery.getDestination()));
-
-		try{
-			delivery.setId(deliveryControllerApi.retrieveDeliveryByRouteCode(delivery.getDestination().getCode(),delivery.getOrigin().getCode()).getId());
-			deliveryControllerApi.updateDeliveryWithHttpInfo(delivery.getId(), delivery);
-		}catch(ApiException e) {
-			if(e.getCode()==404) {
-				delivery.setId(getIdFromLocationHeader(deliveryControllerApi.createDeliveryWithHttpInfo(delivery)));
-			}
-		}
+//		delivery.setOrigin(saveOrUpdate(delivery.getOrigin()));
+//		delivery.setDestination(saveOrUpdate(delivery.getDestination()));
+//
+//		try{
+//			delivery.setId(deliveryControllerApi.retrieveDeliveryByRouteCode(delivery.getDestination().getCode(),delivery.getOrigin().getCode()).getId());
+//			deliveryControllerApi.updateDeliveryWithHttpInfo(delivery.getId(), delivery);
+//		}catch(ApiException e) {
+//			if(e.getCode()==404) {
+//				delivery.setId(getIdFromLocationHeader(deliveryControllerApi.createDeliveryWithHttpInfo(delivery)));
+//			}
+//		}
 		return delivery;
 	}
 

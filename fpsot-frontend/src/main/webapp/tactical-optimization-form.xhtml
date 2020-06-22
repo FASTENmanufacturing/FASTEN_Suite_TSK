@@ -105,139 +105,8 @@
 						</span>
 					</div>
 				</div>
-				<div class="ui-sm-12 ui-g-6 ui-g-nopad">
-					<div class="ui-sm-12 ui-g-11">
-						<p:outputLabel  value="Cluster locations" />
-					</div>
-					<div class="ui-sm-12 ui-g-11">
-						<p:toggleSwitch  value="#{tacticalOptimizationFormMB.clustered}">
-				            <p:ajax listener="#{tacticalOptimizationFormMB.toogleCluster}" global="false" process="@this" update="pMedianPanel" />
-				        </p:toggleSwitch>
-					</div>
-				</div>
 			</div>
             </p:panel>
-            <p:spacer height="15px"/>
-            <ui:remove><!-- inseri um panel group em volta para funcionar a renderização --></ui:remove>
-			<h:panelGroup id="pMedianPanel">
-				<p:panel  rendered="#{tacticalOptimizationFormMB.clustered}" styleClass="box-primary card">
-			  	<div class="box-header with-border">
-				    <h3 class="box-title"> 
-			    			Cluster configuration:
-		   			</h3>
-				    <div class="box-tools pull-right">
-				      <span class="label label-primary">p-median</span>
-				    </div>
-			  	</div>
-			  	<div class="ui-g ui-fluid">
-	               <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
-	                  <div class="ui-sm-12 ui-g-11">
-	                      <p:outputLabel value="Max locations" for="maximumLocations"/>
-	                  </div>
-	                  <div class="ui-sm-12 ui-g-11">
-	                      <p:inputNumber id="maximumLocations" value="#{tacticalOptimizationFormMB.tacticalOptimization.maximumLocations}" required="true"  decimalPlaces="0" decimalSeparator="," thousandSeparator="." symbolPosition="s" emptyValue="zero" />
-	                      <span class="help-block"> 
-	                          <p:message for="maximumLocations"/>
-	                      </span>
-	                  </div>
-	                </div>
-	                <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
-	                  <div class="ui-sm-12 ui-g-11">
-	                      <p:outputLabel value="Importance Balance"  />
-	                  </div>
-	                  <div class="ui-sm-12 ui-g-11">
-	                    	<div class="ui-sm-12 ui-g-4"  style="text-align:center">  
-	        					<h:outputText id="timeWeightDescription" value="Time #{tacticalOptimizationFormMB.tacticalOptimization.timeWeight} %" />
-	       					</div>
-	       					<div class="ui-sm-12 ui-g-4"  style="text-align:center">
-	        					<h:inputHidden id="timeWeight" value="#{tacticalOptimizationFormMB.tacticalOptimization.timeWeight}" />
-						        <p:slider for="timeWeight" display="timeWeightDescription" style="width: 100%"  displayTemplate="Time {value} %" >
-						        	<p:ajax event="slideEnd" update="distanceWeightDescription" process="@this" global="false" listener="#{tacticalOptimizationFormMB.onSlideEnd}"   />
-						        </p:slider>
-						    </div>
-	       					<div class="ui-sm-12 ui-g-4"  style="text-align:center">
-						        <h:outputText id="distanceWeightDescription" value="Distance #{tacticalOptimizationFormMB.tacticalOptimization.distanceWeight} %" />
-						    </div>
-	                  </div>
-	                </div>
-	            </div>
-	            </p:panel>
-            </h:panelGroup>
-            <p:spacer height="15px"/>
-            <p:panel styleClass="box-primary card">
-            <div class="box-header with-border">
-			    <h3 class="box-title"> 
-		    		Production Center:
-	   			</h3>
-			    <div class="box-tools pull-right">
-			      <span class="label label-primary">location-allocation</span>
-			    </div>
-		  	</div>
-            <div class="ui-g ui-fluid">
-            	<div class="ui-sm-12 ui-g-6 ui-g-nopad">     
-                  <div class="ui-sm-12 ui-g-11">
-                      <p:outputLabel for="productionCenterCost" value="Holding a Production Center"  />
-                  </div>
-                  <div class="ui-sm-12 ui-g-11">
-                      <div class="ui-sm-6 ui-g-6"><p:inputNumber id="productionCenterCost" value="#{tacticalOptimizationFormMB.tacticalOptimization.productionCenterCost}" required="true"  decimalPlaces="2" decimalSeparator="," thousandSeparator="." symbol="$ " symbolPosition="p" emptyValue="zero" /></div>
-                      <div class="ui-sm-6 ui-g-6">by year</div>
-                      <span class="help-block"> 
-                      	<p:message for="productionCenterCost"/>
-                      </span>
-                  </div>
-                </div>
-                <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
-                  <div class="ui-sm-12 ui-g-11">
-                      <p:outputLabel for="maximumSrams" value="Maximum number of SRAMs"  />
-                  </div>
-                  <div class="ui-sm-12 ui-g-11">
-                      <div class="ui-sm-6 ui-g-6"><p:inputNumber id="maximumSrams" value="#{tacticalOptimizationFormMB.tacticalOptimization.maximumSrams}" required="true"  decimalPlaces="0" decimalSeparator="," thousandSeparator="." symbol=" printers" symbolPosition="s" emptyValue="zero" /></div>
-                      <div class="ui-sm-6 ui-g-6">by Production Center</div>
-                      <span class="help-block"> 
-                      	<p:message for="maximumSrams"/>
-                      </span>
-                  </div>
-                </div>
-            </div>
-            </p:panel>
-            <p:spacer height="15px"/>
-            <p:panel styleClass="box-primary card">
-            <div class="box-header with-border">
-			    <h3 class="box-title"> 
-		    		SRAM - Smart Robotic Additive Manufacturing:
-	   			</h3>
-			    <div class="box-tools pull-right">
-			      <span class="label label-primary">location-allocation</span>
-			    </div>
-		  	</div>
-            <div class="ui-g ui-fluid">
-            	
-                <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
-                  <div class="ui-sm-12 ui-g-11">
-                      <p:outputLabel for="sramCost" value="Holding a SRAM"  />
-                  </div>
-                  <div class="ui-sm-12 ui-g-11">
-                      <div class="ui-sm-6 ui-g-6"><p:inputNumber id="sramCost" value="#{tacticalOptimizationFormMB.tacticalOptimization.sramCost}" required="true"  decimalPlaces="2" decimalSeparator="," thousandSeparator="." symbol="$ " symbolPosition="p" emptyValue="zero" /></div>
-                      <div class="ui-sm-6 ui-g-6">by year</div>
-                      <span class="help-block"> 
-                      	<p:message for="sramCost"/>
-                      </span>
-                  </div>
-                </div>
-                <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
-                  <div class="ui-sm-12 ui-g-11">
-                      <p:outputLabel for="sramCapacity" value="Capacity of a SRAM"  />
-                  </div>
-                  <div class="ui-sm-12 ui-g-11">
-                      <div class="ui-sm-6 ui-g-6"><p:inputNumber id="sramCapacity" value="#{tacticalOptimizationFormMB.tacticalOptimization.sramCapacity}" required="true"  decimalPlaces="0" decimalSeparator="," thousandSeparator="." symbol=" hours" symbolPosition="s" emptyValue="zero" /></div>
-                      <div class="ui-sm-6 ui-g-6">by year</div>
-                      <span class="help-block"> 
-                      	<p:message for="sramCapacity"/>
-                      </span>
-                  </div>
-                </div>
-            </div>
-		    </p:panel>
 		    <p:spacer height="15px"/>
 		    <p:panel visible="false" styleClass="box-primary card">
             <div class="box-header with-border">
@@ -255,7 +124,7 @@
                       <p:outputLabel for="capitalCost" value="Average stock applied to calculate capital costs"  />
                   </div>
                   <div class="ui-sm-12 ui-g-11">
-                      <p:inputNumber id="capitalCost" value="#{tacticalOptimizationFormMB.tacticalOptimization.capitalCost}" required="true"  decimalPlaces="2" decimalSeparator="," thousandSeparator="." symbol="%" symbolPosition="s" emptyValue="zero" />
+                      <p:inputNumber id="capitalCost" value="1" required="true"  decimalPlaces="2" decimalSeparator="," thousandSeparator="." symbol="%" symbolPosition="s" emptyValue="zero" />
                       <span class="help-block"> 
                       	<p:message for="capitalCost"/>
                       </span>
@@ -266,7 +135,7 @@
                       <p:outputLabel for="stockoutCost" value="Stockout cost"  />
                   </div>
                   <div class="ui-sm-12 ui-g-11">
-                      <p:inputNumber id="stockoutCost" value="#{tacticalOptimizationFormMB.tacticalOptimization.stockoutCost}" required="true"  decimalPlaces="2" decimalSeparator="," thousandSeparator="."  symbol="$ " symbolPosition="p" emptyValue="zero" />
+                      <p:inputNumber id="stockoutCost" value="1" required="true"  decimalPlaces="2" decimalSeparator="," thousandSeparator="."  symbol="$ " symbolPosition="p" emptyValue="zero" />
                       <span class="help-block"> 
                       	<p:message for="stockoutCost"/>
                       </span>
@@ -304,27 +173,12 @@
                 </div>
                 <div class="ui-sm-12 ui-g-6 ui-g-nopad">     
                   <div class="ui-sm-12 ui-g-11">
-                      <p:outputLabel for="leadTimeLimit" value="Maximum lead time" rendered="#{tacticalOptimizationFormMB.tacticalOptimization.type.value eq 'Lead Time'}" />
+                      <p:outputLabel for="maximumLocations" value="Number of facilites" rendered="#{tacticalOptimizationFormMB.tacticalOptimization.type.value eq 'Number of facilites'}" />
                   </div>
                   <div class="ui-sm-12 ui-g-11">
-                      <p:inputNumber id="leadTimeLimit" value="#{tacticalOptimizationFormMB.tacticalOptimization.leadTimeLimit}" rendered="#{tacticalOptimizationFormMB.tacticalOptimization.type.value eq 'Lead Time'}" required="true"  decimalPlaces="0" decimalSeparator="," thousandSeparator="." symbol=" hours" symbolPosition="s" emptyValue="zero" />
+                      <p:inputNumber id="maximumLocations" value="#{tacticalOptimizationFormMB.tacticalOptimization.maximumLocations}" rendered="#{tacticalOptimizationFormMB.tacticalOptimization.type.value eq 'Number of facilites'}" required="true"  decimalPlaces="0" decimalSeparator="," thousandSeparator="." symbolPosition="s" emptyValue="zero" />
                       <span class="help-block"> 
-                      	<p:message for="leadTimeLimit"/>
-                      </span>
-                  </div>
-                </div>
-            </div>
-            <div class="ui-g ui-fluid">
-            	<div class="ui-sm-12 ui-g-6 ui-g-nopad">     
-                  <div class="ui-sm-12 ui-g-11">
-                      <p:outputLabel for="usePrediction" value="Use Predict study" />
-                  </div>
-                  <div class="ui-sm-12 ui-g-11">
-                      <p:toggleSwitch id="usePrediction" value="#{tacticalOptimizationFormMB.usePrediction}" >
-				            <p:ajax listener="#{tacticalOptimizationFormMB.toogleUsePrediction}" global="false" process="@this" update="predictionPanel" />
-				      </p:toggleSwitch>
-                      <span class="help-block"> 
-                      	<p:message for="usePrediction"/>
+                      	<p:message for="maximumLocations"/>
                       </span>
                   </div>
                 </div>
@@ -333,6 +187,21 @@
 		    <p:spacer height="15px"/>
             <ui:remove><!-- inseri um panel group em volta para funcionar a renderização --></ui:remove>
 			<h:panelGroup id="predictionPanel">
+				<div class="ui-g ui-fluid">
+	            	<div class="ui-sm-12 ui-g-6 ui-g-nopad">     
+	                  <div class="ui-sm-12 ui-g-11">
+	                      <p:outputLabel for="usePrediction" value="Use Predict study" />
+	                  </div>
+	                  <div class="ui-sm-12 ui-g-11">
+	                      <p:toggleSwitch id="usePrediction" value="#{tacticalOptimizationFormMB.usePrediction}" >
+					            <p:ajax listener="#{tacticalOptimizationFormMB.toogleUsePrediction}" global="false" process="@this" update="predictionPanel" />
+					      </p:toggleSwitch>
+	                      <span class="help-block"> 
+	                      	<p:message for="usePrediction"/>
+	                      </span>
+	                  </div>
+	                </div>
+	            </div>
 				<p:panel  rendered="#{tacticalOptimizationFormMB.usePrediction}" styleClass="box-primary card">
 			  	<div class="box-header with-border">
 				    <h3 class="box-title"> 
@@ -371,6 +240,58 @@
 	            </div>
 	            </p:panel>
             </h:panelGroup>
+            <ui:remove>
+<!--             <p:spacer height="15px"/> -->
+<!--             <ui:remove>inseri um panel group em volta para funcionar a renderização</ui:remove> -->
+<!-- 			<h:panelGroup id="advancedOptionsPanel"> -->
+<!-- 				<div class="ui-g ui-fluid"> -->
+<!-- 	               <div class="ui-sm-12 ui-g-6 ui-g-nopad">      -->
+<!-- 	                  <div class="ui-sm-12 ui-g-11"> -->
+<!-- 						<p:outputLabel  value="Advanced options" /> -->
+<!-- 					  </div> -->
+<!-- 	                  <div class="ui-sm-12 ui-g-11"> -->
+<!-- 						<p:toggleSwitch  value="#{tacticalOptimizationFormMB.useAdvancedOptions}"> -->
+<!-- 				            <p:ajax listener="#{tacticalOptimizationFormMB.toogleUseAdvancedOptions}" global="false" process="@this" update="advancedOptionsPanel" /> -->
+<!-- 				        </p:toggleSwitch> -->
+<!-- 					  </div> -->
+<!-- 	               </div> -->
+<!-- 	            </div> -->
+<!-- 				<p:panel  rendered="#{tacticalOptimizationFormMB.useAdvancedOptions}" styleClass="box-primary card"> -->
+<!-- 			  	<div class="box-header with-border"> -->
+<!-- 				    <h3 class="box-title">  -->
+<!-- 			    			Advanced options configuration: -->
+<!-- 		   			</h3> -->
+<!-- 				    <div class="box-tools pull-right"> -->
+<!-- 				      <span class="label label-primary">advanced</span> -->
+<!-- 				    </div> -->
+<!-- 			  	</div> -->
+<!-- 			  	<div class="ui-g ui-fluid"> -->
+<!-- 	               <div class="ui-sm-12 ui-g-6 ui-g-nopad">      -->
+<!-- 	                  <div class="ui-sm-12 ui-g-11"> -->
+<!-- 	                      <p:outputLabel for="leadTimeLimit" value="Maximum lead time"/> -->
+<!-- 	                  </div> -->
+<!-- 	                  <div class="ui-sm-12 ui-g-11"> -->
+<!-- 	                      <p:inputNumber id="leadTimeLimit" value="#{tacticalOptimizationFormMB.tacticalOptimization.leadTimeLimit}" required="true"  decimalPlaces="0" decimalSeparator="," thousandSeparator="." symbol=" hours" symbolPosition="s"/> -->
+<!-- 	                      <span class="help-block">  -->
+<!-- 	                      	<p:message for="leadTimeLimit"/> -->
+<!-- 	                      </span> -->
+<!-- 	                  </div> -->
+<!-- 	               	</div> -->
+<!-- 	               	<div class="ui-sm-12 ui-g-6 ui-g-nopad">      -->
+<!-- 	                  <div class="ui-sm-12 ui-g-11"> -->
+<!-- 	                      <p:outputLabel for="sramCapacity" value="Capacity of a SRAM"  /> -->
+<!-- 	                  </div> -->
+<!-- 	                  <div class="ui-sm-12 ui-g-11"> -->
+<!-- 	                      <p:inputNumber id="sramCapacity" value="#{tacticalOptimizationFormMB.tacticalOptimization.sramCapacity}" required="true"  decimalPlaces="0" decimalSeparator="," thousandSeparator="." symbol=" seconds/day" symbolPosition="s" emptyValue="zero" /> -->
+<!-- 	                      <span class="help-block">  -->
+<!-- 	                      	<p:message for="sramCapacity"/> -->
+<!-- 	                      </span> -->
+<!-- 	                  </div> -->
+<!-- 	                </div> -->
+<!-- 	            </div> -->
+<!-- 	            </p:panel> -->
+<!--             </h:panelGroup> -->
+			</ui:remove>
             <p:spacer height="15px"/>
 	        <h:panelGroup id="footer" layout="block">
                 <div id="main-buttons" class="hidden-sm hidden-xs">

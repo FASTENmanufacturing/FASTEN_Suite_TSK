@@ -93,6 +93,7 @@
                             
                         </p:column>
                         
+                        <ui:remove>
                         <p:column headerText="#{adm['list.colum.origin.cep']}" sortBy="#{c.originCep}" filterBy="#{c.originCep}" >
                             <f:facet name="filter">
                                 <p:inputText>
@@ -111,7 +112,7 @@
                             #{c.destinationCep}
                             
                         </p:column>
-                        
+                        </ui:remove>
                          <p:column headerText="#{adm['list.colum.distance']}" sortBy="#{c.distance}" filterBy="#{c.distance}" >
                             <f:facet name="filter">
                                 <p:inputText>
@@ -153,10 +154,10 @@
                             <f:facet name="filter">
 						        <p:selectOneMenu onchange="PF('deliverysTable').filter()" autoWidth="false" filter="true" filterMatchMode="contains">
 				                    <f:selectItem itemLabel="#{adm['combo.box.select.one']}" itemValue="#{null}" noSelectionOption="true" />
-				                    <f:selectItems value="#{deliveryListMB.remoteStations}" />
+				                    <f:selectItems value="#{deliveryListMB.distributionCenters}" />
 				                </p:selectOneMenu>
                             </f:facet>
-                             <p:link value="#{c.origin.name}" outcome="remote-station-form.xhtml" >
+                             <p:link value="#{c.origin.name}" outcome="distribution-center-form.xhtml" >
                                 <f:param name="id" value="#{c.origin.id}"/>
                             </p:link>
                             
@@ -166,10 +167,10 @@
                             <f:facet name="filter">
 						        <p:selectOneMenu onchange="PF('deliverysTable').filter()" autoWidth="false" filter="true" filterMatchMode="contains">
 				                    <f:selectItem itemLabel="#{adm['combo.box.select.one']}" itemValue="#{null}" noSelectionOption="true" />
-				                    <f:selectItems value="#{deliveryListMB.remoteStations}" />
+				                    <f:selectItems value="#{deliveryListMB.distributionCenters}" />
 				                </p:selectOneMenu>
                             </f:facet>
-                             <p:link value="#{c.destination.name}" outcome="remote-station-form.xhtml" >
+                             <p:link value="#{c.destination.name}" outcome="distribution-center-form.xhtml" >
                                 <f:param name="id" value="#{c.destination.id}"/>
                             </p:link>
                             

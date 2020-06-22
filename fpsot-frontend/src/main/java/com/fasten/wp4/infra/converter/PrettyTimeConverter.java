@@ -81,6 +81,9 @@ public class PrettyTimeConverter implements Converter {
 		        result += " " + seg + " s";
 		    }
 
+		    if(result.isEmpty())
+		    	result="0 s";
+		    
 		    return result;
 		}
 

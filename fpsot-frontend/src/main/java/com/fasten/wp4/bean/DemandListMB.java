@@ -24,7 +24,7 @@ import org.primefaces.model.SortMeta;
 
 import com.fasten.wp4.database.client.api.DemandControllerApi;
 import com.fasten.wp4.database.client.api.PartControllerApi;
-import com.fasten.wp4.database.client.api.RemoteStationControllerApi;
+import com.fasten.wp4.database.client.api.DistributionCenterControllerApi;
 import com.fasten.wp4.database.client.invoker.ApiException;
 import com.fasten.wp4.database.client.model.Demand;
 import com.fasten.wp4.database.client.model.PageOfDemand;
@@ -41,7 +41,7 @@ public class DemandListMB implements Serializable {
 	private transient PartControllerApi partControllerApi;
 
 	@Inject
-	private transient RemoteStationControllerApi remoteStationControllerApi;
+	private transient DistributionCenterControllerApi distributionCenterControllerApi;
 
 	Long id;
 	
@@ -52,7 +52,7 @@ public class DemandListMB implements Serializable {
 
 	List<Demand> selectedDemands;
 	
-	List<String> remoteStations;
+	List<String> distributionCenters;
 	
 	List<String> parts;
 
@@ -64,7 +64,7 @@ public class DemandListMB implements Serializable {
 		
 		try {
 			parts= partControllerApi.retrieveAllDistinctByName();
-			remoteStations= remoteStationControllerApi.retrieveAllByName();
+			distributionCenters= distributionCenterControllerApi.retrieveAllDistributionCenterByName();
 		} catch (ApiException e) {
 			throw new BusinessException("Could not retrive list");
 		}finally{
@@ -155,8 +155,8 @@ public class DemandListMB implements Serializable {
 		this.id = id;
 	}
 
-	public List<String> getRemoteStations() {
-		return remoteStations;
+	public List<String> getDistributionCenters() {
+		return distributionCenters;
 	}
 
 	public List<String> getParts() {

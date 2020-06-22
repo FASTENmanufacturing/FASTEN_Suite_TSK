@@ -1,0 +1,229 @@
+version: '3.4'
+
+networks:
+  postgres-network:
+    driver: bridge
+  default:
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.250.0/20
+    driver_opts:
+        com.docker.network.driver.mtu: ${DOCKER_MTU:-1400}
+
+volumes:
+  pg_data_wp4:
+  grafanadb_wp4:
+
+services:
+
+  database-oas:
+    image: filipemb/database-oas
+    ports:
+      - "8081:8081"
+    environment:
+      DATASOURCE_URL: "jdbc:postgresql://10.5.18.149:5432/wp4"
+      DATASOURCE_USER: "fasten"
+      DATASOURCE_PASSWORD: "#fasten-0917!"
+    depends_on:
+      - postgresdb
+    volumes:
+      - /opt/fasten/wp4/logs:/root/logs
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+      
+  email-oas:
+    image: filipemb/email-oas
+    ports:
+      - "1883:1883"
+    environment:
+      EMAIL: "faste.suite@gmail.com"
+      PASSWORD: "!fasten-0917#"
+    volumes:
+      - /opt/fasten/wp4/logs:/root/logs
+
+  fpsot-frontend:
+    image: filipemb/fpsot-frontend
+    environment:
+      DATABASE_OAS_URL: "http://10.5.18.149:8081"
+      EMAIL_OAS_URL: "http://10.5.18.149:1883"
+      FPSOT_OAS_URL: "http://10.5.18.149:3030"
+      IOT_KAFKA_OAS_URL: "http://10.5.18.149:8082"
+      OPTIMIZATOR_OPERATIONAL_URL: "http://10.5.18.149:1026"
+      OPTIMIZATOR_TACTICAL_URL: "http://10.5.18.149:5050"
+      ORS_API_KEY: "5b3ce3597851110001cf6248c4a795ab30aa432fafb7666ccd39ca78"
+      PPA_URL: "http://10.5.18.149:8083"
+      PROBABILITY_DISTRIBUTION_URL: "http://10.5.18.149:3031"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database-oas
+      - email-oas
+      - iot-kafka-oas
+      - optimizator-operational
+      - optimizator-tactical
+      - ppa
+      - probability-distribution
+    volumes:
+      - /opt/fasten/wp4/logs:/root/logs
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+ 
+  fpsot-oas:
+    image: filipemb/fpsot-oas
+    ports:
+      - "3030:3030"
+    environment:
+      DATABASE_OAS_URL: "http://10.5.18.149:8081"
+      EMAIL_OAS_URL: "http://10.5.18.149:1883"
+      FASTEN_GATEWAY_URL: "http://ec2-3-88-109-165.compute-1.amazonaws.com:5000/api/v1"
+      OPTIMIZATOR_OPERATIONAL_URL: "http://10.5.18.149:1026"
+      OPTIMIZATOR_TACTICAL_URL: "http://10.5.18.149:5050"
+      PPA_URL: "http://10.5.18.149:8083"
+      PROBABILITY_DISTRIBUTION_URL: "http://10.5.18.149:3031"
+    depends_on:
+      - database-oas
+      - email-oas
+      - optimizator-operational
+      - optimizator-tactical
+      - ppa
+      - probability-distribution
+    volumes:
+      - /opt/fasten/wp4/logs:/root/logs
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+      
+  iot-fiware-oas:
+    image: filipemb/iot-fiware-oas
+    ports:
+      - "4444:4444"
+    environment:
+      IOT_FIWARE_OAS_URL: "http://10.5.18.149:4444"
+      ORION_URL: "http://200.131.17.17:11012/v2"
+      FPSOT_FRONTEND_URL: "http://10.5.18.149:8080/rest/notify"
+      DATASOURCE_URL: "jdbc:postgresql://10.5.18.149:5432/wp4"
+      DATASOURCE_USER: fasten
+      DATASOURCE_PASSWORD: "#fasten-0917!"
+    volumes:
+      - /opt/fasten/wp4/logs:/root/logs
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"      
+    depends_on:
+      - postgresdb
+#      - landoop
+#      - fpsot-frontend
+       
+  iot-kafka-oas:
+    image: filipemb/iot-kafka-oas
+    ports:
+      - "8082:8082"
+    environment:
+      KAFKA_URL: "200.131.17.17:11024"
+      DATABASE_OAS_URL: "http://10.5.18.149:8081"
+      FPSOT_FRONTEND_URL: "http://10.5.18.149:8080/rest/notify"
+      DATASOURCE_URL: "jdbc:postgresql://10.5.18.149:5432/wp4"
+      DATASOURCE_USER: fasten
+      DATASOURCE_PASSWORD: "#fasten-0917!"
+    volumes:
+      - /opt/fasten/wp4/logs:/root/logs
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"      
+    depends_on:
+      - database-oas
+      - postgresdb
+#      - landoop
+#      - fpsot-frontend
+            
+  optimizator-operational:
+    image: icaroagostino/api-allocate
+    environment:
+      DATABASE_OAS_URL: "http://10.5.18.149:8081"
+      ORS_API_KEY: "5b3ce3597851110001cf6248c4a795ab30aa432fafb7666ccd39ca78"
+    ports:
+      - "1026:1026"
+    depends_on:
+      - database-oas
+    volumes:
+      - /opt/fasten/wp4/logs/api-allocate:/app/logs
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+      
+  probability-distribution:
+    image: icaroagostino/fit-prob
+    ports:
+      - "3031:3030"
+    volumes:
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+      
+  ppa:
+    image: saymongb/ppa
+    ports:
+      - "8083:8083"
+    volumes:
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+  optimizator-tactical:
+    image: filipemb/optimizator-tactical-oas
+    environment:
+      EMAIL_OAS_URL: "http://10.5.18.149:1883"
+      PPA_URL: "http://10.5.18.149:8083"
+      DATASOURCE_URL: "jdbc:postgresql://10.5.18.149:5432/wp4"
+      DATASOURCE_USER: fasten
+      DATASOURCE_PASSWORD: "#fasten-0917!"
+    ports:
+      - "5050:5050"
+    volumes:
+      - /opt/fasten/wp4/logs:/root/logs
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"      
+    depends_on:
+      - postgresdb
+      - email-oas
+      - ppa
+      
+  postgresdb:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: fasten
+      POSTGRES_PASSWORD: "#fasten-0917!"
+      POSTGRES_DB: wp4
+      POSTGRES_PORT: 5432
+      PGDATA: /var/lib/postgresql/data/pg_data
+    networks:
+      - postgres-network
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data_wp4:/var/lib/postgresql/data/pg_data
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+      
+  grafana:
+    image: grafana/grafana
+    environment:
+      - GF_PANELS_DISABLE_SANITIZE_HTML=true
+    volumes:
+      - grafanadb_wp4:/var/lib/grafana
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+    ports:
+      - "3000:3000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 5s
+      start_period: 15s
+
+#  pgadmin:
+#    image: dpage/pgadmin4
+#    environment:
+#      PGADMIN_DEFAULT_EMAIL: "faste.suite@gmail.com"
+#      PGADMIN_DEFAULT_PASSWORD: "!fasten-0917#"
+#    ports:
+#      - "5050:80"
+#    depends_on:
+#      - postgresdb
+#    networks:
+#      - postgres-network
+#    restart: on-failure

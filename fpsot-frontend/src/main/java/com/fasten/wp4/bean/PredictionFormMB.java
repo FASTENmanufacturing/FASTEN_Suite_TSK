@@ -22,11 +22,11 @@ import org.omnifaces.util.Faces;
 import com.fasten.wp4.database.client.api.DemandControllerApi;
 import com.fasten.wp4.database.client.api.PartControllerApi;
 import com.fasten.wp4.database.client.api.PredictionControllerApi;
-import com.fasten.wp4.database.client.api.RemoteStationControllerApi;
+import com.fasten.wp4.database.client.api.DistributionCenterControllerApi;
 import com.fasten.wp4.database.client.invoker.ApiException;
 import com.fasten.wp4.database.client.model.Part;
 import com.fasten.wp4.database.client.model.Prediction;
-import com.fasten.wp4.database.client.model.RemoteStation;
+import com.fasten.wp4.database.client.model.DistributionCenter;
 import com.github.adminfaces.template.exception.BusinessException;
 
 @Named
@@ -37,7 +37,7 @@ public class PredictionFormMB implements Serializable {
 
 	List<Part> parts;
 
-	List<RemoteStation> remoteStations;
+	List<DistributionCenter> distributionCenters;
 
 	private Prediction prediction = new Prediction();
 
@@ -51,7 +51,7 @@ public class PredictionFormMB implements Serializable {
 	private transient PartControllerApi partControllerApi;
 
 	@Inject
-	private transient RemoteStationControllerApi remoteStationControllerApi;
+	private transient DistributionCenterControllerApi distributionCenterControllerApi;
 	
 	private Integer pastObservations=null;
 
@@ -69,7 +69,7 @@ public class PredictionFormMB implements Serializable {
 				throw new BusinessException(String.format("Could not retrive prediction study with id %s, a new one will be initialized.", id));
 			}
 			populateSelectPart();
-			populateSelectRemoteStation();
+			populateSelectDistributionCenter();
 		}
 		
 		selectPredictionType();
@@ -154,9 +154,9 @@ public class PredictionFormMB implements Serializable {
 		}
 	}
 
-	public void populateSelectRemoteStation() {
+	public void populateSelectDistributionCenter() {
 		try {
-			remoteStations= remoteStationControllerApi.retrieveAllRemoteStation();
+			distributionCenters= distributionCenterControllerApi.retrieveAllDistributionCenter();
 		} catch (ApiException e) {
 			throw new BusinessException("Could not retrive list");
 		}finally{
@@ -177,18 +177,18 @@ public class PredictionFormMB implements Serializable {
 		this.parts = parts;
 	}
 
-	public List<RemoteStation> getRemoteStations() {
-		if(remoteStations==null) {
-			remoteStations=new ArrayList<RemoteStation>();
-			return remoteStations;
-		}else if(remoteStations.isEmpty()) {
-			populateSelectRemoteStation();
+	public List<DistributionCenter> getDistributionCenters() {
+		if(distributionCenters==null) {
+			distributionCenters=new ArrayList<DistributionCenter>();
+			return distributionCenters;
+		}else if(distributionCenters.isEmpty()) {
+			populateSelectDistributionCenter();
 		}
-		return remoteStations;
+		return distributionCenters;
 	}
 
-	public void setRemoteStations(List<RemoteStation> remoteStations) {
-		this.remoteStations = remoteStations;
+	public void setDistributionCenters(List<DistributionCenter> distributionCenters) {
+		this.distributionCenters = distributionCenters;
 	}
 
 	private String predictionType;
@@ -214,7 +214,7 @@ public class PredictionFormMB implements Serializable {
 			String start = null;
 			String end = null;
 			Long partId = null;
-			Long remoteStationId=null;
+			Long distributionCenterId=null;
 			SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
 			if(has(prediction.getInitialDate())){
 				start = format.format(prediction.getInitialDate());
@@ -225,11 +225,11 @@ public class PredictionFormMB implements Serializable {
 			if(has(prediction.getPart()) && has(prediction.getPart().getId())){
 				partId=prediction.getPart().getId();
 			}
-			if(has(prediction.getRemoteStation()) && has(prediction.getRemoteStation().getId())){
-				remoteStationId=prediction.getRemoteStation().getId();
+			if(has(prediction.getDistributionCenter()) && has(prediction.getDistributionCenter().getId())){
+				distributionCenterId=prediction.getDistributionCenter().getId();
 			}
 
-			pastObservations = demandControllerApi.retrieveByPredictionParams(end, partId, remoteStationId, start);
+			pastObservations = demandControllerApi.retrieveByPredictionParams(distributionCenterId, end, partId, start);
 		} catch (ApiException e) {
 			throw new BusinessException("Could not get quantity of observations for this period.");
 		}

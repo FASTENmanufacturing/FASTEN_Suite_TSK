@@ -773,16 +773,16 @@ public class DemandControllerApi {
     }
     /**
      * Build call for retrieveByPredictionParams
+     * @param distributionCenterId distributionCenterId (optional)
      * @param end end (optional)
      * @param partId partId (optional)
-     * @param remoteStationId remoteStationId (optional)
      * @param start start (optional)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call retrieveByPredictionParamsCall(String end, Long partId, Long remoteStationId, String start, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call retrieveByPredictionParamsCall(Long distributionCenterId, String end, Long partId, String start, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -790,12 +790,12 @@ public class DemandControllerApi {
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        if (distributionCenterId != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("distributionCenterId", distributionCenterId));
         if (end != null)
         localVarQueryParams.addAll(apiClient.parameterToPair("end", end));
         if (partId != null)
         localVarQueryParams.addAll(apiClient.parameterToPair("partId", partId));
-        if (remoteStationId != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("remoteStationId", remoteStationId));
         if (start != null)
         localVarQueryParams.addAll(apiClient.parameterToPair("start", start));
 
@@ -832,10 +832,10 @@ public class DemandControllerApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call retrieveByPredictionParamsValidateBeforeCall(String end, Long partId, Long remoteStationId, String start, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call retrieveByPredictionParamsValidateBeforeCall(Long distributionCenterId, String end, Long partId, String start, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
 
-        com.squareup.okhttp.Call call = retrieveByPredictionParamsCall(end, partId, remoteStationId, start, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = retrieveByPredictionParamsCall(distributionCenterId, end, partId, start, progressListener, progressRequestListener);
         return call;
 
     }
@@ -843,30 +843,30 @@ public class DemandControllerApi {
     /**
      * Retrieve demands for a prediction study
      * 
+     * @param distributionCenterId distributionCenterId (optional)
      * @param end end (optional)
      * @param partId partId (optional)
-     * @param remoteStationId remoteStationId (optional)
      * @param start start (optional)
      * @return Integer
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public Integer retrieveByPredictionParams(String end, Long partId, Long remoteStationId, String start) throws ApiException {
-        ApiResponse<Integer> resp = retrieveByPredictionParamsWithHttpInfo(end, partId, remoteStationId, start);
+    public Integer retrieveByPredictionParams(Long distributionCenterId, String end, Long partId, String start) throws ApiException {
+        ApiResponse<Integer> resp = retrieveByPredictionParamsWithHttpInfo(distributionCenterId, end, partId, start);
         return resp.getData();
     }
 
     /**
      * Retrieve demands for a prediction study
      * 
+     * @param distributionCenterId distributionCenterId (optional)
      * @param end end (optional)
      * @param partId partId (optional)
-     * @param remoteStationId remoteStationId (optional)
      * @param start start (optional)
      * @return ApiResponse&lt;Integer&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Integer> retrieveByPredictionParamsWithHttpInfo(String end, Long partId, Long remoteStationId, String start) throws ApiException {
-        com.squareup.okhttp.Call call = retrieveByPredictionParamsValidateBeforeCall(end, partId, remoteStationId, start, null, null);
+    public ApiResponse<Integer> retrieveByPredictionParamsWithHttpInfo(Long distributionCenterId, String end, Long partId, String start) throws ApiException {
+        com.squareup.okhttp.Call call = retrieveByPredictionParamsValidateBeforeCall(distributionCenterId, end, partId, start, null, null);
         Type localVarReturnType = new TypeToken<Integer>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -874,15 +874,15 @@ public class DemandControllerApi {
     /**
      * Retrieve demands for a prediction study (asynchronously)
      * 
+     * @param distributionCenterId distributionCenterId (optional)
      * @param end end (optional)
      * @param partId partId (optional)
-     * @param remoteStationId remoteStationId (optional)
      * @param start start (optional)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call retrieveByPredictionParamsAsync(String end, Long partId, Long remoteStationId, String start, final ApiCallback<Integer> callback) throws ApiException {
+    public com.squareup.okhttp.Call retrieveByPredictionParamsAsync(Long distributionCenterId, String end, Long partId, String start, final ApiCallback<Integer> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -903,7 +903,7 @@ public class DemandControllerApi {
             };
         }
 
-        com.squareup.okhttp.Call call = retrieveByPredictionParamsValidateBeforeCall(end, partId, remoteStationId, start, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = retrieveByPredictionParamsValidateBeforeCall(distributionCenterId, end, partId, start, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<Integer>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;

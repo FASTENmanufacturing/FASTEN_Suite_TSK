@@ -46,8 +46,8 @@ public class DemandProjected implements Serializable {
 	private Integer quantity;
 
 	@ManyToOne
-	@JoinColumn(name = "remote_station_id", referencedColumnName = "id")
-	private RemoteStation remoteStation;
+	@JoinColumn(name = "distribution_center_id", referencedColumnName = "id")
+	private DistributionCenter distributionCenter;
 
 	@ManyToOne
 	@JoinColumn(name = "demand_projection_study_id", referencedColumnName = "id")
@@ -86,12 +86,12 @@ public class DemandProjected implements Serializable {
 		this.quantity = quantity;
 	}
 
-	public RemoteStation getRemoteStation() {
-		return remoteStation;
+	public DistributionCenter getDistributionCenter() {
+		return distributionCenter;
 	}
 
-	public void setRemoteStation(RemoteStation remoteStation) {
-		this.remoteStation = remoteStation;
+	public void setDistributionCenter(DistributionCenter distributionCenter) {
+		this.distributionCenter = distributionCenter;
 	}
 
 	public DemandProjectionStudy getDemandProjectionStudy() {
@@ -142,7 +142,7 @@ public class DemandProjected implements Serializable {
 		public String toString() {
 			return "DemandProjected [id=" + id + ", demandType=" + demandType + ", demandSubtype=" + demandSubtype
 					+ ", part=" + part + ", projectedOrderDate=" + projectedOrderDate + ", quantity=" + quantity
-					+ ", remoteStation=" + remoteStation + ", demandProjectionStudy=" + demandProjectionStudy + "]";
+					+ ", distributionCenter=" + distributionCenter + ", demandProjectionStudy=" + demandProjectionStudy + "]";
 		}
 
 }
