@@ -33,7 +33,7 @@ class ForecastStudy(object):
         try:
             
             self.validaForecastingStudy()
-        
+            
             listResult = []
             jsonListModels = []
                   

@@ -24,7 +24,7 @@ file = u'Demanda corrediça.xlsx'
 path = '../dataset/'
 imagePath = '../images/'
 frequency = 'M'#2W, 3W,D,W
-modelo = ['SES']#['AR','HOLT','SES','NAIVE','CF1','CR','ANN','ELM']
+modelo = ['AUTO']#['AR','HOLT','SES','NAIVE','CF1','CR','ANN','ELM']
 sheet_names = ['2017','2018','2019']
 
 # set this to localhost

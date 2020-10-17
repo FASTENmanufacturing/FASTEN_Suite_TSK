@@ -1,32 +1,9 @@
-import pandas as pd
-import matplotlib.pyplot as plt
-import numpy as np
+import requests
 
-file = '/home/saymongb/Downloads/selection_full_data.xls'
-data = pd.read_excel(file,'T0_RMSE')
-series = data[['REMOTE-STATION','PART']]
-result = pd.Series(np.zeros(10),['NAIVE','SES','HOLT','AR','CR','ANN','ELM','CFE','CFM','AUTO'])
-finalFrame = pd.DataFrame()
+url = 'http://localhost:8083/forecast/logs/'
+headers = {'Content-type': 'application/text', 'Accept': 'text/plain'}
+password = "#Fasten2019!"
 
-for row in series.iterrows():
-    
-    part = row[1][1]
-    station = row[1][0]
-    dfTemp = pd.DataFrame()
-    
-    for i in range(10):
-        
-        sheet = 'T'+str(i)+'_MASE'
-        print(sheet+'\n')
-        print('Estação:'+station+' - Peça: '+part)
-        data = pd.read_excel(file,sheet)
-        line = data[(data['REMOTE-STATION'] == station) & (data['PART'] == part)]
-        dfTemp = dfTemp.append(line)
-    print(dfTemp.mean())
-    print(dfTemp.mean().idxmin())
-    result[dfTemp.mean().idxmin()]+=1
-    
+req = requests.get(url,headers=headers,params=password)
 
-print('\n Resultado: \n')
-print(result)
-print(result.sum()) 
+print(req.url)

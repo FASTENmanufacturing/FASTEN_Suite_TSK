@@ -18,6 +18,7 @@ class WebServiceTools:
 
     @staticmethod
     def decodeForecastStudyList(request):
+        
         # Build and returns a list of ForecastStudy.
         forecastStudyList = []
         forecastStudy = None
@@ -30,24 +31,16 @@ class WebServiceTools:
         
         for m in request.json['StudyList']:
             
-            try:
+            forecastStudy = st.ForecastStudy(
+                models = ['AUTO'] ,
+                demands = m['demands'],
+                forecast_Horizon = m['horizon'],
+                part = m['part'],
+                remoteStation = m['remoteStation'],
+                frequency = m['frequency'])
             
-                forecastStudy = st.ForecastStudy(
-                    models = ['AUTO'] ,
-                    demands = m['demands'],
-                    forecast_Horizon = m['horizon'],
-                    part = m['part'],
-                    remoteStation = m['remoteStation'],
-                    frequency = m['frequency'])
+            forecastStudyList.append(forecastStudy)   
             
-                forecastStudyList.append(forecastStudy)   
-                
-            except Exception:
-                error = True
-            
-        #if error:
-        #    WebServiceTools.createLog(request.json)
-             
         return forecastStudyList
     
     @staticmethod
@@ -60,27 +53,19 @@ class WebServiceTools:
         
         for study in forecastStudyList:
             
-            try:
-                # This point can be slow.
-                res = study.runStudy()
-                   
-                forecastStudy = st.ForecastStudy(
-                    models = [res['modelsResults'][0]['model']] ,
-                    demands = res['modelsResults'][0]['forecastDemand'],
-                    forecast_Horizon = study.forecast_Horizon,
-                    part = res['modelsResults'][0]['part'],
-                    remoteStation = res['modelsResults'][0]['remoteStation'],
-                    frequency = study.frequency
-                    )
-                
-                tempList.append(forecastStudy)
+            # This point can be slow.
+            res = study.runStudy()
+             
+            forecastStudy = st.ForecastStudy(
+                models = [res['modelsResults'][0]['model']] ,
+                demands = res['modelsResults'][0]['forecastDemand'],
+                forecast_Horizon = study.forecast_Horizon,
+                part = res['modelsResults'][0]['part'],
+                remoteStation = res['modelsResults'][0]['remoteStation'],
+                frequency = study.frequency
+                )
             
-            except (Exception,StudyException,ValueError,TypeError):
-                error = True
-                
-        # Use this section to debug the application.
-        #if error:
-        #WebServiceTools.createLOG(study.json())
+            tempList.append(forecastStudy)
                 
         startDate = request.json['startDate']
         endDate = request.json['endDate']
@@ -90,18 +75,7 @@ class WebServiceTools:
             'endDate': endDate,
             'StudyList': tempList
             }        
-    
-    @staticmethod
-    def createLOG(data):
-        
-        # General log for error debugging.
-        #data =  data.json()
-        fileName = dt.datetime.now().strftime("%d-%m-%Y-%H-%M-%S")
-        fileName = fileName
-        
-        with open('logs/'+fileName+'.txt', 'w') as f:
-            json.dump(data, f)
-        
+         
     @staticmethod
     def decode(request):
         

@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 '''
 Created on 24 de jun de 2019
 Author: 	1. Flavio Filho (Jun-Dec 2019)    
@@ -13,7 +13,6 @@ Fix:
 Status:        
 '''
 
-#import sys,os,string
 from flask import Flask, request
 from flask_restplus import Api, Resource, reqparse, inputs
 from ws.objects import *
@@ -21,6 +20,8 @@ from ws.study import ForecastStudy
 from utils import ws_util as wsUt
 import logging
 from logging.handlers import RotatingFileHandler
+import hmac
+import threading
 
 # Creating an Api Flask instance
 flask_app = Flask(__name__)
@@ -32,7 +33,13 @@ flask_app.config['PREFERRED_URL_SCHEME'] = 'http'
 # Logging system
 logging.basicConfig(filename='logs/ppat.log',
 				level=logging.ERROR,
-				format='%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s')
+				format='%(asctime)s '+
+				'%(levelname)s '+
+				'%(threadName)s '+
+				'%(thread)d '+
+				'%(lineno)d ' +
+				'%(module)s '
+				': %(message)s')
 
 # Creating a instance of API
 app = Api(app = flask_app, 
@@ -63,7 +70,7 @@ class MainClass(Resource):
     # Type of data model returned by this method
     @app.marshal_with(modelStudyResults)
     # Response code definition
-    @app.doc(responses={200: 'OK. Processing your request.',
+    @app.doc(responses={200: 'OK. Request processed.',
 					400: 'Invalid Argument.',
 					500: 'Internal Server Error.' })
     # Type of data model for input 
@@ -88,15 +95,13 @@ class MainClass(Resource):
             return res   
               
         except (ErrorJson,StudyException,TypeError,ValueError) as e:
-            #wsUt.WebServiceTools.createLOG(request.json)
+            
             flask_app.logger.error(request.json)
             name_space.abort(400, e.args[0], status = "Invalid Argument.", statusCode = "400")
             
         except Exception as e:
-        	#wsUt.WebServiceTools.createLOG(request.json)
-        	#flask_app.logger.error(request.text.encode('ascii','ignore'))
+        	
         	flask_app.logger.error(request.json)
-            
         	name_space.abort(500, "There is an error in the application."+ 
 							" Your request will be stored for analysis.",
 							status = "Internal Server Error.", statusCode = "500")
@@ -113,7 +118,7 @@ class Multi(Resource):
 	@app.marshal_with(studyList)
 	# Response code definition
 	@app.doc(responses={
-		200: 'OK. Processing your request.',
+		200: 'OK. Request processed.',
 		400: 'Invalid Argument.',
 		500: 'Internal Server Error.' })
 	# Type of data model for input
@@ -127,10 +132,48 @@ class Multi(Resource):
 			res = wsUt.WebServiceTools.createResultList(forecastStudyList,request)
 			return res
 		
-		except (TypeError,ErrorJson) as e:
+		except (ErrorJson,StudyException,TypeError,ValueError) as e:
+			
 			flask_app.logger.error(request.json)
 			name_space.abort(400, e.args[0], status = "Invalid Argument.", statusCode = "400")
+			
 		except Exception as e:
+			
 			flask_app.logger.error(request.json)
 			name_space.abort(500, e.args[0], status = "Internal Server Error.", statusCode = "500")
+			
+# The methods available are used to get logs for debugging the tool.
+@name_space.route("/logs/<string:password>")
+class Log(Resource):
+	
+	parser = reqparse.RequestParser()
+	parser.add_argument('url',type=inputs.URL(schemes=['http']))
+	
+	# Response code definition
+	@app.doc(responses={
+		200: 'OK.',
+		400: 'Invalid password.',
+		500: 'Internal Server Error.' })
+	
+	def get(self,password):
+		
+		_internalKey = 'ppat'
+		_hexDigest = '34e183afca25086c7bfed393f7ef9c98'
+		
+		try:
+		
+			cObj = hmac.new(_internalKey.encode('iso-8859-15'),
+								password.encode('iso-8859-15'))
+			
+			if(hmac.compare_digest(_hexDigest,cObj.hexdigest())):
+				with open('logs/ppat.log') as f:
+					data = f.read()
+					
+				return data
+			else:
+				return 'Incorrect password.'
+		except Exception as e:
+			name_space.abort(500, e.args[0], status = "Internal Server Error.", statusCode = "500")
+		
+
 			
