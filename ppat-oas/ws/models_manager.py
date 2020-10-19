@@ -46,7 +46,7 @@ class ModelsManager:
     _standardModels = ['SES','NAIVE','AR','HOLT','CR','CFM','CFE','ANN','ELM']
     _horizonLimit = 12
     _decimalPlaces= 4
-    _minLength = 20
+    _minLength = 18
     
     def __init__(self,data,horizon=1,models=['AUTO'], prop=80,start=None,
                  combType='errorBased', combMetric='RMSE'):

@@ -66,11 +66,9 @@ class Croston:
       
             self.optimize()
             
-        else:
-            
-            self.decompose()
-            self.adjustIndex(False)
-            self.setInSampleValues()
+        self.decompose()
+        self.adjustIndex(False)
+        self.setInSampleValues()
            
     def adjustIndex(self,remove=True):
         '''
