@@ -29,7 +29,7 @@
 		<weld.servlet>3.1.1.Final</weld.servlet>
 		<json.version>1.1.4</json.version>
 		<validationapi.version>2.0.1.Final</validationapi.version>
-		<beanvalidator.version>6.1.0.Final</beanvalidator.version>
+		<beanvalidator.version>6.1.5.Final</beanvalidator.version>
 		<cdi.version>2.0.SP1</cdi.version>
 		<el.version>3.0.0</el.version>
 		<!-- EJB -->
